@@ -28,7 +28,7 @@ if (roleIDString == null) {
     <meta name="keywords" content="Your Keywords">
     <meta name="author" content="Your Author">
     <meta name="robots" content="noindex, nofollow">
-    <title>Assets - Your Admin Template</title>
+    <title>Assets - Title</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
