@@ -58,7 +58,46 @@
 <!-- Bootstrap JS and Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		
+
+<script>		
+/* function showFullDescription(projectId, fullDescription) {
+    var descriptionElement = document.getElementById("description_" + projectId);
+
+    // Debugging statement
+    console.log("Project ID: " + projectId);
+    
+    // Update the content using innerHTML
+    descriptionElement.innerHTML = fullDescription;
+
+    // Optionally, you can hide the "Read more" element after showing the full description
+    var readMoreElement = document.querySelector(".read-more");
+    if (readMoreElement) {
+        readMoreElement.style.display = "none";
+    }
+}
+ */function showFullDescription(projectId, fullDescription) {
+	    var descriptionElement = document.getElementById("description_" + projectId);
+
+	    // Debugging statements
+	    console.log("Project ID: " + projectId);
+	    console.log("Full Description: " + fullDescription);
+
+	    // Update the content using innerHTML
+	    if (descriptionElement) {
+	        descriptionElement.innerHTML = fullDescription;
+
+	        // Optionally, you can hide the "Read more" element after showing the full description
+	        var readMoreElement = document.querySelector(".read-more");
+	        if (readMoreElement) {
+	            readMoreElement.style.display = "none";
+	        }
+	    } else {
+	        console.error("Description element not found");
+	    }
+	}
+
+	</script>
+	
 		
     </head>
     <body>
@@ -165,7 +204,8 @@ for (int row = 1; currentIndex < totalcount; row++) {
                 int completedCount = taskCounts.get("completedCount");
                 int pendingCount = taskCounts.get("pendingCount");
         %>
-                <div class="col-md-3" style="padding: 10px; word-wrap: break-word;">
+        <div class="col-md-3" style="padding: 10px; word-wrap: break-word; background-color: #f0f0f0;"> <!-- Add background color style here -->
+               <!--  <div class="col-md-3" style="padding: 10px; word-wrap: break-word;"> -->
                     <div class="dropdown dropdown-action profile-action">
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                         <div class="dropdown-menu dropdown-menu-right">
@@ -180,7 +220,25 @@ for (int row = 1; currentIndex < totalcount; row++) {
                         <span class="text-xs"><%= pendingCount %></span> <span class="text-muted"> tasks pending </span> 
                         <span class="text-xs"><%= completedCount %></span> <span class="text-muted"> tasks completed</span>
                     </small>
-                    <p class="text-muted"><%= project.getDescription() %></p>
+                    <%-- <p class="text-muted"><%= project.getDescription() %></p> --%>
+                    <p class="text-muted" id="description_<%= projectId %>">
+    <% 
+        String description = project.getDescription();
+        if (description.length() > 100) {
+            out.print(description.substring(0, 100) + "...");
+        } else {
+            out.print(description);
+        }
+    %>
+    <!-- Add a clickable element to show the full description -->
+    <% if (description.length() > 100) { %>
+    <!-- Update the "Read more" span to pass the correct parameters -->
+       <%--  <span class="read-more" onclick="showFullDescription('<%= projectId %>', '<%= project.getDescription().replace("'", "\\'") %>')">Read more</span> --%>
+        <span class="read-more" style="cursor: pointer; pointer-events: auto;" onclick="showFullDescription('<%= projectId %>', '<%= project.getDescription().replace("'", "\\'") %>')">Read more</span>
+        
+       <%--  <span class="read-more" onclick="showFullDescription('<%= projectId %>', '<%= project.getDescription() %>')">Read more</span> --%>
+    <% } %>
+</p>
                     DeadLine: <p class="text-muted"><%= project.getEnddate() %>  </p>                 
                     <!-- Add other project attributes as needed -->
                     <div class="project-members m-b-15">

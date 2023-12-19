@@ -38,34 +38,33 @@
                     
                          <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Project Id <span class="text-danger">*</span></label>
-                                <select name="project_id" required class="form-control" required>
-                                
+                                <label class="col-form-label">Project Name <span class="text-danger">*</span></label>
+                                <select style=" width:250px;" name="project_id" required class="abc" required>
+                                   <option value="" selected>Select Project Name</option> <!-- Default option with a specific name -->
                                 <%
-										       System.out.print("Select enterered");
-											    try {
-											        // Call the method to get all employee data
+			
 											        List<CreateProject> employees = ProjectDAO.getAllProjects();
 											        
-											        // Loop through the list and generate <option> elements
 											        for (CreateProject employee : employees) {
 											    %>
 											     
 											      
-											       <option > <%= employee.getProject_id() %></option> 
+											       <option value="<%= employee.getProject_id() %>"> <%= employee.getProjectname() %></option> 
 											    <%
 											        }
 											        
-											    } catch (Exception e) {
-											        e.printStackTrace(); // Print the exception trace for debugging
-											    }
+											 
 											%>
 											
 
 										    </select>
                             </div>
                         </div> 
-                       
+                         <script>
+    $(document).ready(function() {
+        $('.abc').select2();
+    });
+</script>  
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">description</label>

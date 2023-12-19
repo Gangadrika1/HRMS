@@ -1,22 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.weblabs.service.impl.AssetDAO" %>
 <%@ page import="com.weblabs.beans.AssetsBean" %>
-<%@page import="com.weblabs.service.impl.SupplierDAO"%>
-<%@ page import="com.weblabs.beans.SupplierBean" %>
 <%@ page import="java.util.List" %>
-
+ <%@page import="com.weblabs.service.impl.SupplierDAO"%>
+<%@ page import="com.weblabs.beans.SupplierBean" %>
 <%
-
-HttpSession sdsession = request.getSession(true);
-
-// Retrieve the username attribute from the session
-String username = (String) sdsession.getAttribute("username");
-String roleIDString = (String) sdsession.getAttribute("RoleID");
-// Check if the user is logged in or redirect to the login page
-if (roleIDString == null) {
-    response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
-} else {
-    int roleid = Integer.parseInt(roleIDString);
+    // Getting the username from the session
+    String username = (String) session.getAttribute("username");
 %>
 
 <!DOCTYPE html>
@@ -28,7 +18,7 @@ if (roleIDString == null) {
     <meta name="keywords" content="Your Keywords">
     <meta name="author" content="Your Author">
     <meta name="robots" content="noindex, nofollow">
-    <title>Assets - Title</title>
+    <title>Assets - Your Admin Template</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
@@ -61,6 +51,20 @@ if (roleIDString == null) {
     <![endif]-->
     
     <title>Asset List</title>
+     <style>
+        .page-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .page-title {
+            text-align: center;
+        }
+        
+    </style>
 </head>
 <body>
 <%
@@ -71,7 +75,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "10"; // Set a default value, e.g., 5
+    recordsPerPageStr = "5"; // Set a default value, e.g., 5
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -83,7 +87,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 10; // Default value
+int newRecordsPerPage = 5; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -124,58 +128,65 @@ function changeRecordsPerPage() {
         <!-- Page Wrapper -->
         <div class="page-wrapper">
             <!-- Page Content -->
-            <div class="content container-fluid">
+           
                 <!-- Page Header -->
                 <div class="page-header">
                     <div class="row align-items-center">
                         <div class="col">
-							<div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                                Welcome <%= username %>!
-                              </div>
-								<h3 class="page-title">Assets</h3>
-								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-									<li class="breadcrumb-item active">Assets</li>
-								</ul>
-							</div>
+                            <h3 class="page-title">Assets</h3>
+                         <%--   <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
+                                Welcome <%= username %>
+                            </div> --%> 
+                             <br>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Assets</li>
+                            </ul>
+                       </div>
+                        
                         <div class="col-auto float-right ml-auto">
                             <a href="#" class="btn add-btn" data-toggle="modal" data-target="#AddAssets"><i class="fa fa-plus"></i> Add Asset</a>
-                            <!-- <div class="view-icons">
-                                <a href="asset.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                                <a href="assets-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                            </div> -->
+                         <!--    <div class="view-icons"> -->
+       <!--                          <a href="asset.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                                <a href="assets-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a> -->
+                            </div>
                         </div>
-                    </div>
-                </div>
+                  </div> 
+               
                 <!-- Search form -->
                  <form action="./AssetSearchSrv" method="post">
-                    <div class="row filter-row">
+                 
+                 		<div class="form-container">
+                    <div class="form-row filter-row">
                         <div class="col-sm-6 col-md-3">
                             <div class="form-group form-focus">
                                 <label for="assetName">Asset Name:</label>
                                 <input type="text" name="assetName" id="assetName">
                             </div>
                         </div>
-
+  
                         <div class="col-sm-6 col-md-3">
                             <div class="form-group form-focus select-focus">
                                 <label for="assetId">ID:</label>
-                                <input type="text" name="Id" id="assetId">
+                                <input style="margin-top: 29px;" type="text" name="Id" id="assetId">
                             </div>
                         </div>
 
-                        <div class="col-sm-6 col-md-3">
-                            <input type="submit" value="Search">
+                        <div class="col-sm-6 col-md-3 ">
+                            <input style="margin-top: 29px;" type="submit" value="Search">
                         </div>
+                   </div>
                     </div>
+                  <br>
                     <input type="hidden" name="start" value="<%= currentPage %>">
                     <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                     <div class="col-sm-6 col-md-3" id = "flag">
                         <label>Records per page:</label>
                         <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                         
+                            <option value="5">5</option>
                             <option value="10">10</option>
-                         
+                            <option value="20">20</option>
+                            <option value="50">50</option>
                         </select>
                     </div>
                 </form>
@@ -186,7 +197,7 @@ function changeRecordsPerPage() {
                     <th>ID</th>
                     <th>Asset Name</th>
                     <th>Purchase Date</th>
-                    <th>supplier Name</th>
+                    <th>supplierName</th>
                     <th>Manufacturer</th>
                     <th>Model</th>
                     <th>Status</th>
@@ -195,6 +206,7 @@ function changeRecordsPerPage() {
                     <th>Price</th>
                     <th>Asset User</th>
                     <th>Description</th>
+                    <th>DateTime</th>
                      <th>EDIT</th>
                       <th>DELETE</th>
                     
@@ -249,15 +261,15 @@ function changeRecordsPerPage() {
 
                     for (AssetsBean asset : assets) {
                     	
-                   	 SupplierBean supplier = SupplierDAO.getSupplierById(asset.getSupplierID());
-                   	
-               %>
-               <tr>
-                   <td><%= asset.getId() %></td>
-                   <td><%= asset.getAssetName() %></td>
-                   <td><%= asset.getPurchaseDate() %></td>
-                   <%-- <td><%= asset.getSupplierID() %></td> --%>
-                   <td><%= supplier != null ? supplier.getSupplierName() : "N/A" %></td>
+                    	 SupplierBean supplier = SupplierDAO.getSupplierById(asset.getSupplierID());
+                    	
+                %>
+                <tr>
+                    <td><%= asset.getId() %></td>
+                    <td><%= asset.getAssetName() %></td>
+                    <td><%= asset.getPurchaseDate() %></td>
+                    <%-- <td><%= asset.getSupplierID() %></td> --%>
+                    <td><%= supplier != null ? supplier.getSupplierName() : "N/A" %></td>
                     <td><%= asset.getManufacturer() %></td>
                     <td><%= asset.getModel() %></td>
                     <td><%= asset.getStatus() %></td>
@@ -266,6 +278,7 @@ function changeRecordsPerPage() {
                     <td><%= asset.getPrice() %></td>
                     <td><%= asset.getAssetUser() %></td>
                     <td><%= asset.getDescription() %></td>
+                    <td><%= asset.getDateTime() %></td>
                     <td>
 
  
@@ -282,7 +295,9 @@ function changeRecordsPerPage() {
 		        %>
     </table>
     </div>
-    
+    </div>
+						</div>
+					</div>
     
     <div class="row justify-content-center align-items-center" id = "flag1">
     <!-- Pagination links -->
@@ -301,19 +316,18 @@ function changeRecordsPerPage() {
 
     <% if (pageno < noOfPages) { %>
         <a href="Assets.jsp?page=<%=pageno + 1%>">Next</a>
-    <% } }%>
+    <% } %>
    
    </div>
- 
-                </div>
-            </div>
-
+</div>
+</div>
    
      <jsp:include page="AddAssets.jsp" />
      <!-- Include your Add Employee Modal HTML here -->
-      </div>
+    
     <!-- Include your Add Holiday Modal HTML here -->
-
+     
+</div>
     <!-- jQuery -->
     <script src="js/jquery-3.2.1.min.js"></script>
 
@@ -336,7 +350,7 @@ function changeRecordsPerPage() {
     
    
   
-<!-- <script>
+<script>
     $(document).ready(function () {
         $("#filterButton").click(function () {
             // Get filter criteria (username and id)
@@ -361,9 +375,19 @@ function changeRecordsPerPage() {
             });
         });
     });
-    </script> -->
+    </script>
     <script>
-  
+    var recordsPerPage = <%= recordsPerPage %>; // Use Java variable in JavaScript
+    var currentPage = <%= currentPage %>; 
+    function changeRecordsPerPage() {
+        var recordsPerPageSelect = document.getElementById("recordsPerPage");
+        var selectedValue = recordsPerPageSelect.value;
+        
+        // Update the URL with the selected "recordsPerPage" value and navigate to it
+        var baseUrl = window.location.href.split('?')[0];
+        var newUrl = baseUrl + '?newRecordsPerPage=' + selectedValue;
+        window.location.href = newUrl;
+    }
     
     function updateFooterVisibility(resultCount) {
         var dropdown = document.getElementById("flag1");

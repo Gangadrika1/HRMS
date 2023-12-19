@@ -150,11 +150,11 @@ if (newRecordsPerPageParam != null) {
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus select-focus">
                             <label for="ID">ID:</label>
-                            <input type="text" name="ID" id="TaxID">
+                            <input style="margin-top: 29px;" type="text" name="ID" id="TaxID">
                         </div>
                     </div>
 	                    <div class="col-sm-6 col-md-3">
-	                        <input type="submit" value="Search">
+	                        <input style="margin-top: 29px;" type="submit" value="Search">
 	                    </div>
                 </div>
                  <input type="hidden"  name="start" value="<%= currentPage %>">

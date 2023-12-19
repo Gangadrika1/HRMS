@@ -42,6 +42,12 @@
     
      <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+    
+     
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-Z4jEgrIGWSE5m4e0MmxXo9amii9K4ksAqJHkDzQJDDOV+3+mr8zUo0PvP47qcKE3hNYFVNPikD5MZAgAIdFJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha512-Gn5384xq/58AcB8tJDrabOTtJ5zL04+2bYxIc+2PF3zS3lXtmUjNBeyGv3PpHqccqGCVlFJ6pqu/5t5aU3dfRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-OiE1TD7q2dbUd4bZaRlQ5I1oUiwVw0CLOlKzgAdRxyA1zHdA+f9exSOJ7Sy3i8qOb/sMr3JNtr6CceVcn9Vbrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
  </head>
 <body>
 
@@ -116,23 +122,25 @@
 												<input name="purchase_date" value="<%= asset.getPurchaseDate() %>" required class="form-control" type="text" >
                                         </div>
 										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												
-												<label for="supplier_id" class="col-form-label">supplierID <span class="text-danger">*</span></label>
 													
-											<%-- 	<input name="supplier_id" value="<%= asset.getSupplierID() %>" required class="form-control" type="text" > --%>
-                       
+													
+													
+													
+													
+						<div class="col-md-6">
+						<div class="form-group">
+												
+					<label style="margin-top: 39px; for="supplier_id" class="col-form-label">supplierID <span class="text-danger">*</span></label>
                        
                        
 
-        <select required name="supplier_id" class="select" id="supplier_id" >
+        <select class="abc2"  style=" width:270px;" required name="supplier_id" id="supplier_id" >
             <%
                String selectedClientId = asset.getSupplierID();
                 List<SupplierBean> dept = SupplierDAO.getAllSuppliers();
                 for (SupplierBean client : dept) {
             %>
-            <option value="<%= client.getSupplierName()%>" <%= (selectedClientId != null && selectedClientId.equals(client.getSupplierID())) ? "selected" : "" %>><%= client.getSupplierName() %></option>
+            <option  value="<%= client.getSupplierName()%>" <%= (selectedClientId != null && selectedClientId.equals(client.getSupplierID())) ? "selected" : "" %>><%= client.getSupplierName() %></option>
             <%
                 }
             %>
@@ -140,6 +148,14 @@
 											</div>
 										</div>
 									</div>
+									
+									
+         <script>
+    $(document).ready(function() {
+        $('.abc2').select2();
+    });
+</script>  
+			
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
@@ -165,13 +181,13 @@
 											<div class="form-group">
 												
 												<label class="col-form-label">Status<span class="text-danger">*</span></label>
-												
-												<select name="status" class="select">
+												<input name="status" value="<%= asset.getStatus() %>" required class="form-control" type="text" >
+												<!-- <select name="status" class="select">
 													<option value="0">Pending</option>
 													<option value="1">Approved</option>
 													<option value="2">Deployed</option>
 													<option value="3">Damaged</option>
-												</select>
+												</select> -->
 											</div>
 										</div>
 										<%-- <div class="col-md-6">
@@ -191,6 +207,8 @@
                        
 											</div>
 										</div>
+										
+										
 										<div class="col-md-6">
 											<div class="form-group">
 											
@@ -200,8 +218,8 @@
                        
 											</div>
 										</div>
-									</div>
-									<div class="row">
+									
+									
 										<div class="col-md-6">
 											<div class="form-group">
 												
@@ -211,6 +229,10 @@
                        
 											</div>
 										</div>
+									
+										
+										
+										
 										<div class="col-md-6">
 											<div class="form-group">
 												
@@ -222,7 +244,7 @@
 												</select> -->
 											</div>
 										</div>
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
 												
 												<label class="col-form-label">Description<span class="text-danger">*</span></label>
@@ -231,6 +253,8 @@
                        
 											</div>
 										</div>
+										
+										
 										
 										<%-- <div class="col-md-6">
 											<div class="form-group">

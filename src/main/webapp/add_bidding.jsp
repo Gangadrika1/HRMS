@@ -21,8 +21,8 @@
                             <input name="designation" required class="form-control" type="text">
                         </div> -->
                         <div class="form-group">
-                            <label>Client ID <span class="text-danger">*</span></label>
-                            <select required name="Clientid" class="form-control" required onchange="getAllClient">
+                            <label>Client Name <span class="text-danger">*</span></label>
+                            <select style=" width:250px;"  required name="Clientid" class="abc"  required onchange="getAllClient">
   
                            <option value="">Select an employee</option>
             <% 
@@ -33,7 +33,7 @@
                 // Loop through the list and generate <option> elements
                 for (AddClient employee : allProjects) {
             %>
-            <option  value="<%= employee.getClientID()%>"><%= employee.getClientID() %></option>
+            <option  value="<%= employee.getClientID()%>"><%= employee.getUsername() %></option>
             <%
                 }
             } catch (Exception e) {
@@ -43,7 +43,11 @@
         </select>
                         </div>
                         
-                        
+             <script>
+    $(document).ready(function() {
+        $('.abc').select2();
+    });
+</script>              
                         
                         
      <script>
@@ -99,29 +103,34 @@
                         </div> -->
                         
                         
-                         <div class="form-group">
-                            <label>Project ID <span class="text-danger">*</span></label>
-                            <select required name="project_id" class="form-control" required onchange="getAllProjects">
-  
-                           <option value="">Select an employee</option>
-            <% 
-            try {
-                // Call the method to get all employee data
-               List<CreateProject> allProjects = ProjectDAO.getAllProjects();
-                
-                // Loop through the list and generate <option> elements
-                for (CreateProject employee : allProjects) {
-            %>
-            <option value="<%= employee.getProject_id() %>"><%= employee.getProject_id() %></option>
+                      <div class="form-group">
+                                <label class="col-form-label">Project Name <span class="text-danger">*</span></label>
+                                <select style=" width:250px;" name="project_id" required class="xyz" required>
+                                   <option value="" selected>Select Project Name</option> <!-- Default option with a specific name -->
+                                <%
+			
+											        List<CreateProject> employees = ProjectDAO.getAllProjects();
+											        
+											        for (CreateProject employee : employees) {
+											    %>
+											     
+											      
+											       <option value="<%= employee.getProject_id() %>"> <%= employee.getProjectname() %></option> 
+											    <%
+											        }
+											        
+											 
+											%>
+											
 
-            <%
-                }
-            } catch (Exception e) {
-                e.printStackTrace(); // Print the exception trace for debugging
-            }
-            %>
-        </select>
-                        </div>
+										    </select>
+                            
+                        </div> 
+                         <script>
+    $(document).ready(function() {
+        $('.xyz').select2();
+    });
+</script>  
                         
                         
                  <div class="form-group">

@@ -98,11 +98,17 @@
                             <label class="col-form-label">description <span class="text-danger">*</span></label>
                             <input name="description" value="<%= type.getDescription() %>" required class="form-control" type="text">
                         </div>
-                        <div class="form-group">
+                        <%-- <div class="form-group">
                             <label class="col-form-label">Status <span class="text-danger">*</span></label>
                             <input name="Status" value="<%= type.getStatus() %>" required class="form-control" type="text">
-                        </div>
-                        
+                        </div> --%>
+         <div class="form-group">
+        <label class="col-form-label">Status <span class="text-danger">*</span></label>
+        <select class="select" name="Status" required>
+            <option value="Active" <%= "Active".equals(type.getStatus()) ? "selected" : "" %>>Active</option>
+            <option value="Inactive" <%= "Inactive".equals(type.getStatus()) ? "selected" : "" %>>Inactive</option>
+        </select>
+    </div>
  
                         <div class="submit-section">
                             <button type="submit" name="update_trainingtype" class="btn btn-primary submit-btn">Update</button>
