@@ -4,6 +4,7 @@
 <%@page import="com.weblabs.service.impl.ProjectDAO"%>
 <%@ page import="com.weblabs.service.impl.TasksServiceImp" %>
 <%@ page import="com.weblabs.beans.TasksBean" %>
+<%@ page import="com.weblabs.beans.CreateProject" %>
 <%@ page import="java.util.List" %>
 
 
@@ -143,7 +144,7 @@ if (newRecordsPerPageParam != null) {
             </div>
         </div>
         <div class="col-sm-6 col-md-3">
-            <input type="submit" value="Search">
+            <input style="margin-top: 29px;" type="submit" value="Search">
         </div>
     </div>
     <input type="hidden" name="start" value="<%= currentPage %>">
@@ -167,7 +168,7 @@ if (newRecordsPerPageParam != null) {
 										<tr>
 							
 											<th>task_id</th>
-											<th>project_id</th>
+											<th>project Name</th>
 									        <th>description</th>
 									        <th>start_date</th>
 									        <th>end_date</th>
@@ -221,10 +222,12 @@ if (!whereClause.isEmpty()) {
     tax = taskDAO.getFilteredTask("", start, limit);
 }
 for (TasksBean tasks : tax) {
+	CreateProject pro = ProjectDAO.getProjectById(tasks.getProject_id());
 %>
 <tr>
     <td><%=tasks.getTask_id() %></td>
-    <td><%=tasks.getProject_id() %></td>
+   <%--  <td><%=tasks.getProject_id() %></td> --%>
+    <td><%= pro != null ? pro.getProjectname() : "N/A" %></td>
     <td><%=tasks.getDescription() %></td>
     <td><%=tasks.getStart_date() %></td>
     <td><%=tasks.getEnd_date() %></td>

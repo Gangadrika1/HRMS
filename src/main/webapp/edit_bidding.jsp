@@ -101,27 +101,29 @@
 
 
 <div class="form-group">
-                            <label>Client ID <span class="text-danger">*</span></label>
-                            <select required name="Clientid" value="<%= designation.getClientid() %>" class="form-control" required type="text" >
-  
+                          <label style="margin-top: 40px;" class="col-form-label">Client Name <span class="text-danger">*</span></label>
+                                <select class="abc2" style=" width:270px;" name="Clientid" required class="form-control" required>
                           
             <% 
-            try {
+                String selectedClientId1 = designation.getProject_id();
                 // Call the method to get all employee data
                List<AddClient> allProjects = AddClientsDAO.getAllClient();
                 
                 // Loop through the list and generate <option> elements
                 for (AddClient employee : allProjects) {
             %>
-            <option  value="<%= employee.getClientID()%>"><%= employee.getClientID() %></option>
+             <option  value="<%=employee.getUsername()%>" <%= (selectedClientId1 != null && selectedClientId1.equals(employee.getClientID())) ? "selected" : "" %>><%= employee.getUsername() %></option>
             <%
                 }
-            } catch (Exception e) {
-                e.printStackTrace(); // Print the exception trace for debugging
-            }
+           
             %>
         </select>
                         </div>
+                           <script>
+    $(document).ready(function() {
+        $('.abc2').select2();
+    });
+</script>  
 <%-- <div class="form-group">
     <label class="col-form-label">Is Fixed <span class="text-danger">*</span></label>
     <input name="is_fixed" value="<%= designation.getIs_fixed()%>" required class="form-control" type="text">
@@ -146,11 +148,30 @@
     <input name="pricing" value="<%= designation.getPricing()%>" required class="form-control" type="text">
 </div>
 
-<div class="form-group">
-    <label class="col-form-label">Project Id <span class="text-danger">*</span></label>
-   <input name="project_id" value="<%= designation.getProject_id()%>" required class="form-control" type="text">
-</div>
-
+ <div class="form-group">
+                                <label style="margin-top: 40px;" class="col-form-label">Project Name <span class="text-danger">*</span></label>
+                                <select class="abc2" style=" width:270px;" name="project_id" required class="form-control" required>
+                                    <%
+                                            String selectedClientId = designation.getProject_id();
+                                            List<CreateProject> projects = ProjectDAO.getAllProjects();
+                                            
+                                            for (CreateProject project : projects) {
+                                    %>
+                                   <%--  <option value="<%= project.getProjectname() %>" <%= (project.getProject_id().equals(task.getProject_id())) ? "selected" : "" %>><%= project.getProjectname() %></option> --%>
+                                    <option  value="<%= project.getProjectname()%>" <%= (selectedClientId != null && selectedClientId.equals(designation.getProject_id())) ? "selected" : "" %>><%= project.getProjectname() %></option>
+                                    
+                                    <%
+                                            }
+                                      
+                                    %>
+                                </select>
+                           
+                        </div> 
+                       <script>
+    $(document).ready(function() {
+        $('.abc2').select2();
+    });
+</script>  
   
 <div class="form-group">
     <label class="col-form-label">Is Fixed <span class="text-danger">*</span></label>

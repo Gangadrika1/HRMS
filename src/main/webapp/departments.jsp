@@ -146,7 +146,7 @@ if (newRecordsPerPageParam != null) {
                 </div>
             </div>
 
-            <!-- Search form -->
+           
             <form action="./DepartmentSearchSrv" method="post">
                 <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">
@@ -158,11 +158,11 @@ if (newRecordsPerPageParam != null) {
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus select-focus">
                             <label for="date">ID:</label>
-                            <input type="text" name="DepartmentId" id="date">
+                            <input style="margin-top: 29px;" type="text" name="DepartmentId" id="date">
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
+                        <input style="margin-top: 29px;" type="submit" value="Search">
                     </div>
                 </div>
                 <input type="hidden" name="start" value="<%= currentPage %>">

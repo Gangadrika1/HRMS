@@ -100,15 +100,16 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Status <span class="text-danger">*</span></label>
-                                <select class="select" value="<%= taxes.getStatus()%>" required name="status">
-                                    <option>Active</option>
-                                    <option>Inactive</option>
-                                </select>
-                            </div>
-                        </div>
+     <div class="col-md-6">
+    <div class="form-group">
+        <label class="col-form-label">Status <span class="text-danger">*</span></label>
+        <select class="select" name="status" required>
+            <option value="Pending" <%= "Pending".equals(taxes.getStatus()) ? "selected" : "" %>>Pending</option>
+            <option value="Approved" <%= "Approved".equals(taxes.getStatus()) ? "selected" : "" %>>Approved</option>
+        </select>
+    </div>
+</div>
+
                     
                     <!-- Closing div for the row -->
                     </div>

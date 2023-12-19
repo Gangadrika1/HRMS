@@ -115,7 +115,8 @@ public class EmployeeDAO {
 
         try {
             connection = DBUtil.provideConnection();
-            String query = "SELECT  Employee_Id, FirstName, LastName, UserName, Email, Phone, DepartmentId, Designationid FROM employees";
+            String query = "SELECT Employee_Id, FirstName, LastName, UserName, Email, Phone, DepartmentId, DesignationId FROM employees WHERE Status IS NULL OR Status = 'Active'";
+
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 

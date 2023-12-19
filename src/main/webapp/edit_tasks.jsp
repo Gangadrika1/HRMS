@@ -86,26 +86,29 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Project Id <span class="text-danger">*</span></label>
-                                <select name="project_id" required class="form-control" required>
+                                <label style="margin-top: 40px;" class="col-form-label">Project Name <span class="text-danger">*</span></label>
+                                <select class="abc2" style=" width:270px;" name="project_id" required class="form-control" required>
                                     <%
-                                        try {
+                                            String selectedClientId = task.getProject_id();
                                             List<CreateProject> projects = ProjectDAO.getAllProjects();
                                             
                                             for (CreateProject project : projects) {
                                     %>
-                                    <option value="<%= project.getProject_id() %>" <%= (project.getProject_id().equals(task.getProject_id())) ? "selected" : "" %>><%= project.getProject_id() %></option>
+                                   <%--  <option value="<%= project.getProjectname() %>" <%= (project.getProject_id().equals(task.getProject_id())) ? "selected" : "" %>><%= project.getProjectname() %></option> --%>
+                                    <option  value="<%= project.getProjectname()%>" <%= (selectedClientId != null && selectedClientId.equals(task.getProject_id())) ? "selected" : "" %>><%= project.getProjectname() %></option>
+                                    
                                     <%
                                             }
-                                            
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
+                                      
                                     %>
                                 </select>
                             </div>
                         </div> 
-                       
+                       <script>
+    $(document).ready(function() {
+        $('.abc2').select2();
+    });
+</script>  
                         <!-- Add other form fields with values from the 'task' object -->
                         <div class="col-md-6">
                             <div class="form-group">

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.weblabs.beans.CreateProject;
+import com.weblabs.beans.SupplierBean;
 import com.weblabs.utility.DBUtil;
 
 public class ProjectDAO {
@@ -218,10 +219,41 @@ public class ProjectDAO {
 	    return months;
 	}
   
-    
+    public static CreateProject getProjectById(String projectID) {
+    	CreateProject project = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        try {
+            connection = DBUtil.provideConnection();
+            String query = "SELECT projectname FROM project WHERE project_id = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, projectID);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+            	project = new CreateProject();
+            	project.setProjectname(resultSet.getString("projectname"));
+               
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return project;
+    }
 }
-   
+
+  
 
 
 

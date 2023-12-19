@@ -146,11 +146,11 @@
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus select-focus">
                             <label for="id">ID:</label>
-                            <input type="text" name="id" id="id">
+                            <input style="margin-top: 29px;" type="text" name="id" id="id">
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
+                        <input style="margin-top: 29px;" type="submit" value="Search">
                     </div>
                 </div>
                 	 <input type="hidden"  name="start" value="<%= currentPage %>">

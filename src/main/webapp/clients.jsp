@@ -172,7 +172,7 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
 	        </div>
 
 	        <div class="col-sm-6 col-md-3 form-group search-btn">
-	            <input type="submit" value="Search" id="Search">
+	            <input style="margin-top: 29px;" type="submit" value="Search" id="Search">
 	        </div>
 	    </div>
 	</div>
