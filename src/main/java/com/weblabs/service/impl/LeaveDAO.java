@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,4 +106,174 @@ public class LeaveDAO {
 		 }
 		 return count;
 		 }
+    
+    
+    
+    public static int calculateNetSalaryWithLeaves(String employeeId, int payrollYear, int payrollMonth, int netSalary) {
+        int adjustedNetSalary = netSalary;
+        Connection connection = null;
+
+        try {
+            connection = DBUtil.provideConnection();
+             String sql = "SELECT Days " + 
+                    "FROM leaves " + 
+                    "WHERE Employee_Id = ? " + 
+                    "  AND (" + 
+                    "    (YEAR(STR_TO_DATE(Starting_At, '%Y-%m-%d')) = ? AND MONTH(STR_TO_DATE(Starting_At, '%Y-%m-%d')) = ?) " + 
+                    "    AND (YEAR(STR_TO_DATE(Ending_On, '%Y-%m-%d')) = ? AND MONTH(STR_TO_DATE(Ending_On, '%Y-%m-%d')) = ?) " + 
+                    "  );";
+
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, employeeId);
+                preparedStatement.setInt(2, payrollYear);
+                preparedStatement.setInt(3, payrollMonth);
+                preparedStatement.setInt(4, payrollYear);
+                preparedStatement.setInt(5, payrollMonth);
+                
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int totalLeaveDays = resultSet.getInt("Days");
+
+                        // Calculate adjusted net salary based on leave days
+                        if (totalLeaveDays > 0) {
+                            int totalDaysInMonth = java.time.YearMonth.of(payrollYear, payrollMonth).lengthOfMonth();
+                           int  TD= totalLeaveDays-1;
+							/* int remainingDays = totalDaysInMonth - (TD); */
+
+                            adjustedNetSalary = (netSalary * TD) / totalDaysInMonth;
+                            netSalary -= adjustedNetSalary;
+                        }
+                    }
+                }
+            } 
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception according to your application's needs
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return netSalary;
+    }
+    
+    
+    
+    
+    public static int calculateLeaves(String employeeId, int payrollYear, int payrollMonth) {
+		/* int adjustedNetSalary = netSalary; */
+        Connection connection = null;
+        int  TD =0;
+        try {
+            connection = DBUtil.provideConnection();
+             String sql = "SELECT Days " + 
+                    "FROM leaves " + 
+                    "WHERE Employee_Id = ? " + 
+                    "  AND (" + 
+                    "    (YEAR(STR_TO_DATE(Starting_At, '%Y-%m-%d')) = ? AND MONTH(STR_TO_DATE(Starting_At, '%Y-%m-%d')) = ?) " + 
+                    "    AND (YEAR(STR_TO_DATE(Ending_On, '%Y-%m-%d')) = ? AND MONTH(STR_TO_DATE(Ending_On, '%Y-%m-%d')) = ?) " + 
+                    "  );";
+             
+
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, employeeId);
+                preparedStatement.setInt(2, payrollYear);
+                preparedStatement.setInt(3, payrollMonth);
+                preparedStatement.setInt(4, payrollYear);
+                preparedStatement.setInt(5, payrollMonth);
+                
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int totalLeaveDays = resultSet.getInt("Days");
+
+                        // Calculate adjusted net salary based on leave days
+                        if (totalLeaveDays > 0) {
+							/*
+							 * int totalDaysInMonth = java.time.YearMonth.of(payrollYear,
+							 * payrollMonth).lengthOfMonth();
+							 */
+                            TD= totalLeaveDays-1;
+							/* int remainingDays = totalDaysInMonth - (TD); */
+
+							/*
+							 * adjustedNetSalary = (netSalary * TD) / totalDaysInMonth; netSalary -=
+							 * adjustedNetSalary;
+							 */
+                        }
+                    }
+                }
+            } 
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception according to your application's needs
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return TD;
+    }
+    
+   
+    public static int OTNET(String employeeId, int payrollYear, int payrollMonth, int baseSalary) {
+        int totalDaysInMonth = YearMonth.of(payrollYear, payrollMonth).lengthOfMonth();
+        int PDay = baseSalary / totalDaysInMonth;
+        int HourlyRate = PDay / 8;
+
+        int overtimeHours = OvertimeHours(employeeId, payrollYear, payrollMonth);
+        double overtimePay = overtimeHours * HourlyRate;
+        int OT = (int) (overtimePay);
+        int NETCAL = baseSalary+ OT;
+    
+        return NETCAL;
+    }
+    
+
+    public static int OvertimeHours(String employeeId, int payrollYear, int payrollMonth) {
+        Connection connection = null;
+        int totalOvertimeHours = 0;
+
+        try {
+        	 connection = DBUtil.provideConnection();
+            // Select overtime hours from the Overtime table
+            String selectQuery = "SELECT Hours FROM Overtime WHERE Employee_Id = ? AND YEAR(OverTime_Date) = ? AND MONTH(OverTime_Date) = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setString(1, employeeId);
+                preparedStatement.setInt(2, payrollYear);
+                preparedStatement.setInt(3, payrollMonth);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int hoursWorked = resultSet.getInt("Hours");
+                        totalOvertimeHours += hoursWorked;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the database connection
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return totalOvertimeHours;
+    }
+
 }

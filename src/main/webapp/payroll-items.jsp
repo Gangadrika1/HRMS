@@ -352,7 +352,7 @@ if (newRecordsPerPageParam != null) {
                             <a href="edit_overtime.jsp?Employee_Id=<%= holiday.getEmployee_Id()%>">Edit</a>
                             </td>
                             <td>
-                            <a href="DeleteOverTimeSrv?Employee_Id=<%= holiday.getEmployee_Id()%>">Delete</a>
+                            <a href="DeleteOverTimeSrv?id=<%= holiday.getEmployee_Id()%>">Delete</a>
                         </td>
                     </tr>
                     <%
@@ -466,7 +466,7 @@ if (newRecordsPerPageParam != null) {
 								        <a href="edit_deduction.jsp?id=<%= holiday.getPayrolldeductionid() %>">Edit</a>
 								    </td>
 								    <td>
-								        <a href="DeleteDeductionServlet?payrolldeductionid=<%= holiday.getPayrolldeductionid()%>">Delete</a>
+								        <a href="DeleteDeductionServlet?payrolldeductionid=<%= holiday.getPayroll_id()%>">Delete</a>
 								    </td>
 								</tr>
 								<%

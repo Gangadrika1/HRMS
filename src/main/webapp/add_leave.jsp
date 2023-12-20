@@ -71,7 +71,7 @@
 											for(EmployeeBean dep: dept)
 											{
 											%>
-                                           <option><%= dep.getUsername() %></option>
+                                           <option value="<%=dep.getEmployee_ID() %>"><%= dep.getUsername() %></option>
                                         <%
                           					}
 									     %>                       

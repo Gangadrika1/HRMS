@@ -42,39 +42,40 @@ public class AddAdditionServlet extends HttpServlet {
             if (conn != null) {
                 try {
                     // Insert data into payroll_addition
-                    String insertAdditionSQL = "INSERT INTO payroll_addition (Payroll_id,AdditionName, Category, UnitCalculation, UnitAmount) VALUES (?, ?, ?, ?, ?)";
-                    PreparedStatement additionStatement = conn.prepareStatement(insertAdditionSQL, PreparedStatement.RETURN_GENERATED_KEYS);
-                    
-                    additionStatement.setString(1, payroll_id);
-                    additionStatement.setString(2, additionName);
-                    additionStatement.setString(3, category);
-                    additionStatement.setInt(4, unitCalculation);
-                    additionStatement.setString(5, unitAmount);
-                    additionStatement.executeUpdate();
-                  
-                    // Get the affected rows
-                    int affectedRows = additionStatement.executeUpdate();
+                	// Insert data into payroll_addition
+                	String insertAdditionSQL = "INSERT INTO payroll_addition (Payroll_id,AdditionName, Category, UnitCalculation, UnitAmount) VALUES (?, ?, ?, ?, ?)";
+                	PreparedStatement additionStatement = conn.prepareStatement(insertAdditionSQL, PreparedStatement.RETURN_GENERATED_KEYS);
 
-                    if (affectedRows > 0) {
+                	additionStatement.setString(1, payroll_id);
+                	additionStatement.setString(2, additionName);
+                	additionStatement.setString(3, category);
+                	additionStatement.setInt(4, unitCalculation);
+                	additionStatement.setString(5, unitAmount);
+                	// Remove the redundant executeUpdate() call
+                	// additionStatement.executeUpdate();
+
+                	// Get the affected rows
+                	int affectedRows = additionStatement.executeUpdate();
+
+                	if (affectedRows > 0) {
                         ResultSet generatedKeys = additionStatement.getGeneratedKeys();
                         if (generatedKeys.next()) {
                             int additionId = generatedKeys.getInt(1);
 
                             // If at least one employee is selected, create a batch insert statement for payroll_addition_assignee
                             if (selectedEmployees != null && selectedEmployees.length > 0) {
-                                String insertAssigneSQL = "INSERT INTO payrolladditionassignment (employee_id,Payrolladditionid,payroll_id) VALUES (?, ?,?)";
-                                PreparedStatement assigneStatement = conn.prepareStatement(insertAssigneSQL);
+                                String insertAssignSQL = "INSERT INTO payrolladditionassignment (employee_id, Payrolladditionid, payroll_id) VALUES (?, ?, ?)";
+                                try (PreparedStatement assignStatement = conn.prepareStatement(insertAssignSQL)) {
+                                    for (String employeeId : selectedEmployees) {
+                                        assignStatement.setString(1, employeeId);
+                                        assignStatement.setInt(2, additionId);
+                                        assignStatement.setString(3, payroll_id);
+                                        // Use the generated addition ID
+                                        assignStatement.addBatch();
+                                    }
 
-                                for (String employeeId : selectedEmployees) {
-                                    assigneStatement.setString(1, employeeId);
-                                    assigneStatement.setInt(2, additionId); 
-                                    assigneStatement.setString(3, payroll_id);
-                                    // Use the generated addition ID
-                                    assigneStatement.addBatch();
+                                    assignStatement.executeBatch();
                                 }
-
-                                assigneStatement.executeBatch();
-                                assigneStatement.close();
                             }
 
                             // Close the database connection
@@ -84,27 +85,24 @@ public class AddAdditionServlet extends HttpServlet {
                             response.sendRedirect("payroll-items.jsp");
                         }
                     }
-                    
-                }
-                
-                catch (Exception e) {
+
+                } catch (Exception e) {
                     e.printStackTrace();
-                    
                     response.sendRedirect("error.jsp");
+                } finally {
+                    try {
+                        if (conn != null) {
+                            conn.close();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        // Handle the exception if needed
+                    }
                 }
-            } else {
-               
-                response.sendRedirect("error.jsp");
             }
         }
-        
-        catch (Exception e) 
-        
-        {
-            e.printStackTrace();
-           
-            response.sendRedirect("error.jsp");
+        finally {
+        	System.out.println("Try block fininshed..");
         }
-    			}
-    
+    }
 }

@@ -1,7 +1,6 @@
 package com.weblabs.srv;
 
 import javax.servlet.ServletException;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,47 +11,45 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.weblabs.utility.DBUtil;
-import com.weblabs.service.impl.AddDeductionServiceImpl;
 
 @WebServlet("/AddDeductionServlet")
 public class AddDeductionServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Your code to handle GET requests
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         commonLogic(request, response);
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         commonLogic(request, response);
     }
 
-    private void commonLogic(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void commonLogic(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
-                      
-        	String payroll_id = request.getParameter("payrollid");
+            String payroll_id = request.getParameter("payrollid");
             String deductionName = request.getParameter("name");
             String unitCalculationParam = request.getParameter("unitcalculation");
             int unitCalculation = (unitCalculationParam != null) ? 1 : 0;
             String unitAmount = request.getParameter("unitamount");
 
             // Retrieve data from the request for AddPayrollAdditionAssignee
-           
-            String[] selectedEmployees = request.getParameterValues("selectedEmployee"); // Assuming "selectedEmployees" is the name of the checkboxes
+            String[] selectedEmployees = request.getParameterValues("selectedEmployee");
 
             Connection conn = DBUtil.provideConnection();
             if (conn != null) {
                 try {
                     // Insert data into payroll_deduction
-                    String insertAdditionSQL = "INSERT INTO payroll_deduction (Payroll_id,DeductionName,  UnitCalculation, UnitAmount) VALUES ( ?, ?, ?, ?)";
+                    String insertAdditionSQL = "INSERT INTO payroll_deduction (Payroll_id, DeductionName, UnitCalculation, UnitAmount) VALUES (?, ?, ?, ?)";
                     PreparedStatement additionStatement = conn.prepareStatement(insertAdditionSQL, PreparedStatement.RETURN_GENERATED_KEYS);
-                        
+
                     additionStatement.setString(1, payroll_id);
                     additionStatement.setString(2, deductionName);
-                    additionStatement.setInt(3, unitCalculation);   
+                    additionStatement.setInt(3, unitCalculation);
                     additionStatement.setString(4, unitAmount);
-                    additionStatement.executeUpdate();
-                  
 
-                    // Get the affected rows
+                    // Execute the statement and get the affected rows
                     int affectedRows = additionStatement.executeUpdate();
 
                     if (affectedRows > 0) {
@@ -62,7 +59,7 @@ public class AddDeductionServlet extends HttpServlet {
 
                             // If at least one employee is selected, create a batch insert statement for payroll_deduction_assignee
                             if (selectedEmployees != null && selectedEmployees.length > 0) {
-                                String insertAssigneSQL = "INSERT INTO payrolldeductionassignment (employee_id,payrolldeductionid,payroll_id) VALUES (?, ?,?)";
+                                String insertAssigneSQL = "INSERT INTO payrolldeductionassignment (employee_id, payrolldeductionid, payroll_id) VALUES (?, ?, ?)";
                                 PreparedStatement assigneStatement = conn.prepareStatement(insertAssigneSQL);
 
                                 for (String employeeId : selectedEmployees) {
@@ -72,6 +69,7 @@ public class AddDeductionServlet extends HttpServlet {
                                     assigneStatement.addBatch();
                                 }
 
+                                // Execute the batch insert statement
                                 assigneStatement.executeBatch();
                                 assigneStatement.close();
                             }
@@ -83,27 +81,19 @@ public class AddDeductionServlet extends HttpServlet {
                             response.sendRedirect("payroll-items.jsp");
                         }
                     }
-                    
-                }
-                
-                catch (Exception e) {
+
+                    // Close the additionStatement
+                    additionStatement.close();
+                } catch (Exception e) {
                     e.printStackTrace();
-                    
                     response.sendRedirect("error.jsp");
                 }
             } else {
-               
                 response.sendRedirect("error.jsp");
             }
-        }
-        
-        catch (Exception e) 
-        
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-           
             response.sendRedirect("error.jsp");
         }
-    			}
-    
+    }
 }

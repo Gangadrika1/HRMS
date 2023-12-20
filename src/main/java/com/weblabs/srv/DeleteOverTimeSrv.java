@@ -23,7 +23,6 @@ public class DeleteOverTimeSrv extends HttpServlet {
     	String id = request.getParameter("id");
 
     	AddOverTimeImpl overtime = new AddOverTimeImpl();
-
 		String status = overtime.deleteovertime(id);
 		
         RequestDispatcher rd = request.getRequestDispatcher("delete_overtime.jsp?message=" + status);

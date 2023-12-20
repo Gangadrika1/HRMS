@@ -20,7 +20,7 @@
 								
 									<div class="form-group">
 										<label> Employee ID<span class="text-danger">*</span></label>
-										<select id="selectedEmployee" name="Employee" class="form-control">
+										<select id="selectedEmployee" name="Employee_Id" class="form-control">
                                  
                                 <%
 											List<EmployeeBean> dept = EmployeeDAO.getAllEmployees();

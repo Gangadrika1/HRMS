@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.weblabs.service.impl.EmployeeDAO" %>
 <%@ page import="com.weblabs.beans.EmployeeBean" %>
+<%@ page import="com.weblabs.service.impl.PayrollDAO" %>
+<%@ page import="com.weblabs.beans.Payroll" %>
 <%@ page import="java.util.List" %>
 
 <!DOCTYPE html>
@@ -60,12 +62,29 @@
                 </div>
                 <div class="form-group">
                     <label>PayrollId <span class="text-danger">*</span></label>
-                    <input name="payrollid" required class="form-control" type="text">
+                    <select required name="payrollid" class="select">
+                                             <%
+											List<Payroll> dept = PayrollDAO.getAllYears();
+											for(Payroll dep: dept)
+											{
+											%>
+                                           <option> <%= dep.getPayroll_id()%></option>
+                                        <%
+                          					}
+									     %>
+                                         </select>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Name <span class="text-danger">*</span></label>
-                        <input name="name" required class="form-control" type="text">
+                        <select class="select" name="name" required >
+											<option>Select a category</option>
+											<option>ESI</option>
+											<option>TDS</option>
+											<option>PF TAX</option>
+											<option>lABOUR WELFARE</option>
+											
+					</select>
                     </div>
 					
 					
@@ -81,57 +100,56 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="d-block">Assignee</label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="deduction_assignee" id="deduction_no_emp" value="option1" checked>
-                            <label class="form-check-label" for="deduction_no_emp">No assignee</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="deduction_assignee" id="deduction_all_emp" value="option2">
-                            <label class="form-check-label" for="deduction_all_emp">All employees</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="deduction_assignee" id="deduction_single_emp" value="option3">
-                            <label class="form-check-label" for="deduction_single_emp">Select Employee</label>
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-dropdown">
-                                <div class="custom-dropdown-content grid-view" id="employeeSelectContent">
-                                    <div class="grid-container">
-                                        <%
-                                        // Call the method to get all employee data
-                                        List<EmployeeBean> employees = EmployeeDAO.getAllEmployees();
-                                        // System.println("Number of employees: " + employees.size());
-                                        // Loop through the list and generate checkboxes in a grid
-                                        for (EmployeeBean employee : employees) {
-                                        %>
-                                        <div class="grid-item">
-                                            <input type="checkbox" name="selectedEmployees" value="<%= employee.getEmployee_ID() %>">
-                                            <label><%= employee.getEmail() %></label>
-                                        </div>
-                                        <%
-                                        }
-                                        %>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="submit-section">
-                        <button class="btn btn-primary submit-btn">Submit</button>
-                    </div>
-                </div>
-            </div>
+                   <div class="form-group">
+					    <label class="d-block">Assignee</label>
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="radio" name="deductions_assignee" id="deductions_no_emp" value="option1" checked="">
+					        <label class="form-check-label" for="deductions_no_emp">No assignee</label>
+					    </div>
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="radio" name="deductions_assignee" id="deductions_all_emp" value="option2">
+					        <label class="form-check-label" for="deductions_all_emp">All employees</label>
+					    </div>
+					    <div class="form-check form-check-inline">
+					        <input class="form-check-input" type="radio" name="deductions_assignee" id="deductions_single_emp" value="option3">
+					        <label class="form-check-label" for="deductions_single_emp">Select Employee</label>
+					    </div>
+					
+					    <div class="form-group">
+					        <div class="custom-dropdown">
+					            <div class="custom-dropdown-content grid-view" id="employeeSelectContent">
+					                <div class="grid-container">
+					                    <%
+					                    // Call the method to get all employee data
+					                    List<EmployeeBean> employees = EmployeeDAO.getAllEmployees();					
+					                    // Loop through the list and generate checkboxes in a grid
+					                    for (EmployeeBean employee : employees) {
+					                    %>
+					                    <div class="grid-item">
+					                        <input type="checkbox" name="selectedEmployee" value="<%= employee.getEmployee_ID() %>">
+					                        <label><%= employee.getEmployee_ID()%></label>
+					                    </div>
+					                    <%
+					                    }
+					                    %>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+                    <div class="submit-section">	
+						<button type="submit" class="btn btn-primary submit-btn">Submit</button>
+					</div>
+        </div>
         </div>
     </div>
-  </form>  
-  
-  <script>
+</div>	 
+</form>
+<script>
     // JavaScript to handle checking all employee checkboxes when "All employees" is selected
-    document.getElementById("deduction_all_emp").addEventListener("change", function() {
+    document.getElementById("deductions_all_emp").addEventListener("change", function() {
         if (this.checked) {
-            const checkboxes = document.querySelectorAll("input[name='selectedEmployees']");
+            const checkboxes = document.querySelectorAll("input[name='selectedEmployee']");
             checkboxes.forEach(checkbox => {
                 checkbox.checked = true;
             });
@@ -139,46 +157,64 @@
     });
 
     // JavaScript to handle checking or unchecking all employee checkboxes when "No assignee" is selected
-    document.getElementById("deduction_no_emp").addEventListener("change", function() {
+    document.getElementById("deductions_no_emp").addEventListener("change", function() {
         if (this.checked) {
-            const checkboxes = document.querySelectorAll("input[name='selectedEmployees']");
+            const checkboxes = document.querySelectorAll("input[name='selectedEmployee']");
             checkboxes.forEach(checkbox => {
                 checkbox.checked = false;
             });
         }
     });
 
-    
- // JavaScript to clear selections when "Select Employee" is chosen and allow selections when "Select Employee" is chosen
-    const DeductionEmployeeRadio = document.getElementById("deduction_single_emp");
-    const checkboxes = document.querySelectorAll("input[name='selectedEmployees']");
+    // JavaScript to clear selections when "Select Employee" is chosen and allow selections when "Select Employee" is chosen
+    const singleEmployeeRadioDeduction = document.getElementById("deductions_single_emp");
+    const checkboxesDeduction = document.querySelectorAll("input[name='selectedEmployee']");
+    singleEmployeeRadioDeduction.addEventListener("change", toggleCheckboxesDeduction);
 
-    DeductionEmployeeRadio.addEventListener("change", toggleCheckboxes);
-
-    function toggleCheckboxes() {
-        const isChecked = DeductionEmployeeRadio.checked;
-        checkboxes.forEach(checkbox => {
+    function toggleCheckboxesDeduction() {
+        const isChecked = singleEmployeeRadioDeduction.checked;
+        checkboxesDeduction.forEach(checkbox => {
             checkbox.disabled = !isChecked;
-            checkbox.checked = false; // Uncheck all checkboxes when "Select Employee" is chosen
+            checkbox.checked = false;
         });
     }
-    
-    
-    // JavaScript to read the selected employees
-    const selectedEmployeesButton = document.getElementById("readSelectedEmployeesButton");
-
-    selectedEmployeesButton.addEventListener("click", function() {
-        const selectedEmployeeIDs = [];
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                selectedEmployeeIDs.push(checkbox.value);
-            }
-        });
-
-        // Do something with the selected employee IDs
-        alert("Selected Employee IDs: " + selectedEmployeeIDs.join(", "));
-    });
 </script>
+<!-- ... (existing code) ... -->
+<script>
+    // JavaScript to handle checking all employee checkboxes when "All employees" is selected
+    document.getElementById("deductions_all_emp").addEventListener("change", function() {
+        if (this.checked) {
+            const checkboxes = document.querySelectorAll("input[name='selectedEmployee']");
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = true;
+            });
+        }
+    });
+
+    // JavaScript to handle checking or unchecking all employee checkboxes when "No assignee" is selected
+    document.getElementById("deductions_no_emp").addEventListener("change", function() {
+        if (this.checked) {
+            const checkboxes = document.querySelectorAll("input[name='selectedEmployee']");
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
+    });
+
+    // JavaScript to clear selections when "Select Employee" is chosen and allow selections when "Select Employee" is chosen
+    const singleEmployeeRadioDeduction = document.getElementById("deductions_single_emp");
+    const checkboxesDeduction = document.querySelectorAll("input[name='selectedEmployee']");
+    singleEmployeeRadioDeduction.addEventListener("change", toggleCheckboxesDeduction);
+
+    function toggleCheckboxesDeduction() {
+        const isChecked = singleEmployeeRadioDeduction.checked;
+        checkboxesDeduction.forEach(checkbox => {
+            checkbox.disabled = !isChecked;
+            checkbox.checked = false;
+        });
+    }
+</script>
+
 
         				</body>
 				</html>

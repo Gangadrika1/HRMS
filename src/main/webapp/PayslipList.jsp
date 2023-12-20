@@ -176,9 +176,9 @@
         <th>Payslips</th>
     </tr>
     <%
-    System.out.println("Year Parameter: " + request.getParameter("year"));
+   /*  System.out.println("Year Parameter: " + request.getParameter("year"));
     System.out.println("Month Parameter: " + request.getParameter("month"));
-
+ */
     		int start=currentPage;
 		    int limit = newRecordsPerPage;
 		    //pagenation code start
@@ -254,7 +254,7 @@
 		    <td><%= employeeData[9] %></td>
 		   
 		    <td><a href="salary-view.jsp?id=<%= employeeData[0] %>&year=<%= employeeData[10] %>&month=<%= employeeData[9] %>">Payslip View</a></td>
-                    </tr>
+              </tr>
                 <% }catch (Exception e) {
                     // Handle exceptions
                     e.printStackTrace();
@@ -269,9 +269,6 @@
 </table>
 
 <div class="row justify-content-center align-items-center">
-   
-   <!-- Pagination links -->
-
     <% if (pageno > 1) { %>
         <a href="PayslipList.jsp?page=<%=pageno - 1%>">Previous</a>
     <% } %>
@@ -286,10 +283,7 @@
 
     <% if (pageno < noOfPages) { %>
         <a href="PayslipList.jsp?page=<%=pageno + 1%>">Next</a>
-    <%
-    }
-    %>
-
+    <% } %>
 </div>
 
             </div>
@@ -299,7 +293,7 @@
             <!-- Add Client Modal content goes here -->
             <!-- /Add Client Modal -->
             
-            <!-- Edit Client Modal -->
+            <!-- Edit Client Modal --> 
             <!-- Edit Client Modal content goes here -->
             <!-- /Edit Client Modal -->
             

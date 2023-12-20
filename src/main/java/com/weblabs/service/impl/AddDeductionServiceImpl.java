@@ -111,7 +111,17 @@ public class AddDeductionServiceImpl{
 		        int k = ps.executeUpdate();
 
 		        if (k > 0) {
-		            status = "deduction Removed Successfully!";
+		        	 // Step 2: If deletion from payroll_addition was successful, delete corresponding rows from payrolladditionassignment
+		            ps = con.prepareStatement("DELETE FROM payroll payrolldeductionassignment WHERE payroll_id = ?");
+		            ps.setString(1, id);
+
+		            int rowsDeleted = ps.executeUpdate();
+
+		            if (rowsDeleted > 0) {
+		                status = "Addition and Assignment Removed Successfully!";
+		            } else {
+		                status = "Addition Removed Successfully, but Assignment Removal Failed!";
+		            }
 		        }
 		    } catch (SQLException e) {
 		        status = "Error: " + e.getMessage();
@@ -119,6 +129,7 @@ public class AddDeductionServiceImpl{
 		    } finally {
 		        DBUtil.closeConnection(con);
 		        DBUtil.closeConnection(ps);
+		     
 		    }
 
 		    return status;
