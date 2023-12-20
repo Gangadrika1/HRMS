@@ -44,7 +44,7 @@ public class EmpLoginSrv extends HttpServlet {
 	    PreparedStatement ps = null;
         try {
             String sql = "SELECT employees.Email, employees.UserName, designations.RoleID, employees.Employee_Id "
-            		+ "FROM hrms.employees inner join hrms.designations on employees.designationid = designations.Designationid"
+            		+ "FROM employees inner join designations on employees.designationid = designations.Designationid"
             		+ " WHERE Email=? AND Password=?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, username);

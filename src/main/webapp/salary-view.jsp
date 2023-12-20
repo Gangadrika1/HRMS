@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.weblabs.beans.AddAddition"%>
 <%@page import="com.weblabs.service.impl.PayrollAdditionDAO"%>
+<%@page import="com.weblabs.beans.AddLeaves"%>
+<%@page import="com.weblabs.service.impl.LeaveDAO"%>
 <%@page import="com.weblabs.service.impl.DesignationDAO"%>
 <%@page import="com.weblabs.service.impl.PayrollDAO"%>
 <%@page import="com.weblabs.beans.Payroll"%>
@@ -66,7 +68,7 @@
 
     if (emp != null && !emp.isEmpty()) {
     	EmployeeBean employee = emp.get(0); // Access the first element
-        if (employee != null) {
+         if (employee != null) { 
         	
         	String employee_id= employee.getEmployee_ID();
         	List<AddsalaryBean> salary = SalaryDAO.getSalaryDetails(employee_id);
@@ -85,11 +87,11 @@
             	    String employeeIdString = payrol.getPayroll_id();
             	    int payrollId = Integer.parseInt(employeeIdString);
             	    
-            	    List<AddAddition> addaddition = PayrollAdditionDAO.getPayrollDetails(payrollId);
+            	    /* List<AddAddition> addaddition = PayrollAdditionDAO.getPayrollDetails(payrollId);
                 	// Check if the list is not empty
                  	if (!addaddition.isEmpty()) {
                 	    // Get the first record
-                	    AddAddition addadditions = addaddition.get(0); 
+                	    AddAddition addadditions = addaddition.get(0);  */
                 	 
 %>
     
@@ -215,11 +217,11 @@
 														
 															<td><strong>Medical Allowance</strong> <span class="float-right"><strong><%=salrec.getMEDICAL()%></strong></span></td>
 														</tr>
-														<tr>
+														<%-- <tr>
 															<td><strong>Unit Amount</strong> <span class="float-right"><%=addadditions.getUnitAmount()%></span></td>
-														</tr>
+														</tr> --%>
 														<tr>
-														  <td><strong>Grose Salary</strong> <span id="totalEarnings" class="float-right"></span></td>
+														  <td><strong>Grose Salary</strong> <span id="totalEarnings" class="float-right"><%=salrec.getOTHERS() %></span></td>
 														</tr>
 
 														 
@@ -268,17 +270,17 @@
 										<%
 										    
 										        String grosesal = salrec.getOTHERS();
-										        String unitamount = addadditions.getUnitAmount();
+										        /* String unitamount = addadditions.getUnitAmount();*/
 										
 										        double g = Double.parseDouble(grosesal);
-										        double u = Double.parseDouble(unitamount);
+										       /* double u = Double.parseDouble(unitamount);
 										        
 										        int gose = (int) g;
 										        int unit = (int) u;
 										
 										        // Calculate total earnings
-										        int totalEarnings = gose + unit;
-										
+										        int totalEarnings = gose + unit; */
+										        int totalEarnings = (int) g;
 										        String totalDeductions = salrec.getDeducationTotal();
 										        double t= Double.parseDouble(totalDeductions);
 										        int totaDeductionInt = (int)t;
@@ -286,10 +288,33 @@
 										        
 										        int netSalarycal = totalEarnings - totaDeductionInt;
 										
-										        String netSalaryInWords = NumberToWordsConverter.convertToWords(netSalarycal);
-										    
-										%>
-										    <p><strong>Net Salary: <%=netSalarycal %> -> <%= netSalaryInWords %></strong></p>
+										       
+										        /* String netSalaryInWords = NumberToWordsConverter.convertToWords(netSalarycal); */
+										          int YY=0;
+										         int MM =0;
+										         try {
+										        	    YY = Integer.parseInt(year);
+										        	     MM = Integer.parseInt(month);
+										        	} catch (NumberFormatException e) {
+										        	    /* System.out.println("Error parsing year or month: " + e.getMessage());
+										        	    System.out.println("Year from payrol.getYear(): " + payrol.getYear());
+										        	    System.out.println("Month from payrol.getMonth(): " + payrol.getMonth()); */
+										        	}
+										        
+										        int netCalu = LeaveDAO.calculateNetSalaryWithLeaves(employee.getEmployee_ID(), YY, MM, netSalarycal);
+										        int Leave = LeaveDAO.calculateLeaves(employee.getEmployee_ID(), YY, MM);
+										        int OTNet = LeaveDAO.OTNET(employee.getEmployee_ID(), YY, MM, netCalu);
+			                                    int Oth = LeaveDAO.OvertimeHours(employee.getEmployee_ID(), YY, MM);
+										        String netSalaryInWords = NumberToWordsConverter.convertToWords(OTNet);
+										       %>
+										       <p>Total Leaves this month : <strong><%=Leave %></strong></p>
+										       <p>Total Overtime Hours this month : <strong><%= Oth%></strong></p>
+											    <p><strong>Net Salary: <%= OTNet %> -> <%= netSalaryInWords %></strong></p>
+										
+											 <%-- else { %>
+											     <p>Total Leaves this month : <strong><%=Leave %></strong></p>
+											    <p><strong>Net Salary: <%= netCalu %> -> <%= NumberToWordsConverter.convertToWords(netCalu) %></strong></p>
+											<% } %> --%>
 										</div>
 									</div>
 								</div>
@@ -306,7 +331,7 @@
 		<!-- /Main Wrapper -->
 
 		<!-- jQuery -->
-	 <script>
+	<%--  <script>
     var grosesal = <%=salrec.getOTHERS()%>;
     var unitamount = <%=addadditions.getUnitAmount()%>;
 
@@ -315,7 +340,7 @@
 
     // Update the Total Earnings element in the HTML
     document.getElementById('totalEarnings').textContent = totalEarnings.toFixed(2); // You can adjust the number of decimal places as needed
-</script>
+</script> --%>
     <%--// Calculate and update Net Salary
     var totalDeductions = <%=salrec.getDeducationTotal()%>;
     var netSalary = totalEarnings - totalDeductions;
@@ -334,7 +359,7 @@
 }
     }
         }
-    }
+   
 %>
 
 

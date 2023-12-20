@@ -79,13 +79,14 @@ public class GenaratePayslipSRV extends HttpServlet{
 					 * out.println("</script>");
 					 */
                     // You might want to include return; here to stop further execution
-                	 response.sendRedirect("Genarate_Payslip.jsp");
+                	 response.sendRedirect("Genatare_Payslip.jsp");
                  }
                     
-                con.close();
+               
 
                 // Redirect to a success page
-                response.sendRedirect("PayslipList.jsp");
+				 response.sendRedirect("PayslipList.jsp"); 
+                con.close();
                 }
     catch (Exception e) {
         e.printStackTrace();

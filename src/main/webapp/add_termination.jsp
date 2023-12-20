@@ -1,4 +1,4 @@
- <%@page import="com.weblabs.service.impl.EmployeeDAO"%>
+<%@page import="com.weblabs.service.impl.EmployeeDAO"%>
 <%@ page import="com.weblabs.beans.EmployeeBean" %> 
 <%@ page import="java.util.List" %>
 <form action="./AddTerminationSrv" method="post">
