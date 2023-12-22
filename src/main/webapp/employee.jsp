@@ -58,6 +58,13 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <![endif]-->
     
     <title>Employee List</title>
+<style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>
 </head>
 <body>
 <%
@@ -153,29 +160,29 @@ if (newRecordsPerPageParam != null) {
 
      	<form action="./EmployeeSearchServlet" method="post" >
   		    <div style="margin-left:3px;" class="row filter-row">
-			    <div class="col-sm-6 col-md-3">
-			      <div class="form-group form-focus">
-                	<label for="username">Username:</label>
-			        <input type="text" name="username" id="username" >
-			       </div>
-			    </div>
+			    <div class="col-sm-6 col-md-3">  
+				 <div class="form-group form-focus">
+					<input name="username" id="username" type="text" class="form-control floating">
+					<label class="focus-label">Username</label>
+				 </div>
+				</div>
 			    
-			    <div class="col-sm-6 col-md-3"> 
-			      <div class="form-group form-focus select-focus">
-                    <label for="id">Employee_ID:</label>
-			        <input type="text" name="Employee_Id" id="id">
-			     </div>
-			    </div>
-			    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
-                </div>
+			    <div class="col-sm-6 col-md-3">  
+				<div class="form-group form-focus">
+					<input name="Employee_Id" id="id" type="text" class="form-control floating">
+					<label class="focus-label">Employee ID</label>
+				</div>
+				</div>
+				
+				 <div class="col-sm-6 col-md-3" >
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+               </div>
+                
 			     <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
-	          <div class="col-sm-6 col-md-3" id = "flag" >
+	                <div class="col-sm-6 col-md-3" id = "flag" >
 			       <label>Records per page:</label>
-			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-					    
+			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">				    
 					    <option value="10">10</option>
 					  
 					</select>
@@ -185,7 +192,7 @@ if (newRecordsPerPageParam != null) {
 			         </div> 
 			          <div class="table-container" style="height: 400px; overflow-y: auto;">
      
-	         <table>
+	         <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
         <tr>
             <!-- <th>Employee ID</th>
             <th>First Name</th>

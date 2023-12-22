@@ -189,6 +189,17 @@ int currentIndex = 0; // Start index from 0
 for (int row = 1; currentIndex < totalcount; row++) {
 %>
 
+<style>
+    .row > .col-md-3 {
+        margin-bottom: 20px; /* Adjust the value as needed for the desired spacing between columns */
+    }
+
+    /* Add space only between rows (every fourth column) */
+    .row > .col-md-3:nth-child(4n) {
+        margin-bottom: 40px; /* Adjust the value as needed for the desired spacing between rows */
+    }
+</style>
+
    <div class="row">
         <% for (int col = 0; col < columnCount; col++) {
             if (currentIndex < totalcount) { // Ensure not to exceed the total count of projects
@@ -204,7 +215,9 @@ for (int row = 1; currentIndex < totalcount; row++) {
                 int completedCount = taskCounts.get("completedCount");
                 int pendingCount = taskCounts.get("pendingCount");
         %>
-        <div class="col-md-3" style="padding: 10px; word-wrap: break-word; background-color: #f0f0f0;"> <!-- Add background color style here -->
+        <div class="col-md-3" style="padding: 15px; word-wrap: break-word; background-color: white;">
+
+ <!-- Add background color style here -->
                <!--  <div class="col-md-3" style="padding: 10px; word-wrap: break-word;"> -->
                     <div class="dropdown dropdown-action profile-action">
                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -273,7 +286,7 @@ for (int row = 1; currentIndex < totalcount; row++) {
     </div>
     <br> <!-- Add a line break between rows -->
 
-<%
+<%	
 }
 %>
 

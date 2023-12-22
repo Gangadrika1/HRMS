@@ -37,7 +37,7 @@
 		<!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/tstyles.css">
-		
+		 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 			<script src="js/html5shiv.min.js"></script>
@@ -125,15 +125,31 @@
 							<div class="col-auto float-right ml-auto">
 								<div class="btn-group btn-group-sm">
 									<button class="btn btn-white">CSV</button>
-									<button class="btn btn-white">PDF</button>
-									<button class="btn btn-white"><i class="fa fa-print fa-lg"></i> Print</button>
+									<button class="btn btn-white">PDF</button>	
+									<!-- <button class="btn btn-white" <a href="1.pdf" title=""  class="fa fa-download" download></a>> Print</button> -->
+									<button class="btn btn-white" id="downloadPdf" >Print</button>
+<script>
+    document.getElementById('downloadPdf').addEventListener('click', function() {
+      const invoiceElement = document.getElementById('invoice');
+      const options = {
+        margin: 1,
+        filename: 'Payslip.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      // Then call html2pdf with the element and options
+      html2pdf().from(invoiceElement).set(options).save();
+    });
+  </script>
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- /Page Header -->
 					
-					<div class="row">
+		 			<div id="invoice" class="row">
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-body">

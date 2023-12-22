@@ -50,22 +50,6 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <link rel="stylesheet" href="css/tstyles.css">
     
     
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="js/html5shiv.min.js"></script>
-        <script src="js/respond.min.js"></script>
-    <![endif]-->
-    <style>
-    .page-title-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-    }
-
-   
-</style>
 </head>
 <body>
 
@@ -137,17 +121,14 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
                 <!-- Page Header -->
                 <div class="page-header">
                     <div class="row align-items-center">
-                        <div class="col">
-                        <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                                Welcome <%= username %>!
-                              </div>
-                     
-                            <h3 class="page-title">Clients</h3>
+                       <div class="col">
+								<h3 class="page-title">Client</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-									<li class="breadcrumb-item active">Clients</li>
+									<li class="breadcrumb-item active">Client</li>
 								</ul>
-                        </div>
+							</div>
+							
                         <!-- Other content goes here -->
                         <div class="col-auto float-right ml-auto">
 						   <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Client</a>
@@ -161,23 +142,26 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
   		
 		<div class="form-container">
 	    <div class="form-row">
-	        <div class="col-sm-6 col-md-3 form-group form-focus">
-	            <label for="username">UserName:</label>
-	            <input type="text" name="UserName" id="username">
-	        </div>
+	        <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+					   <input name="UserName" id="username" type="text" class="form-control floating">
+					   <label class="focus-label">Username</label>
+				     </div>
+				</div>
+				
+	        <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+					   <input  name="Clientid" id="id" type="text" class="form-control floating">
+					   <label class="focus-label">Client ID</label>
+				     </div>
+				</div>
 
-	        <div class="col-sm-6 col-md-3 form-group form-focus select-focus">
-	            <label for="id">Client ID:</label>
-	            <input type="text" name="Clientid" id="id">
-	        </div>
+	        <div class="col-sm-6 col-md-3" >
+               <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+            </div>
+            
+	  
 
-	        <div class="col-sm-6 col-md-3 form-group search-btn">
-	            <input style="margin-top: 29px;" type="submit" value="Search" id="Search">
-	        </div>
-	    </div>
-	</div>
-
-	    <br>
                 	 <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
 	
@@ -190,6 +174,8 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
 					</select>
 				
 			       </div>
+			       	</div>
+			       	  </div>
 	</form>
 	
 	

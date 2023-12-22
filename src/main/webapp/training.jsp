@@ -39,7 +39,7 @@
 		
 		<!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
-         <link rel="stylesheet" href="css/styles.css">
+         
 		
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -126,32 +126,35 @@ if (newRecordsPerPageParam != null) {
 							
 						</div>
 					</div>
-					<!-- /Page Header -->
+				<!-- /Page Header -->
 					
 					<!-- Search Filter -->
-		<form action="./TrainingSRV" method="post" > 
+ 
+<form action="./TrainingSRV" method="post">
   		
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="TrainingType">Training Type:</label>
-                            <input type="text" name="TrainingType" id="TrainingType">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <label for="id">ID:</label>
-                            <input type="text" name="TainingID" id="id">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
+                <div class="col-sm-6 col-md-3">  
+				   <div class="form-group form-focus">
+					<input name="TrainingType" id="TrainingType" type="text" class="form-control floating">
+					<label class="focus-label">Training Type</label>
+				   </div>
+				</div>
+				
+               <div class="col-sm-6 col-md-3">  
+				<div class="form-group form-focus">
+					<input name="TainingID" id="id" type="text" class="form-control floating">
+					<label class="focus-label">Taining ID</label>
+				</div>
+				</div>
+				
+                    <div class="col-sm-6 col-md-3" >
+                        <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+                    </div> 
                 </div>
                  <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
 	
-       	 			  </div> 
+       	 			  
 		          
 			       <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
@@ -161,16 +164,13 @@ if (newRecordsPerPageParam != null) {
 					    <option value="20">20</option>
 					   <option value="50">50</option>
 					</select>
-					<%-- <select id="recordsPerPage" name="recordsPerPage" onchange="changeRecordsPerPage()">
-						    <option value="5" <% if (session.getAttribute("recordsPerPage").equals("5")) out.print("selected"); %>>5</option>
-						    <option value="10" <% if (session.getAttribute("recordsPerPage").equals("10")) out.print("selected"); %>>10</option>
-						    <option value="20" <% if (session.getAttribute("recordsPerPage").equals("20")) out.print("selected"); %>>20</option>
-						    <option value="100" <% if (session.getAttribute("recordsPerPage").equals("100")) out.print("selected"); %>>100</option>
-						</select> --%>
+					
 			       </div>
 	</form>
-								<table>
-									<thead>
+	</div>
+	
+		<table id="table" class="table-striped custom-table mb-0 datatable">
+								
 										<tr>
 											<th style="width: 30px;">ID</th>
 											<th>Training Type</th>
@@ -185,7 +185,7 @@ if (newRecordsPerPageParam != null) {
 											<th>Delete</th>
 											
 										</tr>
-									</thead>
+								
 		    <%
         	int start = currentPage;
         	int limit = newRecordsPerPage;
@@ -253,7 +253,9 @@ if (newRecordsPerPageParam != null) {
         <%
             }
         %>
-								</table>
+</table>
+
+
 <div class="row justify-content-center align-items-center" id = "flag1">
    
    <!-- Pagination links -->
@@ -275,6 +277,7 @@ if (newRecordsPerPageParam != null) {
     <% } %>
 
 </div>
+ 
 							</div>
 						</div>
 					<!-- </div> -->
@@ -335,7 +338,6 @@ if (newRecordsPerPageParam != null) {
                 }
                 success: function (data) {
                 	
-                	  console.log("myFunction has been invoked.");
                     // Handle the response data, e.g., update the table with the filtered data
                     // You might need to format the data as required
                     $("#employeeTable").html(data);
@@ -377,7 +379,7 @@ if (newRecordsPerPageParam != null) {
     }
     // Update dropdown visibility on page load
     var initialResultCount = (parseInt('<%= request.getAttribute("expenses") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("expenses") %>');
-    console.log(initialResultCount);
+    
     updateFooterVisibility(initialResultCount);
 </script>
 

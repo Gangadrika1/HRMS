@@ -21,10 +21,10 @@ public class ResignationDAO {
             connection = DBUtil.provideConnection();
             String query;
             if (whereClause != null && !whereClause.isEmpty()) {
-                query = "SELECT Id, ResigningEmployee, NoticeDate, ResignationDate, ResignationDate FROM resignation WHERE " + whereClause + " LIMIT ?, ?;";
+                query = "SELECT Id, ResigningEmployee, NoticeDate, ResignationDate, ResignationDate,Reason FROM resignation WHERE " + whereClause + " LIMIT ?, ?;";
                
             } else {
-                query = "SELECT Id, ResigningEmployee, NoticeDate, ResignationDate, ResignationDate FROM resignation LIMIT ?, ?;";
+                query = "SELECT Id, ResigningEmployee, NoticeDate, ResignationDate, ResignationDate,Reason FROM resignation LIMIT ?, ?;";
                 }
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, start);
@@ -39,6 +39,7 @@ public class ResignationDAO {
                 pro.setNoticeDate(resultSet.getString("NoticeDate"));
                 pro.setResignationDate(resultSet.getString("ResignationDate"));
                 pro.setResignationDate(resultSet.getString("ResignationDate"));
+                pro.setReason(resultSet.getString("Reason"));
                 
                 
                 FilteredResignation.add(pro);
