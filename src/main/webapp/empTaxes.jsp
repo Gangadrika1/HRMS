@@ -120,15 +120,13 @@ if (newRecordsPerPageParam != null) {
 					<div class="page-header">
 						<div class="row align-items-center">
 							<div class="col">
-							<div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                                Welcome <%= username %>!
-                              </div>
 								<h3 class="page-title">Taxes</h3>
 								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
 									<li class="breadcrumb-item active">Taxes</li>
 								</ul>
 							</div>
+							
 							<div class="col-auto float-right ml-auto">
 							<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_tax"><i class="fa fa-plus"></i> Add Tax</a>
 							</div>
@@ -141,34 +139,35 @@ if (newRecordsPerPageParam != null) {
   		
                 <div class="row filter-row">
                 
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="TaxName">Tax Name:</label>
-                            <input type="text" name="TaxName" id="TaxName">
+                     <div class="col-sm-6 col-md-3">  
+				       <div class="form-group form-focus">
+					     <input  name="TaxName" id="TaxName" type="text" class="form-control floating">
+					     <label class="focus-label">Tax Name</label>
+				       </div>
+				    </div>
+				    
+                   <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+					   <input  name="ID" id="TaxID" type="text" class="form-control floating">
+					   <label class="focus-label">Tax ID</label>
+				     </div>
+				</div>
+				
+	                    <div class="col-sm-6 col-md-3" >
+                          <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <label for="ID">ID:</label>
-                            <input style="margin-top: 29px;" type="text" name="ID" id="TaxID">
-                        </div>
-                    </div>
-	                    <div class="col-sm-6 col-md-3">
-	                        <input style="margin-top: 29px;" type="submit" value="Search">
-	                    </div>
-                </div>
+             
                  <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
-	
+	   
 		</form>          
 			       <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
-			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-					    
-					    <option value="10">10</option>
-					   
+			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">   
+					    <option value="10">10</option> 
 					</select>
 					
+			       </div>
 			       </div>
 	
 					<!-- <div class="row">

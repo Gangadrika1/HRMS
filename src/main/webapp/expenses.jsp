@@ -50,7 +50,13 @@
 		<![endif]-->
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
-    
+<style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>    
     </head>
     <body>
     <!-- filtering records -->
@@ -62,7 +68,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
- recordsPerPageStr = "5"; // Set a default value, e.g., 1
+ recordsPerPageStr = "10"; // Set a default value, e.g., 1
  sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -136,38 +142,39 @@ if (newRecordsPerPageParam != null) {
 		<form action="./ExpensesSearchSRV" method="post"> 
   		
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="ItemName">Item Name:</label>
-                            <input type="text" name="ItemName" id="ItemName">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <label for="id">ID:</label>
-                            <input type="text" name="id" id="id">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
-                </div>
+                    <div class="col-sm-6 col-md-3">  
+				       <div class="form-group form-focus">
+					     <input name="ItemName" id="ItemName" type="text" class="form-control floating">
+					     <label class="focus-label">Item Name</label>
+				       </div>
+				    </div>
+				    
+                     <div class="col-sm-6 col-md-3">  
+				        <div class="form-group form-focus">
+					      <input name="id" id="id" type="text" class="form-control floating">
+					      <label class="focus-label">Item ID</label>
+				        </div>
+				      </div>
+				      
+                    <div class="col-sm-6 col-md-3" >
+                        <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+                    </div> 
+                    
+                
                 	 <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
 	
        	       <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-					    <option value="5">5</option>
 					    <option value="10">10</option>
-					    <option value="20">20</option>
-					   <option value="50">50</option>
 					</select>
 				
 			       </div>
+			       </div>
 	</form>  
 	
-<table>
+<table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
     <tr>
         <th>ID</th>
         <th>Item</th>
