@@ -1,0 +1,32 @@
+@charset "ISO-8859-1";
+.custom-background {
+    background-color: #D8BFD8;
+    width: 1205px;
+    height: 330px;
+    border-radius: 5px;
+}
+
+.custom-styles {
+    text-align: center;
+    margin-top: 20px;
+    color: black;
+    font-size: 24px;
+}
+
+/* custom-styles.css */
+.page-title {
+    padding-left: 20px;
+}
+
+.breadcrumb {
+    padding-left: 50px;
+}
+
+.custom-table {
+    background-color: #D3D3D3;
+    /* Add any other table styles here */
+}
+
+.custom-width-150 {
+    width: 150px;
+}

@@ -41,7 +41,7 @@
 		<!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
              <!-- table styles CSS -->
-     <link rel="stylesheet" href="css/styles.css">
+     <link rel="stylesheet" href="css/tstyles.css">
 		
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
