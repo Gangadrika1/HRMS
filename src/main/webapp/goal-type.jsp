@@ -41,6 +41,7 @@
 		<![endif]-->
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+
     </head>
     <body>
     
@@ -128,41 +129,35 @@ if (newRecordsPerPageParam != null) {
 		<form action="./GoalTypeSRV" method="post" > 
   		
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="Type">Goal Type:</label>
-                            <input type="text" name="GoalsType" id="Type">
-                        </div>
+                 <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+					   <input  name="GoalsType" id="Type" type="text" class="form-control floating">
+					   <label class="focus-label">Goals Type</label>
+				     </div>
+				</div>
+				
+                    <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+					   <input name="GoalsTypeID" id="id" type="text" class="form-control floating">
+					   <label class="focus-label">GoalsType ID</label>
+				     </div>
+				     </div>
+				     
+                    <div class="col-sm-6 col-md-3" >
+                      <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
                     </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <label for="id">ID:</label>
-                            <input type="text" name="GoalsTypeID" id="id">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
-                </div>
+                    
+             
                  <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
-	
-       	 			  </div> 
 		          
 			       <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-					    <option value="5">5</option>
 					    <option value="10">10</option>
-					    <option value="20">20</option>
-					   <option value="50">50</option>
 					</select>
-					<%-- <select id="recordsPerPage" name="recordsPerPage" onchange="changeRecordsPerPage()">
-						    <option value="5" <% if (session.getAttribute("recordsPerPage").equals("5")) out.print("selected"); %>>5</option>
-						    <option value="10" <% if (session.getAttribute("recordsPerPage").equals("10")) out.print("selected"); %>>10</option>
-						    <option value="20" <% if (session.getAttribute("recordsPerPage").equals("20")) out.print("selected"); %>>20</option>
-						    <option value="100" <% if (session.getAttribute("recordsPerPage").equals("100")) out.print("selected"); %>>100</option>
-						</select> --%>
+					
+			       </div>
 			       </div>
 	</form>
 								<table>

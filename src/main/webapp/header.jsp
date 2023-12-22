@@ -45,13 +45,13 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
         </div>
         <!-- /Logo -->
 
-        <a id="toggle_btn" href="javascript:void(0);">
+        <!-- <a id="toggle_btn" href="javascript:void(0);">
             <span class="bar-icon">
                 <span></span>
                 <span></span>
                 <span></span>
             </span>
-        </a>
+        </a> -->
 
         <!-- Header Title -->
         <div class="page-title-box">

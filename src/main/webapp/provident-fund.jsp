@@ -126,9 +126,6 @@ if (newRecordsPerPageParam != null) {
 					<div class="page-header">
 						<div class="row align-items-center">
 							<div class="col">
-							<div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                                Welcome <%= username %>!
-                              </div>
 								<h3 class="page-title">provident-fund</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
@@ -146,22 +143,25 @@ if (newRecordsPerPageParam != null) {
   		
 		<div class="row filter-row">
         
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus">
-                <label for="EmployeeName">ProvidentFundType :</label>
-                <input type="text" name="ProvidentFundType" id="EmployeeName">
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus select-focus">
-                <label for="PfID">ID:</label>
-                <input  style="margin-top: 28px;" type="text" name="ID" id="PfID">
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <input  style="margin-top: 28px;" type="submit" value="Search">
-        </div>
-    </div>
+        <div class="col-sm-6 col-md-3">  
+	      <div class="form-group form-focus">
+		   <input  name="ProvidentFundType" id="EmployeeName" type="text" class="form-control floating">
+		   <label class="focus-label">ProvidentFund Type</label>
+	   </div>
+	   </div>
+	   
+        <div class="col-sm-6 col-md-3">  
+		    <div class="form-group form-focus">
+		   <input name="ID" id="PfID" type="text" class="form-control floating">
+		   <label class="focus-label">ProvidentFund ID</label>
+		    </div>
+       </div>
+       
+       
+         <div class="col-sm-6 col-md-3" >
+             <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+         </div>
+    
                  <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
 	
@@ -175,6 +175,7 @@ if (newRecordsPerPageParam != null) {
 					    
 					</select>
 					
+			       </div>
 			       </div>
 	</form>
 					
