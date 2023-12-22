@@ -8,7 +8,6 @@
         <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
         <meta name="robots" content="noindex, nofollow">
         <title>Forgot Password - HRMS</title>
-		
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/logo.png">
 		
@@ -45,6 +44,15 @@
 					<div class="account-box">
 						<div class="account-wrapper">
 							<h3 class="account-title">Forgot Password?</h3>
+							<% if ("true".equals(request.getParameter("wrongEmail"))) { %>
+                            <!-- Display an alert if wrongEmail parameter is present -->
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Oh Snap!😕</strong> Wrong Email Address. Please enter a valid email.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <% } %>
 							<p class="account-subtitle">Enter your email to get a password reset link</p>
 							
 							<!-- Account Form -->

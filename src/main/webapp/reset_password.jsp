@@ -60,21 +60,25 @@
                             <div class="succWrap" style="color: red;"><strong>Error</strong>: <%= msg %> </div>
                         <% } %>
  --%>
-                        <form class="singup-form contact-form" method="GET" action="./ResetPasswordServlet">
+                        <form class="singup-form contact-form" method="GET" action="./ResetPasswordServlet" onsubmit="return validateForm()">
                             <div class="row">
                                   <div class="col-md-12">
-                                <label>Re-enter email</label>
-                                    <input type="text" name="email" placeholder="Enter new password">
+                                <label> email</label>
+                                    <input type="text" name="email" placeholder="<%= session.getAttribute("Email")%>" value="<%= session.getAttribute("Email")%>" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                <label>username</label>
+                                    <input type="text" name="email" placeholder="<%= session.getAttribute("username")%>" value="<%= session.getAttribute("username")%>" readonly>
                                 </div>
                                 <div class="col-md-12">
                                 <label>newpassword</label>
-                                    <input type="password" name="newpassword" placeholder="Enter new password">
+                                    <input type="password" id="newpassword" name="newpassword" placeholder="Enter new password">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                  <label>confirmpassword</label>
-                                    <input type="password" name="confirmpassword" placeholder="Confirm new password">
+                                    <input type="password" id="conformpassword" name="confirmpassword" placeholder="Confirm new password">
                                 </div>
                             </div>
                             <input type="hidden" name="token" value="<%= token %>">
@@ -98,5 +102,18 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- Custom JS -->
     <script src="js/app.js"></script>
+    <script>
+        function validateForm() {
+            var newPassword = document.getElementById("newpassword").value;
+            var confirmPassword = document.getElementById("conformpassword").value;
+
+            if (newPassword !== confirmPassword) {
+                alert("Password mismatch. Please enter the same password in both fields.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 </html>

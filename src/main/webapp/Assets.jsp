@@ -75,7 +75,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "5"; // Set a default value, e.g., 5
+    recordsPerPageStr = "10"; // Set a default value, e.g., 5
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -133,62 +133,54 @@ function changeRecordsPerPage() {
                 <div class="page-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="page-title">Assets</h3>
-                         <%--   <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                                Welcome <%= username %>
-                            </div> --%> 
-                             <br>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Assets</li>
-                            </ul>
-                       </div>
+                     
+								<h3 style="margin-left: 30px;" class="page-title">Goal Type</h3>
+								<ul class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
+									<li class="breadcrumb-item active">Goal Type</li>
+								</ul>
+							</div>
                         
                         <div class="col-auto float-right ml-auto">
                             <a href="#" class="btn add-btn" data-toggle="modal" data-target="#AddAssets"><i class="fa fa-plus"></i> Add Asset</a>
-                         <!--    <div class="view-icons"> -->
-       <!--                          <a href="asset.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                                <a href="assets-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a> -->
-                            </div>
+                                 </div>
                         </div>
                   </div> 
                
                 <!-- Search form -->
                  <form action="./AssetSearchSrv" method="post">
                  
-                 		<div class="form-container">
+               <div class="form-container">
                     <div class="form-row filter-row">
-                        <div class="col-sm-6 col-md-3">
-                            <div class="form-group form-focus">
-                                <label for="assetName">Asset Name:</label>
-                                <input type="text" name="assetName" id="assetName">
-                            </div>
-                        </div>
-  
-                        <div class="col-sm-6 col-md-3">
-                            <div class="form-group form-focus select-focus">
-                                <label for="assetId">ID:</label>
-                                <input style="margin-top: 29px;" type="text" name="Id" id="assetId">
-                            </div>
-                        </div>
+                         <div class="col-sm-6 col-md-3">  
+				           <div class="form-group form-focus">
+					         <input  name="assetName" id="assetName" type="text" class="form-control floating">
+					         <label class="focus-label">Assert Name</label>
+				            </div>
+				          </div>
+				          
+                        <div class="col-sm-6 col-md-3">  
+				          <div class="form-group form-focus">
+					         <input  name="Id" id="assetId" type="text" class="form-control floating">
+					        <label class="focus-label">Assert ID</label>
+				          </div>
+				        </div>
 
-                        <div class="col-sm-6 col-md-3 ">
-                            <input style="margin-top: 29px;" type="submit" value="Search">
-                        </div>
-                   </div>
-                    </div>
-                  <br>
+                        <div class="col-sm-6 col-md-3" >
+                           <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+                         </div>
+                
+                  
                     <input type="hidden" name="start" value="<%= currentPage %>">
                     <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                     <div class="col-sm-6 col-md-3" id = "flag">
                         <label>Records per page:</label>
                         <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                            <option value="5">5</option>
                             <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
                         </select>
                     </div>
+                       </div>
+                     
                 </form>
                <div class="table-container" style="height: 400px; overflow-x: auto;">
        <table>

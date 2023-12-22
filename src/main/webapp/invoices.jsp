@@ -37,7 +37,29 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tstyles.css">
  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+  
+  
+<!-- <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        .hidden {
+    display: none;
+}
+    </style> -->
      <style>
     /* Some basic styling for the table */
     table {
@@ -126,7 +148,46 @@
                         </div>
                     </div>
                 </div>
-                
+                <!-- /Page Header -->
+
+              <!-- <!--   Search Filter
+                <div class="row filter-row">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus">
+                            <div class="cal-icon">
+                                <label>Invoice ID:</label>
+                                <input class="form-control floating datetimepicker" type="text">
+                            </div>
+                            <label class="focus-label">From</label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus">
+                            <div class="cal-icon">
+                                <label>Client:</label>
+                                <input class="form-control floating datetimepicker" type="text">
+                            </div>
+                            <label class="focus-label">To</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus select-focus">
+                            <select class="select floating">
+                                <option>Select Status</option>
+                                <option>Pending</option>
+                                <option>Paid</option>
+                                <option>Partially Paid</option>
+                            </select>
+                            <label class="focus-label">Status</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <a href="#" class="btn btn-success btn-block"> Search </a>
+                    </div>
+                </div>
+                <br><br>
+                /Search Filter -->
  
                 <div class="row">
                     <div class="col-md-12">
@@ -135,9 +196,8 @@
                             <table  class="table table-striped custom-table" id="parentTable">
                                 <thead>
                                     <tr>
-                                        
                                         <th>Invoice ID</th>
-                                        <th>Client idddd</th>
+                                        <th>Client</th>
                                         <th>Project</th>
                                         <th>Email</th>
                                         <th>Tax</th>
@@ -155,7 +215,7 @@
                                 <tbody>
                                     <%
                                     int start = 0;
-                                    int limit = 25;
+                                    int limit = 500;
                                     String usernameFilter = request.getParameter("username");
                                     String idFilter = request.getParameter("id");
                                     List<AddInvoice> resultSet;

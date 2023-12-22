@@ -1,3 +1,4 @@
+
 package com.weblabs.service.impl;
 
 import java.sql.Connection;
@@ -7,12 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.weblabs.beans.AddResignation;
+import com.weblabs.beans.PaymentBean;
 import com.weblabs.utility.DBUtil;
 
-public class ResignationDAO {
-    public static List<AddResignation> getFilteredResignation(String whereClause, int start, int limit) {
-        List<AddResignation> FilteredResignation = new ArrayList<>();
+public class PaymentDAO {
+    public static List<PaymentBean> getFilteredPayment(String whereClause, int start, int limit) {
+        List<PaymentBean> FilteredPayment = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -21,10 +22,10 @@ public class ResignationDAO {
             connection = DBUtil.provideConnection();
             String query;
             if (whereClause != null && !whereClause.isEmpty()) {
-                query = "SELECT Id, ResigningEmployee, NoticeDate, ResignationDate, ResignationDate,Reason FROM resignation WHERE " + whereClause + " LIMIT ?, ?;";
+                query = "SELECT payment_id, client_username, invoice_id, payment_amt, due_date FROM payment WHERE " + whereClause + " LIMIT ?, ?;";
                
             } else {
-                query = "SELECT Id, ResigningEmployee, NoticeDate, ResignationDate, ResignationDate,Reason FROM resignation LIMIT ?, ?;";
+                query = "SELECT payment_id, client_username, invoice_id, payment_amt, due_date FROM payment LIMIT ?, ?;";
                 }
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, start);
@@ -33,20 +34,22 @@ public class ResignationDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-            	AddResignation pro = new AddResignation();
-                pro.setId(resultSet.getString("Id"));
-                pro.setResigningEmployee(resultSet.getString("ResigningEmployee"));
-                pro.setNoticeDate(resultSet.getString("NoticeDate"));
-                pro.setResignationDate(resultSet.getString("ResignationDate"));
-                pro.setResignationDate(resultSet.getString("ResignationDate"));
-                pro.setReason(resultSet.getString("Reason"));
+            	PaymentBean pro = new PaymentBean();
+            	
+                pro.setPayment_id(resultSet.getString("payment_id"));
+                pro.setClient_username(resultSet.getString("client_username"));
+                pro.setInvoice_id(resultSet.getString("invoice_id"));
+                pro.setPayment_amt(resultSet.getString("payment_amt"));
+                pro.setDue_date(resultSet.getString("due_date"));
+             
                 
                 
-                FilteredResignation.add(pro);
+                FilteredPayment.add(pro);
             }
         } catch (Exception e) {
             // Handle exceptions
         	 e.printStackTrace();
+        	 
         } finally {
             // Close database resources (connection, statement, result set)
             try {
@@ -59,9 +62,8 @@ public class ResignationDAO {
             }
         }
 
-        return FilteredResignation;
+        return FilteredPayment;
     }
-    
     public static int totalCount() {
 		 int count = 0;
 		 Connection connection = null;
@@ -69,7 +71,7 @@ public class ResignationDAO {
 	        ResultSet rs = null;
 		 try {
 			 connection = DBUtil.provideConnection();
-		   String query = "select count(*) as count from resignation";
+		   String query = "select count(*) as count from payment";
 		 ps = connection.prepareStatement(query);
 		 rs = ps.executeQuery();
 		 while (rs.next()) {

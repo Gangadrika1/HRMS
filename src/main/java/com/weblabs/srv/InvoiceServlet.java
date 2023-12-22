@@ -20,12 +20,7 @@ import java.sql.Timestamp;
 @WebServlet("/AddInvoiceSrv")
 public class InvoiceServlet extends HttpServlet {
 	
-	 /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	        // Your code to handle GET requests
 		 commonLogic(request, response);
 	    }
@@ -38,9 +33,10 @@ public class InvoiceServlet extends HttpServlet {
 	    
 	    private void commonLogic(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { 
 	        try {
-	          
+	            // Retrieve data from the form
 	        	  
 	            String client = request.getParameter("client");
+	            System.out.println(client);
 	            String project = request.getParameter("projectname");
 	            String email = request.getParameter("email");
 	            String selectedTax = request.getParameter("taxSelect");
@@ -76,18 +72,19 @@ public class InvoiceServlet extends HttpServlet {
 	            double discount = Double.parseDouble(request.getParameter("discount"));
 	            String taxamountParam = request.getParameter("taxAmount");
 	            double taxamount = (taxamountParam != null && !taxamountParam.isEmpty()) ? Double.parseDouble(taxamountParam) : 0.0;
+
+//	            double taxamount = Double.parseDouble(request.getParameter("taxamount"));
 	            double grandtotal = Double.parseDouble(request.getParameter("grandtotal"));
 
-				/* SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy"); */
-
-	         String  invoiceDate = request.getParameter("invoicedate");
-	         String  dueDate = request.getParameter("duedate");
+	            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	          //  OtherInformation,discount,taxamount,grandtotal
+	         // Parse the date strings into Date objects
+	         Date invoiceDate = dateFormat.parse(request.getParameter("invoicedate"));
+	         Date dueDate = dateFormat.parse(request.getParameter("duedate"));
 
 	         // Convert Date objects to Timestamp objects
-				/*
-				 * Timestamp invoiceTimestamp = new Timestamp(invoiceDate.getTime()); Timestamp
-				 * dueTimestamp = new Timestamp(dueDate.getTime());
-				 */
+	         Timestamp invoiceTimestamp = new Timestamp(invoiceDate.getTime());
+	         Timestamp dueTimestamp = new Timestamp(dueDate.getTime());
 
 	            String[] items = request.getParameterValues("items");
 	            String[]	 descriptions = request.getParameterValues("description");
@@ -113,8 +110,8 @@ public class InvoiceServlet extends HttpServlet {
 	                invoiceStatement.setDouble(4, tax);
 	                invoiceStatement.setString(5, clientAddress);
 	                invoiceStatement.setString(6, billingAddress);
-	   	         invoiceStatement.setString(7, invoiceDate);
-	   	         invoiceStatement.setString(8, dueDate);
+	   	         invoiceStatement.setTimestamp(7, invoiceTimestamp);
+	   	         invoiceStatement.setTimestamp(8, dueTimestamp);
 	   	      //  OtherInformation,discount,taxamount,grandtotal   	         
 	   	      invoiceStatement.setString(9, OtherInformation);
 	   	      invoiceStatement.setDouble(10, discount);

@@ -55,7 +55,7 @@
                         <div class="col-sm-12">
                             <!-- Display welcome message -->
                             <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                                 Welcome ! 
+                                 Welcome <%= username %> ! 
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item active">Dashboard</li>

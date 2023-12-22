@@ -12,6 +12,7 @@
     padding-top: 70px;
 }
 </style>
+
 </head>
 
 <body>
@@ -26,6 +27,7 @@
 								<i class="fa fa-lock fa-4x"></i>
 							</h3>
 							<h2 class="text-center">Enter OTP</h2>
+							<p>OTP valid for: <span id="timer">10:00</span> minutes</p>
 									<%
 		  			if(request.getAttribute("message")!=null)
 		  			{
@@ -64,5 +66,49 @@
 			</div>
 		</div>
 	</div>
+	<script>
+        var countdown = 600; // 10 minutes in seconds
+        var timerDisplay = document.getElementById('timer');
+
+        function updateTimer() {
+            var minutes = Math.floor(countdown / 60);
+            var seconds = countdown % 60;
+
+            timerDisplay.textContent = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+            if (countdown > 0) {
+                countdown--;
+                setTimeout(updateTimer, 1000); // Update every 1 second
+            } else {
+                // OTP has expired, you can handle this as needed
+                timerDisplay.textContent = 'Expired';
+            }
+        }
+
+        // Start the timer immediately
+        //window.onload = function () {
+            //updateTimer();
+        //};
+        
+        // Function to get OTP from the URL
+    function getOTPFromURL() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var otp = urlParams.get('otp');
+        return otp;
+    }
+
+    // Function to set OTP in the input field
+    function setOTPInInputField() {
+        var otpInput = document.getElementById('opt');
+        var otp = getOTPFromURL();
+
+        if (otp) {
+            otpInput.value = otp;
+        }
+    }
+    window.onload = function () {
+        setOTPInInputField();
+    };
+    </script>
 </body>
 </html>

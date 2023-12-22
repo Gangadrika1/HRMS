@@ -1,6 +1,8 @@
-<%@ page import="com.weblabs.service.impl.ResignationDAO" %>
-<%@ page import="com.weblabs.beans.AddResignation" %>
+<%@ page import="com.weblabs.service.impl.TerminationDAO" %>
+<%@ page import="com.weblabs.beans.AddTermination" %>
 <%@ page import="java.util.List" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +12,7 @@
     <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Resignation - HRMS admin template</title>
+    <title>Termination - HRMS admin template</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -36,17 +38,21 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tstyles.css">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <script src="assets/js/html5shiv.min.js"></script>
-    <script src="assets/js/respond.min.js"></script>
-<style>
+    
+      <style>
 #table{
     width:1210px;
     margin-left: 30px;
     border:2px;
     }
 </style>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+   
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    
+    <title>Termination List</title>
 </head>
 <body>
 <%
@@ -69,7 +75,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -96,6 +102,7 @@ if (newRecordsPerPageParam != null) {
 
 <!-- Main Wrapper -->
 <div class="main-wrapper">
+
     <!-- Header -->
     <jsp:include page="header.jsp" />
     <!-- Include your header HTML here -->
@@ -106,158 +113,164 @@ if (newRecordsPerPageParam != null) {
 
     <!-- Page Wrapper -->
     <div class="page-wrapper">
+
         <!-- Page Content -->
         <div class="content container-fluid">
+
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
-                    <div class="col">
-                        <h3 class="page-title">Resignation</h3>
+                <div class="col">
+                    <h3 class="page-title">Termination</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Resignation</li>
+                            <li class="breadcrumb-item active">Termination</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_resignation"><i class="fa fa-plus"></i> Add Resignation</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_termination"><i class="fa fa-plus"></i> Add Termination</a>
                     </div>
                 </div>
             </div>
 
             <!-- Search form -->
-            <form action="./ResignationSearchSrv" method="post">
+            <form action="./TerminationSearchSrv" method="post">
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-				      <div class="form-group form-focus">
-					     <input name="resigningemployee" id="resigningemployee" type="text" class="form-control floating">
-					     <label class="focus-label">Employee Name</label>
-				       </div>
-				    </div>
-				    
-                    <div class="col-sm-6 col-md-3"> 
-				      <div class="form-group form-focus select-focus">
-			            <input class="form-control floating" type="date" value="" name="resignationdate" id="resignationdate">
-			            <label class="focus-label">Resignation Date</label>
-			          </div>
-			        </div>
-                    
+                    <div class="col-sm-6 col-md-3">
+                        <div style= margin-left:30px; class="form-group form-focus">
+                         <input  name="terminatedemployee" type="text" class="form-control floating" id="terminatedemployee">
+					<label class="focus-label">TerminatedEmployee</label>
+					   </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus select-focus">
+                      <input class="form-control floating" type="date" value="" name="terminationdate" id="terminationdate" >
+			          <label class="focus-label">TerminationDate</label>
+		
+                        </div>
+                    </div>
                     <div class="col-sm-6 col-md-3" >
-                      <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-                    </div> 
-                    
-                </div>
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+               </div>
+               
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+                       
                         <option value="10">10</option>
+                        
                     </select>
                 </div>
             </form>
-        </div>
-        
-        <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
-            <tr>
-                <th>id</th>
-                <th>Resigning Employee</th>
-                <th>Notice Date</th>
-                <th>Resignation Date</th>
+       </div>
+      <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
+              <tr>
+                <th>Id</th>
+                <th>TerminatedEmployee</th>
+                <th>TerminationType</th>
+                <th>TerminationDate</th>
                 <th>Reason</th>
-              <th style="text-align: center;" colspan="2">Actions</th>
-                
+                <th>NoticeDate</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
-       
-        <%
-            //int start = 0;
-            //int limit = 25;
-            int start = currentPage;
-            int limit = newRecordsPerPage;
+            <%
+                //int start = 0;
+                //int limit = 25;
+                int start = currentPage;
+                int limit = newRecordsPerPage;
 
-            // Pagination code start
-            int pageno = 1;
-            int noOfPages = 0;
+                //pagenation code start
+                int pageno = 1;
+                int noOfPages = 0;
 
-            String pageNoStr = request.getParameter("page");
+                String pageNoStr = request.getParameter("page");
 
-            if (pageNoStr != null) {
-                pageno = Integer.parseInt(pageNoStr);
-            }
-
-            start = (pageno - 1) * limit;
-            // Pagination code ended
-
-            String resigningempnameFilter = request.getParameter("resigningemployee");
-            String dateFilter = request.getParameter("resignationdate");
-            List<AddResignation> trainers;
-
-            String whereClause = ""; // Initialize an empty whereClause
-
-            if (resigningempnameFilter != null && !resigningempnameFilter.isEmpty()) {
-                whereClause = "resigningemployee like '%" + resigningempnameFilter + "%'";
-            }
-
-            if (dateFilter != null && !dateFilter.isEmpty()) {
-                if (!whereClause.isEmpty()) {
-                    whereClause += " or ";
+                if (pageNoStr != null) {
+                    pageno = Integer.parseInt(pageNoStr);
                 }
-                whereClause += "resignationdate = '" + dateFilter + "'";
-            }
-            // Page
-            int recordcount = ResignationDAO.totalCount();
 
-            noOfPages = (int) Math.ceil((double) recordcount / limit);
-            // Page
+                start = (pageno - 1) * limit;
+                //pagenation code ended
 
-            if (!whereClause.isEmpty()) {
-                // Apply the whereClause condition
-                trainers = ResignationDAO.getFilteredResignation(whereClause, start, limit);
-            } else {
-                // Retrieve all data based on the limit
-                trainers = ResignationDAO.getFilteredResignation("", start, limit);
-            }
-            for (AddResignation train : trainers) {
-        %>
-        <tr>
-            <td><%= train.getId() %></td>
-            <td><%= train.getResigningEmployee() %></td>
-            <td><%= train.getNoticeDate() %></td>
-            <td><%= train.getResignationDate() %></td>
-            <td><%= train.getReason()%></td>
-            <td>
-                <a href="edit_resignation.jsp?id=<%= train.getId() %>">Edit</a>
-            </td>
-            <td>
-                <a href="DeleteResignationSrv?id=<%= train.getId() %>">Delete</a>
-            </td>
-        </tr>
-        <%
-            }
-        %>
+                String terminatedempnameFilter = request.getParameter("terminatedemployee");
+                String dateFilter = request.getParameter("terminationdate");
+                List<AddTermination> trainers;
+
+                String whereClause = ""; // Initialize an empty whereClause
+
+                if (terminatedempnameFilter != null && !terminatedempnameFilter.isEmpty()) {
+                    whereClause = "terminatedemployee like '%" + terminatedempnameFilter + "%'";
+                }
+
+                if (dateFilter != null && !dateFilter.isEmpty()) {
+                    if (!whereClause.isEmpty()) {
+                        whereClause += " or ";
+                    }
+                    whereClause += "terminationdate = '" + dateFilter + "'";
+                }
+                //page
+                int recordcount = TerminationDAO.totalCount();
+
+                noOfPages = (int) Math.ceil((double) recordcount / limit);
+                //pagee
+
+                if (!whereClause.isEmpty()) {
+                    // Apply the whereClause condition
+                    trainers = TerminationDAO.getFilteredTermination(whereClause, start, limit);
+                } else {
+                    // Retrieve all data based on the limit
+                    trainers = TerminationDAO.getFilteredTermination("", start, limit);
+                }
+                for (AddTermination train : trainers) {
+            %>
+            <tr>
+                <td><%= train.getId() %></td>
+                <td><%= train.getTerminatedEmployee() %></td>
+                <td><%= train.getTerminationType() %></td>
+                <td><%= train.getTerminationDate()%></td>
+                <td><%= train.getReason()%></td>
+                <td><%=train.getNoticeDate()%></td>
+                <td>
+                    <a href="edit_termination.jsp?id=<%= train.getId() %>">Edit</a>
+                      &nbsp;  &nbsp;  &nbsp; 
+                </td>
+                <td>
+                    <a href="DeleteTerminationSrv?id=<%= train.getId() %>">Delete</a>
+                </td>
+            </tr>
+            <%
+                }
+            %>
         </table>
         <div class="row justify-content-center align-items-center" id = "flag1">
+
             <!-- Pagination links -->
             <% if (pageno > 1) { %>
-            <a href="resignation.jsp?page=<%= pageno - 1 %>">Previous</a>
+            <a href="termination.jsp?page=<%=pageno - 1%>">Previous</a>
             <% } %>
 
             <% for (int i = 1; i <= noOfPages; i++) { %>
             <% if (i == pageno) { %>
-            <%= i %>
+            <%=i%>
             <% } else { %>
-            <a href="resignation.jsp?page=<%= i %>"><%= i %></a>
+            <a href="termination.jsp?page=<%=i%>"><%=i%></a>
             <% } %>
             <% } %>
 
             <% if (pageno < noOfPages) { %>
-            <a href="resignation.jsp?page=<%= pageno + 1 %>">Next</a>
-            <% } %>
+            <a href="termination.jsp?page=<%=pageno + 1%>">Next</a>
+            <% }%>
+
         </div>
     </div>
+
     <!-- /Page Content -->
 
     <!-- Add Promotion Modal -->
-    <jsp:include page="add_resignation.jsp" />
+    <jsp:include page="add_termination.jsp" />
     <!-- /Add Promotion Modal -->
 </div>
 
@@ -285,35 +298,10 @@ if (newRecordsPerPageParam != null) {
 
 <!-- Custom JS -->
 <script src="js/app.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#filterButton").click(function () {
-            // Get filter criteria (username and id)
-            var usernameFilter = $("#resigningemployee").val();
-            var idFilter = $("#resignationdate").val();
 
-            // Make an AJAX request to the server
-            $.ajax({
-                type: "POST", // Use POST or GET depending on your servlet configuration
-                url: "./ResignationSearchSrv",
-                data: {
-                    username: usernameFilter,
-                    id: idFilter
-                },
-                success: function (data) {
-                    console.log("myFunction has been invoked.");
-                    // Handle the response data, e.g., update the table with the filtered data
-                    // You might need to format the data as required
-                    $("#employeeTable").html(data);
-                }
-            });
-        });
-    });
-</script>
 
-<script>
+ <script>
    
-    
     function updateFooterVisibility(resultCount) {
         var dropdown = document.getElementById("flag1");
         var dropdown1=document.getElementById("flag");
@@ -332,7 +320,7 @@ if (newRecordsPerPageParam != null) {
         }
     }
     // Update dropdown visibility on page load
-    var initialResultCount = (parseInt('<%= request.getAttribute("resignation") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("resignation") %>');
+    var initialResultCount = (parseInt('<%= request.getAttribute("termination") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("termination") %>');
     console.log(initialResultCount);
     updateFooterVisibility(initialResultCount);
 </script>
