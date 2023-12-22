@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.weblabs.service.impl.AddRPDAO" %>
-<%@ page import="com.weblabs.beans.AddRolePermissionBean" %>
+<%@ page import="com.weblabs.service.impl.DesignationDAO" %>
+<%@ page import="com.weblabs.beans.AddDesignation" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -14,10 +13,10 @@
     <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Leaves - HRMS admin template</title>
+    <title>Designations - HRMS admin template</title>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
+     <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/logo.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -37,10 +36,6 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- Table styles CSS -->
-    <link rel="stylesheet" href="css/styles.css">
-    
-    
     <style>
 #table{
     width:1210px;
@@ -48,13 +43,12 @@
     border:2px;
     }
 </style>
-    
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-   
+    
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
-   
-    <title>Leave List</title>
+    
+    <title>Designation List</title>
 </head>
 <body>
 <%
@@ -102,6 +96,8 @@ if (newRecordsPerPageParam != null) {
     }
 
 </script>
+
+
 <!-- Main Wrapper -->
 <div class="main-wrapper">
 
@@ -122,34 +118,37 @@ if (newRecordsPerPageParam != null) {
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
-                <div class="col">
-				
-					<h3 class="page-title">Role Permissions</h3>
-					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-						<li class="breadcrumb-item active">Rolepermissions</li>
-					</ul>
-				</div>
+                	<div class="col">
+								<h3 class="page-title">Designation</h3>
+								<ul class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
+									<li class="breadcrumb-item active">Designation</li>
+								</ul>
+							</div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_rp"><i class="fa fa-plus"></i> Add Roles</a>
-                        
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_designation"><i class="fa fa-plus"></i> Add Designation</a>
+                        <!-- <div class="view-icons">
+                            <a href="designations.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="designations-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                        </div> -->
                     </div>
                 </div>
             </div>
-<form action="./RpSearchSrv" method="post">
-  
+
+            <!-- Search form -->
+              <form action="./DesignationSearchSrv" method="post">
             <div class="row filter-row">
                 <div class="col-sm-6 col-md-3">
-                     <div style= margin-left:30px; class="form-group form-focus">
-                      <input class="form-control floating" type="text" value="" name="RoleID" id="RoleID" >
-			          <label class="focus-label">RoleID</label>
-                    </div>
+                <div style= margin-left:30px; class="form-group form-focus">
+                <input  name="DesignationName" type="text" class="form-control floating" id="designation">
+					<label class="focus-label">Designation</label>
+		           </div>
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="form-group form-focus select-focus">
-                         <input class="form-control floating" type="text" value="" name="RolePermissionID" id="RolePermissionID" >
-			          <label class="focus-label">PermissionID</label>
-                    </div>
+                         <input class="form-control floating" type="date" value="" name="Designationid" id="department" >
+			          <label class="focus-label">ID</label>
+			       </div>
                 </div>
                 <div class="col-sm-6 col-md-3" >
                  <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
@@ -159,127 +158,123 @@ if (newRecordsPerPageParam != null) {
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        
+                     
                         <option value="10">10</option>
-                        
+                      
                     </select>
                 </div>
             </form>
-               </div>
-            
-        <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
+            </div>
+
+            <!-- Designation List Table -->
+             <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
        
                 <tr>
-                     <th>RolePermissionID</th>
-                    <th>RoleID</th>
-                    <th>ModuleName</th>
-                    <th>FormName</th>
-                    <th>PermissionType</th>
+                    <th>ID</th>
+                    <th>Designation</th>
+                    <th>Department</th>
                     <th>Edit</th>
                     <th>Delete</th>
+                    
+                    
                 </tr>
                 <%
-                
-                int start = currentPage ;
-                int limit = newRecordsPerPage;
-                //pagenation code start
-       		    int pageno = 1;
-       		    int noOfPages =0;
-       		   
-       		     String pageNoStr = request.getParameter("page");
-       		     
-       		     if (pageNoStr != null) {
-       		         pageno = Integer.parseInt(pageNoStr);
-       		     }
+                	//int start = 0;
+                	//int limit = 25;
+                	int start = currentPage ;
+                       int limit = newRecordsPerPage;
+ 
+                     //pagenation code start
+              		    int pageno = 1;
+              		    int noOfPages =0;
+              		   
+              		     String pageNoStr = request.getParameter("page");
+              		     
+              		     if (pageNoStr != null) {
+              		         pageno = Integer.parseInt(pageNoStr);
+              		     }
 
-       		      start = (pageno - 1) * limit;
-       		     //pagenation code ended
-                String employeeFilter = request.getParameter("RoleID");
-                String startFilter = request.getParameter("RolePermissionID");
-               
-                List<AddRolePermissionBean> leaves;
-                String whereClause = ""; // Initialize an empty whereClause
+              		      start = (pageno - 1) * limit;
+              		     //pagenation code ended
+                	
+                    String designationFilter = request.getParameter("DesignationName");
+                    String idFilter = request.getParameter("Designationid");
+                    List<AddDesignation> designations;
 
-                if (employeeFilter != null && !employeeFilter.isEmpty()) {
-                    whereClause = "RoleID like '%" + employeeFilter +"%'";
-                }
+                    String whereClause = ""; // Initialize an empty whereClause
 
-                if (startFilter != null && !startFilter.isEmpty()) {
-                    if (!whereClause.isEmpty()) {
-                        whereClause += " or ";
+                    if (designationFilter != null && !designationFilter.isEmpty()) {
+                        whereClause = "DesignationName like '%" + designationFilter + "%'";
                     }
-                    whereClause += "RolePermissionID = '" + startFilter + "'";
-                }
 
-               
+                    if (idFilter != null && !idFilter.isEmpty()) {
+                        if (!whereClause.isEmpty()) {
+                            whereClause += " or ";
+                        }
+                        whereClause += "Designationid = '" + idFilter + "'";
+                    }
 
-              //page
-                int recordcount= AddRPDAO.totalCount();
+                  //page
+                    int recordcount= DesignationDAO.totalCount();
 
-               noOfPages = (int) Math.ceil((double) recordcount / limit);
-               //pagee
-                if (!whereClause.isEmpty()) {
-                    // Apply the whereClause condition
-                    leaves = AddRPDAO.getFilteredRP(whereClause, start, limit);
-                } else {
-                    // Retrieve all data based on the limit
-                    leaves = AddRPDAO.getFilteredRP("", start, limit);
-                }
-
-                for (AddRolePermissionBean leave : leaves) {
-            %>
+                   noOfPages = (int) Math.ceil((double) recordcount / limit);
+                   //pagee
+                    if (!whereClause.isEmpty()) {
+                        // Apply the whereClause condition
+                        designations = DesignationDAO.getFilteredDesignations(whereClause, start, limit);
+                    } else {
+                        // Retrieve all data based on the limit
+                        designations = DesignationDAO.getFilteredDesignations("", start, limit);
+                    }
+                    for (AddDesignation designation : designations) {
+                %>
                 <tr>
-                     <td><%=leave.getRolePermissionID()%></td>
-                   <td><%=leave.getRoleID()%></td>
-                    <td><%=leave.getModuleName() %></td>
-                   <td><%=leave.getFormName()%></td>
-                   <td><%=leave.getPermissionType()%></td>
-                           
+                    <td><%= designation.getId() %></td>
+                    <td><%= designation.getDesignationName() %></td>
+                    <td><%= designation.getDepartmentName() %></td>
+                    
                     <td>
-                        <a href="edit_rp.jsp?RolePermissionID=<%= leave.getRolePermissionID() %>">Edit</a>
-                     &nbsp;  &nbsp;  &nbsp; 
+                   
+                        <a href="edit_designation.jsp?Designationid=<%= designation.getId() %>">Edit</a>
+                          &nbsp;  &nbsp;  &nbsp; 
                     </td>
                     <td>
-                        <a href="DeleteRPSrv?RolePermissionID=<%= leave.getRolePermissionID() %>">Delete</a>
-                    </td>
+                       <a href="DeleteDesignationSrv?Designationid=<%= designation.getId() %>">Delete</a> </td>
                 </tr>
                 <%
                     }
                 %>
             </table>
-            
-   <div class="row justify-content-center align-items-center" id = "flag1">
+<div class="row justify-content-center align-items-center" id = "flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="rolepermission.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="designations.jsp?page=<%=pageno - 1%>">Previous</a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
             <%=i%>
         <% } else { %>
-            <a href="rolepermission.jsp?page=<%=i%>"><%=i%></a>
+            <a href="designations.jsp?page=<%=i%>"><%=i%></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="rolepermission.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }%>
-
+        <a href="designations.jsp?page=<%=pageno + 1%>">Next</a>
+    <% } %>
 </div>
-            </div> 
+            </div>
 
-            <!-- Add Leave Modal -->
-            <jsp:include page="add_rp.jsp" />
-            <%-- <jsp:include page="edit_leave.jsp" />
-            <jsp:include page="delete_leave.jsp" /> --%>
-            <!-- Include your Add Leave Modal HTML here -->
+            <!-- Add Designation Modal -->
+            <jsp:include page="add_designation.jsp" />
+            <%-- <jsp:include page="edit_designation.jsp" />
+            <jsp:include page="delete_designation.jsp" />
+            <!-- Include your Add Designation Modal HTML here --> --%>
 
         </div>
-   
-
+    
 <!-- JavaScript Libraries and Custom JS -->
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/popper.min.js"></script>
@@ -290,34 +285,10 @@ if (newRecordsPerPageParam != null) {
 <script src="js/bootstrap-datetimepicker.min.js"></script>
 <script src="js/app.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $("#filterButton").click(function () {
-            // Get filter criteria (username and id)
-            var departmentFilter = $("#username").val();
-            var idFilter = $("#id").val();
-            
-            // Make an AJAX request to the server
-            $.ajax({
-                type: "POST", // Use POST or GET depending on your servlet configuration
-                url: "./RpSearchSrv",
-                data: {
-                    department: departmentFilter,
-                    id: idFilter
-                },
-                success: function (data) {
-                    console.log("myFunction has been invoked.");
-                    // Handle the response data, e.g., update the table with the filtered data
-                    // You might need to format the data as required
-                    $("#employeeTable").html(data);
-                }
-            });
-        });
-    });
-</script>
 
 <script>
    
+    
     function updateFooterVisibility(resultCount) {
         var dropdown = document.getElementById("flag1");
         var dropdown1=document.getElementById("flag");
@@ -336,12 +307,10 @@ if (newRecordsPerPageParam != null) {
         }
     }
     // Update dropdown visibility on page load
-    var initialResultCount = (parseInt('<%= request.getAttribute("client") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("client") %>');
+    var initialResultCount = (parseInt('<%= request.getAttribute("designation") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("designation") %>');
     console.log(initialResultCount);
     updateFooterVisibility(initialResultCount);
 </script>
-
-
 
 </body>
 </html>
