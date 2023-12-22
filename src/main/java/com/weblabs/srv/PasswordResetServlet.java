@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.weblabs.service.impl.EmailDao;
 import com.weblabs.service.impl.OTPGenerator;
 
 
@@ -16,13 +18,30 @@ public class PasswordResetServlet extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String toEmail = request.getParameter("email"); // Assuming the parameter name is "email"
-
         
-        String otp = OTPGenerator.sendOTPEmail(toEmail);
+        if (isEmailExists(toEmail)) {
+        String otp = OTPGenerator.sendOTPEmail(toEmail,request.getSession());
         // Store the OTP in the session to verify it later
         request.getSession().setAttribute("otp", otp);
+        
 
         // Redirect to the page where the user can enter the OTP
-        response.sendRedirect("EnterOtp.jsp"); // Assuming enterOTP.jsp is the page where the user can enter the OTP
+        response.sendRedirect("EnterOtp.jsp");
+        }
+        else
+        {
+        	response.sendRedirect("forgot-password.jsp?wrongEmail=true");
+        }
+    }
+	private boolean isEmailExists(String email) {
+        EmailDao dao=new EmailDao();
+        int count=dao.getFilteredEmail(email);
+        
+        if(count>0)
+        {
+        	
+        	return true;
+        }
+        return false; // Replace with your actual implementation
     }
 }

@@ -83,17 +83,10 @@ if (invoices != null && !invoices.isEmpty()) {
 	AddInvoice invoice = invoices.get(0); // Access the first element
     if (invoice != null) {
 %>
-   
-   
-                                                          <% 
-										                    List<AddInvoiceItems> invoiceItems = InvoiceDAO.getInvoiceItemsByInvoiceId(invoice.getId());
-										                    for (AddInvoiceItems invoiceItem : invoiceItems) {
-										                %>
-   
-
-  
-    
-    
+                     <% 
+                     List<AddInvoiceItems> invoiceItems = InvoiceDAO.getInvoiceItemsByInvoiceId(invoice.getId());
+				     for (AddInvoiceItems invoiceItem : invoiceItems) {
+		             %>
     <form action="./EditInvoiceServlet" method="post">
 		<!-- Main Wrapper -->
         <div class="main-wrapper">
@@ -160,15 +153,9 @@ if (invoices != null && !invoices.isEmpty()) {
 									</div>
 									<div class="col-sm-6 col-md-3">
 										<div class="form-group">
-										<label class="col-form-label">Tax<span class="text-danger">*</span></label>
-        <select name="taxSelect" required class="form-control" onchange="updateTaxRate()"  id="taxSelect" >
-            <option value="0" disabled>Select Tax</option>
-            <option value="10" <%= (invoice.getTax().equals("10")) ? "selected" : "" %>>VAT (10%</option>
-            <option value="20" <%= (invoice.getTax().equals("20")) ? "selected" : "" %>>GST (20%)</option>
-        </select>
-											
-											
-											 <%--  <input name="taxSelect" value="<%= invoice.getTax() %>" required class="form-control" type="text" onchange="updateTaxRate()" id="taxSelect" > --%>
+											<label>Tax</label>
+											  <input name="taxSelect" value="<%= invoice.getTax() %>" required class="form-control" type="text" >
+											<!-- 	<p>Tax Rate: <span id="taxRate">0.0</span></p> -->
 										</div>
 									</div>
 									<div class="col-sm-6 col-md-3">
@@ -224,9 +211,9 @@ if (invoices != null && !invoices.isEmpty()) {
 												<tbody>
 												<tr>
 													<td>
-<input name="id" class="form-control" type="text" style="min-width:150px" value="<%= invoiceItem.getInvoiceid()%>" >
+   <input name="id" class="form-control" type="text" style="min-width:150px" value="<%= invoiceItem.getInvoiceid()%>" >
 
-</td>
+   </td>
 													<td>
 													<!-- 	<input name="items" class="form-control" type="text" style="min-width:150px"> -->
 														 <input name="items" id="items" required class="form-control" type="text"  value="<%= invoiceItem.getItem() %>" oninput="validateName(this.value, 'itemsError')" >
@@ -276,7 +263,7 @@ if (invoices != null && !invoices.isEmpty()) {
 														<td colspan="3" class="text-right">Tax Rate %</td>
 														<td style="text-align: right; padding-right: 30px;width: 230px">
 														
-															<input id="taxrate" name="taxrate" class="form-control text-right" type="text" onchange="updateTaxRate()" value="<%= invoice.getTax() %>" readonly >
+															<input id="taxrate" name="taxrate" class="form-control text-right" type="text" onchange="updateTaxRate()" value="<%= invoice.getTaxamount() %>" >
 															</td>
 															
 														   	<td colspan="5" class="text-right">Tax Amount</td>
@@ -301,7 +288,7 @@ if (invoices != null && !invoices.isEmpty()) {
 														</td>
 														<td style="text-align: right; padding-right: 30px; font-weight: bold; font-size: 16px;width: 230px">
 														
-															<input name="grandtotal" id="grandtotal" class="form-control text-right" type="text" value="0" onblur="calculateAll()" value="<%= invoice.getGrandtotal() %>" readonly >
+															<input name="grandtotal" id="grandtotal" class="form-control text-right" type="text" value="0" onblur="calculateAll()" value="<%= invoice.getGrandtotal() %>"  >
 														</td>
 													</tr>
 												</tbody>

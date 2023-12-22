@@ -277,14 +277,23 @@ public class InvoiceDAO {
 
 		    try (Connection connection = DBUtil.provideConnection()) {
 		        if (connection != null) {
-		            String sql = "SELECT grandTotal FROM invoice WHERE id = ? ";
+		            String sql = "SELECT min(payment_amt) as payment_amt FROM payment WHERE invoice_id = ? ";
 		            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 		                preparedStatement.setInt(1, selectedInvoiceIDInt);
 
 		                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-		                    if (resultSet.next()) {
+		                    if (resultSet.next() ) {
 		                        // Retrieve the payment amount as a String
-		                        paymentAmount = resultSet.getString("grandTotal");
+		                        paymentAmount = resultSet.getString("payment_amt");
+		                    }
+		                    if (paymentAmount == null || "null".equals(paymentAmount) || paymentAmount.isEmpty()) {
+		                    	Connection conn = DBUtil.provideConnection();
+		                    	String sql1 = "select grandtotal from invoice where id=? ";
+		                    	PreparedStatement preparedStatement1 = conn.prepareStatement(sql1);
+		                    	preparedStatement1.setInt(1, selectedInvoiceIDInt);
+		                    	ResultSet resultSet1 = preparedStatement1.executeQuery();
+		                    	if (resultSet1.next() )
+		                    	paymentAmount = resultSet1.getString("grandtotal");
 		                    }
 		                }
 		            }
@@ -311,8 +320,28 @@ public class InvoiceDAO {
 					 * "JOIN clients ON invoice.client = clients.Clientid " +
 					 * "WHERE clients.UserName = ?";
 					 */
-		        	 String sql =  "SELECT DISTINCT invoice.id FROM invoice WHERE client = ? ";
+//		        	String sql = "SELECT DISTINCT invoice.id " +
+//		                    "FROM invoice " +
+//		                    "INNER JOIN ( " +
+//		                    "    SELECT invoice_id " +
+//		                    "    FROM hrms1.partial_payments " +
+//		                    "    GROUP BY invoice_id " +
+//		                    "    HAVING MIN(balance_amt) > 0 " +
+//		                    ") AS pp ON invoice.id = pp.invoice_id " +
+//		                    "WHERE client = ? ";
 		        	
+		        	String sql = "SELECT DISTINCT invoice.id \n"
+		        			+ "FROM invoice\n"
+		        			+ "WHERE invoice.id NOT IN (\n"
+		        			+ "    SELECT invoice_id \n"
+		        			+ "    FROM hrms1.partial_payments \n"
+		        			+ "    GROUP BY invoice_id \n"
+		        			+ "    HAVING MIN(balance_amt) <= 0\n"
+		        			+ ") and invoice.client= ? ";
+        			        	
+		        	
+
+
 		            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 		                preparedStatement.setString(1, selectedClientUsername);
 

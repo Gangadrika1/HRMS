@@ -1,86 +1,82 @@
 package com.weblabs.srv;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.RequestDispatcher; // Import RequestDispatcher from javax.servlet package
 
+import com.weblabs.service.impl.EmailDao;
+
+import javax.servlet.RequestDispatcher; // Import RequestDispatcher from javax.servlet package
 @WebServlet("/EmpValidateOtp")
 public class EmpValidateOtp extends HttpServlet {
-
+	private static final Map<String, OTPDetails> otpMap = new HashMap<>();
     private static final long serialVersionUID = 1L;
-
+    private static class OTPDetails {
+        private String otp;
+        private long creationTime;
+        private boolean used;
+        public OTPDetails(String otp, long creationTime) {
+            this.otp = otp;
+            this.creationTime = creationTime;
+            this.used = false;
+        }
+        public String getOtp() {
+            return otp;
+        }
+        public long getCreationTime() {
+            return creationTime;
+        }
+        public boolean isUsed() {
+            return used;
+        }
+        public void markAsUsed() {
+            this.used = true;
+        }
+    }
+//    otpMap.put(toEmail, new OTPDetails(otp, System.currentTimeMillis()));
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	
-        int value = Integer.parseInt(request.getParameter("otp"));
-        
+        int enteredOTP = Integer.parseInt(request.getParameter("otp"));
         HttpSession session = request.getSession();
         // Storing the OTP in the session
         // Rest of your code
-        int otp = Integer.parseInt((String) session.getAttribute("otp"));
-        
+        int storedOTP = Integer.parseInt((String) session.getAttribute("otp"));
+        String username = (String) session.getAttribute("username");
+        if (otpMap.containsKey(username)) {
+            OTPDetails otpDetails = otpMap.get(username);
+            if (otpDetails.isUsed()) {
+                // OTP already used, show an error message
+                request.setAttribute("message", "OTP has already been used");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+        }
         RequestDispatcher dispatcher = null;
-
-        if (value == otp) {
+        if (isWithin10Minutes(session) &&enteredOTP == storedOTP  ) {
 			/* String email=request.getParameter("email"); */
             request.setAttribute("email", request.getParameter("email"));
             request.setAttribute("status", "success");
             dispatcher = request.getRequestDispatcher("reset_password.jsp");
             dispatcher.forward(request, response);
-
         } else {
             request.setAttribute("message", "wrong otp");
             dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
             dispatcher.forward(request, response);
         }
     }
+
+ // Method to check if the elapsed time is within 10 minutes
+    private static boolean isWithin10Minutes(HttpSession session) {
+    	String username=(String) session.getAttribute("username");
+    	int otp = Integer.parseInt((String) session.getAttribute("otp"));
+    	boolean flag=EmailDao.TimeOfOTP(otp,username);
+        return flag;
+    }
 }
-
-
-
-//package com.weblabs.srv;
-//
-//import java.io.IOException;
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.HttpServlet;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
-//
-//@WebServlet("/EmpValidateOtp")
-//public class EmpValidateOtp extends HttpServlet {
-//
-//    private static final long serialVersionUID = 1L;
-//
-//    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        int value = Integer.parseInt(request.getParameter("otp"));
-//        HttpSession session = request.getSession();
-//        session.setAttribute("otp", value); // Storing the OTP in the session
-//
-//        int storedOtp = (int) session.getAttribute("otp"); // Retrieving the stored OTP
-//        System.out.println("Stored OTP: " + storedOtp);
-//
-//        // Rest of your code
-//        int otp = (int) session.getAttribute("otp");
-//        System.out.println(otp);
-//        RequestDispatcher dispatcher = null;
-//
-//        if (value == otp) {
-//            request.setAttribute("email", request.getParameter("email"));
-//            request.setAttribute("status", "success");
-//            dispatcher = request.getRequestDispatcher("reset_password.jsp");
-//            dispatcher.forward(request, response);
-//
-//        } else {
-//            request.setAttribute("message", "wrong otp");
-//
-//            dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
-//            dispatcher.forward(request, response);
-//        }
-//    }
-//}
