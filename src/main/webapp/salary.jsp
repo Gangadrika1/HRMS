@@ -36,6 +36,14 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/tstyles.css">
 		
+		
+		<style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
@@ -52,7 +60,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "5"; // Set a default value, e.g., 1
+    recordsPerPageStr = "10"; // Set a default value, e.g., 1
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -64,7 +72,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -116,57 +124,45 @@ if (newRecordsPerPageParam != null) {
 								</ul>
 							</div>
 							<div class="col-auto float-right ml-auto">
-								
 							<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_salary"><i class="fa fa-plus"></i> Add Salary</a>
-							
 							</div>
 						</div>
 					</div>
 					<!-- /Page Header -->
 					
 					<!-- Search Filter -->
- <form action="./SalarySearchSRV" method="post" > 
-  		
-                <div class="row filter-row">
+                <form action="./SalarySearchSRV" method="post" >  
+                 <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="Type">Employee ID:</label>
-                            <input type="text" name="Employee_Id" id="Employee_Id">
-                        </div>
-                    </div>
+                     <div style= margin-left:30px; class="form-group form-focus">
+                           <input class="form-control floating" type="" value="" name="Employee_Id" id="Employee_Id" >
+			                 <label class="focus-label">Employee ID</label>
+		                          </div>
+                              </div>
                     
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
-                </div>
+                   <div class="col-sm-6 col-md-3" >
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+               </div>
                  <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
-	
-       	 			   
-		          
-			       <div class="col-sm-6 col-md-3">
+	            <div class="col-sm-6 col-md-3">
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-					    <option value="5">5</option>
-					    <option value="10">10</option>
-					    <option value="20">20</option>
-					   <option value="50">50</option>
+
+					   <option value="10">10</option>
 					</select>
-					<%-- <select id="recordsPerPage" name="recordsPerPage" onchange="changeRecordsPerPage()">
-						    <option value="5" <% if (session.getAttribute("recordsPerPage").equals("5")) out.print("selected"); %>>5</option>
-						    <option value="10" <% if (session.getAttribute("recordsPerPage").equals("10")) out.print("selected"); %>>10</option>
-						    <option value="20" <% if (session.getAttribute("recordsPerPage").equals("20")) out.print("selected"); %>>20</option>
-						    <option value="100" <% if (session.getAttribute("recordsPerPage").equals("100")) out.print("selected"); %>>100</option>
-						</select> --%>
-			       </div>
-	</form>  
+					</div>
+	          </form> 
+	           </div>
 					<!-- /Search Filter -->
 					
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-md-12">
 							<div class="table-responsive">
-								<table>
-									<thead>
+								<table> -->
+								<div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                          <table id="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
+                          <thead>
 										<tr>
 											
 											<th>Employee ID</th>
@@ -243,6 +239,7 @@ if (newRecordsPerPageParam != null) {
             <td><%= train.getNetSal() %></td>
              <td>
         <a href="editsalary.jsp?employee_id=<%= train.getEmployee_id() %>">Edit</a>
+         &nbsp;  &nbsp;  &nbsp;
     </td>
     <td>
         <a href="deletesalary.jsp?employee_id=<%= train.getEmployee_id() %>">Delete</a>
@@ -253,6 +250,7 @@ if (newRecordsPerPageParam != null) {
             }
         %>
 								</table>
+	</div>							
 <div class="row justify-content-center align-items-center">
    
    <!-- Pagination links -->
@@ -275,10 +273,6 @@ if (newRecordsPerPageParam != null) {
 
 </div>
 </div>
-							</div>
-						</div>
-					</div>
-                </div>
 				<!-- /Page Content -->
 				
 				<!-- Add Salary Modal -->

@@ -2,19 +2,7 @@
 <%@ page import="com.weblabs.beans.AddTermination" %>
 <%@ page import="java.util.List" %>
 
-<%
-HttpSession sdsession = request.getSession(true);
 
-// Retrieve the username attribute from the session
-String username = (String) sdsession.getAttribute("username");
-String roleIDString = (String) sdsession.getAttribute("RoleID");
-// Check if the user is logged in or redirect to the login page
-if (roleIDString == null) {
-response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
-} else {
-   int roleid = Integer.parseInt(roleIDString);
-
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,6 +38,14 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tstyles.css">
+    
+      <style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
    
@@ -67,7 +63,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "5"; // Set a default value, e.g., 1
+    recordsPerPageStr = "10"; // Set a default value, e.g., 1
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -79,7 +75,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -125,11 +121,7 @@ if (newRecordsPerPageParam != null) {
             <div class="page-header">
                 <div class="row align-items-center">
                 <div class="col">
-                <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                        Welcome <%= username %>!
-                      </div>
-             
-                        <h3 class="page-title">Termination</h3>
+                    <h3 class="page-title">Termination</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
                             <li class="breadcrumb-item active">Termination</li>
@@ -145,21 +137,22 @@ if (newRecordsPerPageParam != null) {
             <form action="./TerminationSearchSrv" method="post">
                 <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="terminatedemployee">TerminatedEmployee:</label>
-                            <input type="text" name="terminatedemployee" id="terminatedemployee">
-                        </div>
+                        <div style= margin-left:30px; class="form-group form-focus">
+                         <input  name="terminatedemployee" type="text" class="form-control floating" id="terminatedemployee">
+					<label class="focus-label">TerminatedEmployee</label>
+					   </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus select-focus">
-                            <label for="terminationdate">TerminationDate:</label>
-                            <input type="text" name="terminationdate" id="terminationdate">
+                      <input class="form-control floating" type="date" value="" name="terminationdate" id="terminationdate" >
+			          <label class="focus-label">TerminationDate</label>
+		
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
-                </div>
+                    <div class="col-sm-6 col-md-3" >
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+               </div>
+               
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                 <div class="col-sm-6 col-md-3" id = "flag">
@@ -171,10 +164,9 @@ if (newRecordsPerPageParam != null) {
                     </select>
                 </div>
             </form>
-       
-
-        <table>
-            <tr>
+       </div>
+      <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
+              <tr>
                 <th>Id</th>
                 <th>TerminatedEmployee</th>
                 <th>TerminationType</th>
@@ -243,6 +235,7 @@ if (newRecordsPerPageParam != null) {
                 <td><%=train.getNoticeDate()%></td>
                 <td>
                     <a href="edit_termination.jsp?id=<%= train.getId() %>">Edit</a>
+                      &nbsp;  &nbsp;  &nbsp; 
                 </td>
                 <td>
                     <a href="DeleteTerminationSrv?id=<%= train.getId() %>">Delete</a>
@@ -269,7 +262,7 @@ if (newRecordsPerPageParam != null) {
 
             <% if (pageno < noOfPages) { %>
             <a href="termination.jsp?page=<%=pageno + 1%>">Next</a>
-            <% }} %>
+            <% }%>
 
         </div>
     </div>
@@ -306,32 +299,6 @@ if (newRecordsPerPageParam != null) {
 <!-- Custom JS -->
 <script src="js/app.js"></script>
 
-<!-- <script>
-    $(document).ready(function () {
-        $("#filterButton").click(function () {
-            // Get filter criteria (username and id)
-            var usernameFilter = $("#terminatedemployee").val();
-            var idFilter = $("#terminationdate").val();
-
-            // Make an AJAX request to the server
-            $.ajax({
-                type: "POST", // Use POST or GET depending on your servlet configuration
-                url: "./TerminationSearchSrv",
-                data: {
-                    username: usernameFilter,
-                    id: idFilter
-                },
-                success: function (data) {
-
-                    console.log("myFunction has been invoked.");
-                    // Handle the response data, e.g., update the table with the filtered data
-                    // You might need to format the data as required
-                    $("#employeeTable").html(data);
-                }
-            });
-        });
-    });
-</script> -->
 
  <script>
    

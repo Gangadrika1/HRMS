@@ -3,19 +3,7 @@
 <%@ page import="com.weblabs.beans.AddDesignation" %>
 <%@ page import="java.util.List" %>
 
-<%
-HttpSession sdsession = request.getSession(true);
 
-// Retrieve the username attribute from the session
-String username = (String) sdsession.getAttribute("username");
-String roleIDString = (String) sdsession.getAttribute("RoleID");
-// Check if the user is logged in or redirect to the login page
-if (roleIDString == null) {
-response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
-} else {
-   int roleid = Integer.parseInt(roleIDString);
-
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +15,8 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <meta name="robots" content="noindex, nofollow">
     <title>Designations - HRMS admin template</title>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
+     <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/logo.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -48,9 +36,13 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- table styles CSS -->
-    <link rel="stylesheet" href="css/tstyles.css">
-    
+    <style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     
     <script src="js/html5shiv.min.js"></script>
@@ -126,25 +118,15 @@ if (newRecordsPerPageParam != null) {
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
-               <div class="page-header">
-                    
-                        <div class="col">
-							<div id="welcomeMessage" style="text-align: center; margin-left: 500px; font-size: 24px;">
-                                Welcome <%= username %>!
-                              </div>
+                	<div class="col">
 								<h3 class="page-title">Designation</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
 									<li class="breadcrumb-item active">Designation</li>
 								</ul>
 							</div>
-                        </div>
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_designation"><i class="fa fa-plus"></i> Add Designation</a>
-                        <!-- <div class="view-icons">
-                            <a href="designations.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="designations-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -153,20 +135,19 @@ if (newRecordsPerPageParam != null) {
               <form action="./DesignationSearchSrv" method="post">
             <div class="row filter-row">
                 <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <label for="designation">Designation:</label>
-                        <input type="text" name="DesignationName" id="designation">
-                    </div>
+                <div style= margin-left:30px; class="form-group form-focus">
+                <input  name="DesignationName" type="text" class="form-control floating" id="designation">
+					<label class="focus-label">Designation</label>
+		           </div>
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="form-group form-focus select-focus">
-                        <label for="department">ID:</label>
-                        <input style="margin-top: 29px;" type="text" name="Designationid" id="department">
-                    </div>
+                         <input class="form-control floating" type="date" value="" name="Designationid" id="department" >
+			          <label class="focus-label">ID</label>
+			       </div>
                 </div>
-                <div class="col-sm-6 col-md-3">
-                    <input style="margin-top: 29px;" type="submit" value="Search">
-                </div>
+                <div class="col-sm-6 col-md-3" >
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
                </div>
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
@@ -182,7 +163,8 @@ if (newRecordsPerPageParam != null) {
             </div>
 
             <!-- Designation List Table -->
-            <table>
+             <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
+       
                 <tr>
                     <th>ID</th>
                     <th>Designation</th>
@@ -250,6 +232,7 @@ if (newRecordsPerPageParam != null) {
                     <td>
                    
                         <a href="edit_designation.jsp?Designationid=<%= designation.getId() %>">Edit</a>
+                          &nbsp;  &nbsp;  &nbsp; 
                     </td>
                     <td>
                        <a href="DeleteDesignationSrv?Designationid=<%= designation.getId() %>">Delete</a> </td>
@@ -276,7 +259,7 @@ if (newRecordsPerPageParam != null) {
 
     <% if (pageno < noOfPages) { %>
         <a href="designations.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }} %>
+    <% } %>
 </div>
             </div>
 
@@ -298,62 +281,7 @@ if (newRecordsPerPageParam != null) {
 <script src="js/bootstrap-datetimepicker.min.js"></script>
 <script src="js/app.js"></script>
 
-<%-- <script>
-$(document).ready(function () {
-    // Attach the changeRecordsPerPage function to the change event of the recordsPerPage select
-    $("#recordsPerPage").change(function () {
-        changeRecordsPerPage();
-    });
 
-    $("#filterButton").click(function (event) {
-        // Get filter criteria (username and id)
-        event.preventDefault();
-        var usernameFilter = $("#DesignationName").val();
-        var idFilter = $("#Designationid").val();
-        
-        // Make an AJAX request to the server
-        $.ajax({
-            type: "POST", // Use POST or GET depending on your servlet configuration
-            url: "./DesignationSearchSrv",
-            data: {
-                username: usernameFilter,
-                id: idFilter
-            },
-            success: function (data) {
-                console.log("myFunction has been invoked.");
-                // Handle the response data, e.g., update the table with the filtered data
-                // You might need to format the data as required
-                $("#holidaysTable").html(data);
-            }
-        });
-    });
-
-    // Function to change records per page
-    function changeRecordsPerPage() {
-        var recordsPerPageSelect = $("#recordsPerPage");
-        var selectedValue = recordsPerPageSelect.val();
-
-        var form = $("<form>")
-            .attr("method", "POST")
-            .attr("action", "./DesignationSearchSrv");
-
-        var inputRecordsPerPage = $("<input>")
-            .attr("type", "hidden")
-            .attr("name", "newRecordsPerPage")
-            .val(selectedValue);
-
-        var inputCurrentPage = $("<input>")
-            .attr("type", "hidden")
-            .attr("name", "start")
-            .val("<%= currentPage %>");
-
-        form.append(inputRecordsPerPage, inputCurrentPage);
-        $("body").append(form);
-        form.submit();
-    }
-});
-</script>
- --%>
 <script>
    
     

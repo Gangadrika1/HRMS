@@ -3,19 +3,7 @@
 <%@ page import="com.weblabs.beans.AddDepartment" %>
 <%@ page import="java.util.List" %>
 
-<%
-HttpSession sdsession = request.getSession(true);
 
-// Retrieve the username attribute from the session
-String username = (String) sdsession.getAttribute("username");
-String roleIDString = (String) sdsession.getAttribute("RoleID");
-// Check if the user is logged in or redirect to the login page
-if (roleIDString == null) {
-response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
-} else {
-   int roleid = Integer.parseInt(roleIDString);
-
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +16,7 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <title>Departments - HRMS admin template</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/logo.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -48,9 +36,15 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- Table styles CSS -->
-    <link rel="stylesheet" href="css/tstyles.css">
-    
+    <style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>
+   
+   
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
    
     <script src="js/html5shiv.min.js"></script>
@@ -125,46 +119,40 @@ if (newRecordsPerPageParam != null) {
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
-                <div class="col">
-                <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                        Welcome <%= username %>!
-                      </div>
-             
+                <div style= margin-left:30px; class="col">
                     <h3 class="page-title">Departments</h3>
 						<ul class="breadcrumb">
 							<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
 							<li class="breadcrumb-item active">Departments</li>
 						</ul>
-                </div>
+                   </div>
+                   
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_department"><i class="fa fa-plus"></i> Add Department</a>
-                        <!-- <div class="view-icons">
-                            <a href="departments.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="departments-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
+                           </div>
+			              </div>
+			            </div>
 
            
             <form action="./DepartmentSearchSrv" method="post">
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="department">Department:</label>
-                            <input type="text" name="DepartmentName" id="department">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <label for="date">ID:</label>
-                            <input style="margin-top: 29px;" type="text" name="DepartmentId" id="date">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input style="margin-top: 29px;" type="submit" value="Search">
-                    </div>
-                </div>
+                    <div class="col-sm-6 col-md-3">  
+				<div style= margin-left:30px; class="form-group form-focus">
+					<input  name="DepartmentName" type="text" class="form-control floating" id="department">
+					<label class="focus-label">Department</label>
+				</div>
+				</div>
+				
+				<div class="col-sm-6 col-md-3"> 
+				<div class="form-group form-focus select-focus">
+			            <input class="form-control floating" type="date" value="" name="DepartmentId" id="date" >
+			          <label class="focus-label">StarDate</label>
+			        </div>
+			    </div>
+                   <div class="col-sm-6 col-md-3" >
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+               </div>
+              
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                 <div class="col-sm-6 col-md-3" id = "flag">
@@ -179,7 +167,8 @@ if (newRecordsPerPageParam != null) {
         </div> <!-- Closes the filter-row div -->
 
         <!-- Department List Table -->
-        <table>
+        <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
+        
             <tr>
                 <th>ID</th>
                 <th>Department</th>
@@ -240,6 +229,7 @@ if (newRecordsPerPageParam != null) {
                 <td><%= department.getDepartmentName() %></td>
                 <td>
                     <a href="edit_department.jsp?DepartmentId=<%= department.getId() %>">Edit</a>
+                    &nbsp;  &nbsp;  &nbsp;  
                 </td>
                 <td>
                     <a href="DeleteDepartmentSrv?DepartmentId=<%= department.getId() %>">Delete</a>
@@ -267,7 +257,7 @@ if (newRecordsPerPageParam != null) {
 
     <% if (pageno < noOfPages) { %>
         <a href="departments.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }} %>
+    <% } %>
 
 </div>
     </div> <!-- Closes the content container-fluid div -->
@@ -280,72 +270,26 @@ if (newRecordsPerPageParam != null) {
 
 </div> <!-- Closes the page-wrapper div -->
 
-<!-- JavaScript Libraries and Custom JS -->
 <script src="js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap Core JS -->
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
+<!-- Slimscroll JS -->
 <script src="js/jquery.slimscroll.min.js"></script>
+
+<!-- Select2 JS -->
 <script src="js/select2.min.js"></script>
+
+<!-- Datetimepicker JS -->
 <script src="js/moment.min.js"></script>
 <script src="js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Custom JS -->
 <script src="js/app.js"></script>
+	
 
-<%-- <script>
-$(document).ready(function () {
-    // Attach the changeRecordsPerPage function to the change event of the recordsPerPage select
-    $("#recordsPerPage").change(function () {
-        changeRecordsPerPage();
-    });
-
-    $("#filterButton").click(function (event) {
-        // Get filter criteria (username and id)
-        event.preventDefault();
-        var usernameFilter = $("#DepartmentName").val();
-        var idFilter = $("#DepartmentId").val();
-        
-        // Make an AJAX request to the server
-        $.ajax({
-            type: "POST", // Use POST or GET depending on your servlet configuration
-            url: "./DepartmentSearchSrv",
-            data: {
-                username: usernameFilter,
-                id: idFilter
-            },
-            success: function (data) {
-                console.log("myFunction has been invoked.");
-                // Handle the response data, e.g., update the table with the filtered data
-                // You might need to format the data as required
-                $("#holidaysTable").html(data);
-            }
-        });
-    });
-
-    // Function to change records per page
-    function changeRecordsPerPage() {
-        var recordsPerPageSelect = $("#recordsPerPage");
-        var selectedValue = recordsPerPageSelect.val();
-
-        var form = $("<form>")
-            .attr("method", "POST")
-            .attr("action", "./DepartmentSearchSrv");
-
-        var inputRecordsPerPage = $("<input>")
-            .attr("type", "hidden")
-            .attr("name", "newRecordsPerPage")
-            .val(selectedValue);
-
-        var inputCurrentPage = $("<input>")
-            .attr("type", "hidden")
-            .attr("name", "start")
-            .val("<%= currentPage %>");
-
-        form.append(inputRecordsPerPage, inputCurrentPage);
-        $("body").append(form);
-        form.submit();
-    }
-});
-</script>
- --%>
  <script>
    
     

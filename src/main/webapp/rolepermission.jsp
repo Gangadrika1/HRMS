@@ -5,20 +5,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 
-<%
-HttpSession sdsession = request.getSession(true);
-
-// Retrieve the username attribute from the session
-String username = (String) sdsession.getAttribute("username");
-String roleIDString = (String) sdsession.getAttribute("RoleID");
-// Check if the user is logged in or redirect to the login page
-if (roleIDString == null) {
-response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
-} else {
-   int roleid = Integer.parseInt(roleIDString);
-
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,6 +39,15 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     
     <!-- Table styles CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    
+    
+    <style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>
     
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
    
@@ -128,9 +123,7 @@ if (newRecordsPerPageParam != null) {
             <div class="page-header">
                 <div class="row align-items-center">
                 <div class="col">
-				<div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                    Welcome <%= username %>!
-                  </div>
+				
 					<h3 class="page-title">Role Permissions</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
@@ -139,10 +132,7 @@ if (newRecordsPerPageParam != null) {
 				</div>
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_rp"><i class="fa fa-plus"></i> Add Roles</a>
-                        <!-- <div class="view-icons">
-                            <a href="leaves.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="leaves-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                        </div> -->
+                        
                     </div>
                 </div>
             </div>
@@ -150,22 +140,20 @@ if (newRecordsPerPageParam != null) {
   
             <div class="row filter-row">
                 <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <label for="RoleID">RoleID:</label>
-                        <input type="text" name="RoleID" id="RoleID">
+                     <div style= margin-left:30px; class="form-group form-focus">
+                      <input class="form-control floating" type="text" value="" name="RoleID" id="RoleID" >
+			          <label class="focus-label">RoleID</label>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="form-group form-focus select-focus">
-                        <label for="RolePermissionID">RolePermissionID :</label>
-                        <input type="text" name="RolePermissionID" id="RolePermissionID">
+                         <input class="form-control floating" type="text" value="" name="RolePermissionID" id="RolePermissionID" >
+			          <label class="focus-label">PermissionID</label>
                     </div>
                 </div>
-               
-                <div class="col-sm-6 col-md-3">
-                    <input type="submit" value="Search">
-                </div>
-                 </div>
+                <div class="col-sm-6 col-md-3" >
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+               </div>
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                 <div class="col-sm-6 col-md-3" id = "flag">
@@ -179,8 +167,8 @@ if (newRecordsPerPageParam != null) {
             </form>
                </div>
             
-        <table>
-
+        <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
+       
                 <tr>
                      <th>RolePermissionID</th>
                     <th>RoleID</th>
@@ -249,6 +237,7 @@ if (newRecordsPerPageParam != null) {
                            
                     <td>
                         <a href="edit_rp.jsp?RolePermissionID=<%= leave.getRolePermissionID() %>">Edit</a>
+                     &nbsp;  &nbsp;  &nbsp; 
                     </td>
                     <td>
                         <a href="DeleteRPSrv?RolePermissionID=<%= leave.getRolePermissionID() %>">Delete</a>
@@ -277,7 +266,7 @@ if (newRecordsPerPageParam != null) {
 
     <% if (pageno < noOfPages) { %>
         <a href="rolepermission.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }} %>
+    <% }%>
 
 </div>
             </div> 
