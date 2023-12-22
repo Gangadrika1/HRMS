@@ -41,6 +41,13 @@
 		
 			<script src="assets/js/html5shiv.min.js"></script>
 			<script src="assets/js/respond.min.js"></script>
+<style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>
 	
     </head>
     <body>
@@ -52,7 +59,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "5"; // Set a default value, e.g., 1
+    recordsPerPageStr = "10"; // Set a default value, e.g., 1
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -127,37 +134,38 @@ if (newRecordsPerPageParam != null) {
 					  <!-- Search form -->
             <form action="./PromotionSearchSrv" method="post">
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="promotionfor">PromotionFor:</label>
-                            <input type="text" name="promotionfor" id="promotionfor">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <label for="promotiondate">PromotionDate:</label>
-                            <input type="text" name="promotiondate" id="promotiondate">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
-                </div>
+                    <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+					   <input name="promotionfor" id="promotionfor" name="employee" type="text" class="form-control floating">
+					   <label class="focus-label">promotion for</label>
+				     </div>
+				</div>
+                   <div class="col-sm-6 col-md-3"> 
+				     <div class="form-group form-focus select-focus">
+			            <input class="form-control floating" type="date" value="" name="promotiondate" id="promotiondate" placeholder=" ">
+			          <label class="focus-label">Promotion Date</label>
+			        </div>
+			       </div>
+			       
+               <div class="col-sm-6 col-md-3" >
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+               </div>
+              
+                
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        <option value="5">5</option>
                         <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
                     </select>
                 </div>
+                </div>
             </form>
+            
         </div>
 					
-					  <table>
+					  <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
 						<tr>
 							<th>Id</th>
 				            <th>PromotionFor </th>

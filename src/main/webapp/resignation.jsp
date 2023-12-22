@@ -40,6 +40,13 @@
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <script src="assets/js/html5shiv.min.js"></script>
     <script src="assets/js/respond.min.js"></script>
+<style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>
 </head>
 <body>
 <%
@@ -50,7 +57,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "5"; // Set a default value, e.g., 1
+    recordsPerPageStr = "10"; // Set a default value, e.g., 1
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -120,45 +127,45 @@ if (newRecordsPerPageParam != null) {
             <!-- Search form -->
             <form action="./ResignationSearchSrv" method="post">
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="resigningemployee">ResigningEmployee:</label>
-                            <input type="text" name="resigningemployee" id="resigningemployee">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <label for="resignationdate">ResignationDate:</label>
-                            <input type="text" name="resignationdate" id="resignationdate">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
+                    <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+					     <input name="resigningemployee" id="resigningemployee" type="text" class="form-control floating">
+					     <label class="focus-label">Employee Name</label>
+				       </div>
+				    </div>
+				    
+                    <div class="col-sm-6 col-md-3"> 
+				      <div class="form-group form-focus select-focus">
+			            <input class="form-control floating" type="date" value="" name="resignationdate" id="resignationdate">
+			            <label class="focus-label">Resignation Date</label>
+			          </div>
+			        </div>
+                    
+                    <div class="col-sm-6 col-md-3" >
+                      <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+                    </div> 
+                    
                 </div>
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        <option value="5">5</option>
                         <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
                     </select>
                 </div>
             </form>
         </div>
         
-        <table>
+        <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
             <tr>
                 <th>id</th>
                 <th>Resigning Employee</th>
                 <th>Notice Date</th>
                 <th>Resignation Date</th>
                 <th>Reason</th>
-                <th>Edit</th>
-                <th>Delete</th>
+              <th style="text-align: center;" colspan="2">Actions</th>
+                
             </tr>
        
         <%
@@ -216,7 +223,7 @@ if (newRecordsPerPageParam != null) {
             <td><%= train.getResigningEmployee() %></td>
             <td><%= train.getNoticeDate() %></td>
             <td><%= train.getResignationDate() %></td>
-            <td><%= train.getReason() %></td>
+            <td><%= train.getReason()%></td>
             <td>
                 <a href="edit_resignation.jsp?id=<%= train.getId() %>">Edit</a>
             </td>

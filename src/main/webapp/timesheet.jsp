@@ -47,6 +47,13 @@
     <script src="js/respond.min.js"></script>
  
     <title>Timesheet List</title>
+<style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border:2px;
+    }
+</style>
 </head>
 <body>
 <%
@@ -57,7 +64,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "5"; // Set a default value, e.g., 1
+    recordsPerPageStr = "10"; // Set a default value, e.g., 1
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -117,15 +124,12 @@ if (newRecordsPerPageParam != null) {
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Timesheet</h3>
-                        <ul class="breadcrumb">
-                            <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                                Welcome <%= username %>😊😊
-                            </div>
-                            <li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Timesheet</li>
-                        </ul>
-                    </div>
+								<h3 class="page-title">Timesheet</h3>
+								<ul class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
+									<li class="breadcrumb-item active">Timesheet</li>
+								</ul>
+							</div>
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_timesheet"><i class="fa fa-plus"></i> Add Timesheet</a>
                         <div class="view-icons">
@@ -139,38 +143,37 @@ if (newRecordsPerPageParam != null) {
             <!-- Search form -->
              <form action="./TimesheetSearchSrv" method="post">
             <div class="row filter-row">
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <label for="TimesheetID">TimesheetID:</label>
-                        <input type="text" name="TimesheetID" id="TimesheetID">
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus select-focus">
-                        <label for="DateWorked">DateWorked:</label>
-                        <input type="text" name="DateWorked" id="DateWorked" >
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <input type="submit" value="Search">
-                </div>
-            </div>
+                <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+					   <input  name="TimesheetID" id="TimesheetID" type="text" class="form-control floating">
+					   <label class="focus-label">Timesheet ID</label>
+				     </div>
+				</div>
+				
+               <div class="col-sm-6 col-md-3"> 
+				<div class="form-group form-focus select-focus">
+			            <input class="form-control floating" type="date" value="" name="DateWorked" id="DateWorked" placeholder=" ">
+			          <label class="focus-label">Date Worked</label>
+			        </div>
+			  </div>
+                <div class="col-sm-6 col-md-3" >
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+               </div> 
+            
             <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        <option value="5">5</option>
                         <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
                     </select>
+                </div>
                 </div>
             </form>
         </div> <!-- Closes the filter-row div -->
 
             <!-- Timesheet List Table -->
-            <table>
+            <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
                 <tr>
                     <th>TimesheetID</th>
                     <th>Employee_Id</th>
