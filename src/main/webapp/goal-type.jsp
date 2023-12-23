@@ -160,7 +160,8 @@ if (newRecordsPerPageParam != null) {
 			       </div>
 			       </div>
 	</form>
-								<table>
+	<table   id ="table" class="table table-striped custom-table mb-0 datatable" style=" color:gray; border: 2px solid gray;">
+ 	
 										<tr>
 											<th style="width: 30px;">ID</th>
 											<th>Type </th>

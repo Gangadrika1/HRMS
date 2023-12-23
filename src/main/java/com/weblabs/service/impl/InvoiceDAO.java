@@ -334,7 +334,7 @@ public class InvoiceDAO {
 		        			+ "FROM invoice\n"
 		        			+ "WHERE invoice.id NOT IN (\n"
 		        			+ "    SELECT invoice_id \n"
-		        			+ "    FROM hrms1.partial_payments \n"
+		        			+ "    FROM hrms.partial_payments \n"
 		        			+ "    GROUP BY invoice_id \n"
 		        			+ "    HAVING MIN(balance_amt) <= 0\n"
 		        			+ ") and invoice.client= ? ";

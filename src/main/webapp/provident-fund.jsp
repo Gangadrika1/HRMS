@@ -179,8 +179,8 @@ if (newRecordsPerPageParam != null) {
 			       </div>
 	</form>
 					
-								<table>
-									
+	       <table   id ="table" class="table table-striped custom-table mb-0 datatable" style=" color:gray; border: 2px solid gray;">
+     	
 										<tr>
 										    <th>ID</th>
 											<th>Employee_Id</th>

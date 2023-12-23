@@ -53,6 +53,7 @@
 <style>
     /* Set a fixed height for the sidebar and enable scrollbar */
     #sidebar {
+    	background-color:white;
         height: 1000 px; /* Set a fixed height */
         overflow-y: auto; /* Enable vertical scrollbar */
     }

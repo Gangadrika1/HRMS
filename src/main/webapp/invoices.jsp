@@ -193,7 +193,7 @@
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <!-- Parent Table -->
-                            <table  class="table table-striped custom-table" id="parentTable">
+                            <table   id ="table" class="table table-striped custom-table mb-0 datatable" style=" color:gray; border: 2px solid black;" id="parentTable">
                                 <thead>
                                     <tr>
                                         <th>Invoice ID</th>

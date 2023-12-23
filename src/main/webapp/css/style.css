@@ -1482,7 +1482,7 @@ table.dataTable thead > tr > td.sorting {
 	content: '';
 	width: 5px;
 	height: 5px;
-	border: 5px solid #ff9b44;
+	border: 5px solid #FC041F;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
 	border-radius: 30px;
@@ -1609,7 +1609,7 @@ table.dataTable thead > tr > td.sorting {
 	margin-bottom: 20px;
 }
 .add-btn {
-    background-color: #ff9b44;
+    background-color: #FC041F;
     border: 1px solid #ff9b44;
     border-radius: 50px;
     color: #fff;

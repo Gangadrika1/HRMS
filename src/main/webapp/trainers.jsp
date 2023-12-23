@@ -175,7 +175,8 @@ if (newRecordsPerPageParam != null) {
 					<!-- <div class="row">
 						<div class="col-md-12">
 							<div class="table-responsive"> -->
-								<table>
+							<table   id ="table" class="table table-striped custom-table mb-0 datatable" style=" color:gray; border: 2px solid gray;">
+					     	
 									<thead>
 										<tr>
 											<th style="width: 30px;">ID</th>

@@ -127,9 +127,7 @@ if (newRecordsPerPageParam != null) {
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                       <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                        Welcome <%= username %>!
-                      </div>
+                       
              
                     <h3 class="page-title">Leaves</h3>
 						<ul class="breadcrumb">

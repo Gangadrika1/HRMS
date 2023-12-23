@@ -179,7 +179,7 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
 	</form>
 	
 	
-	<table>
+	<table  id ="table" class="table table-striped custom-table mb-0 datatable" style=" color:gray; border: 2px solid black;">
     <tr>
     
         <th>Username</th>

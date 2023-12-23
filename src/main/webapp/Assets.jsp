@@ -134,10 +134,10 @@ function changeRecordsPerPage() {
                     <div class="row align-items-center">
                         <div class="col">
                      
-								<h3 style="margin-left: 30px;" class="page-title">Goal Type</h3>
+								<h3 style="margin-left: 30px;" class="page-title">Assets</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-									<li class="breadcrumb-item active">Goal Type</li>
+									<li class="breadcrumb-item active">Assets</li>
 								</ul>
 							</div>
                         
@@ -183,7 +183,7 @@ function changeRecordsPerPage() {
                      
                 </form>
                <div class="table-container" style="height: 400px; overflow-x: auto;">
-       <table>
+       <table  id ="table" class="table table-striped custom-table mb-0 datatable" style=" color:gray; border: 2px solid black;">
                 <tr>
                 
                     <th>ID</th>

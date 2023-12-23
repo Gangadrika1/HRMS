@@ -62,7 +62,7 @@ public static void storeOTP(String email,String username,int otp) {
             String query=null;
             if (username != null && !username.isEmpty()) {
 //            	insert into hrms1.otpdetails (username,time,otp) values ("chintu",CURRENT_TIMESTAMP,"854796");
-                query = "insert into  hrms1.otpdetails  (email,username,time,otp) values (?,?,CURRENT_TIMESTAMP,?)"  ;
+                query = "insert into  hrms.otpdetails  (email,username,time,otp) values (?,?,CURRENT_TIMESTAMP,?)"  ;
             } 
 
             preparedStatement = connection.prepareStatement(query);
