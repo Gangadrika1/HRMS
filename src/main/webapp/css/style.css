@@ -1121,19 +1121,22 @@ table.dataTable thead > tr > td.sorting {
 -----------------------*/
 
 .header {
-	background: -moz-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: -webkit-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: -ms-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: linear-gradient(to right, #ff9b44 0%, #fc6075 100%);
-	border-bottom: 1px solid transparent;
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-	height: 60px;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 1002;
+    background: -moz-linear-gradient(left, #8a4dff 0%, #c34cff 100%);
+    background: -webkit-linear-gradient(left, #8a4dff 0%, #c34cff 100%);
+    background: -ms-linear-gradient(left, #8a4dff 0%, #c34cff 100%);
+    background: linear-gradient(to right, #8a4dff 0%, #c34cff 100%);
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    color: white; /* Set text color to white */
+    height: 60px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1002;
 }
+
+
 .gradient{
 	background: repeating-linear-gradient(to bottom right, #3f95ea 0%, #52d3aa 100%);
 	background: -moz-linear-gradient(left, #3f95ea 0%, #52d3aa 100%);
@@ -1336,7 +1339,6 @@ table.dataTable thead > tr > td.sorting {
 	position: relative;
 }
 .sidebar-menu li a {
-	color: #b7c0cd;
 	display: block;
 	font-size: 15px;
 	height: auto;
@@ -1482,11 +1484,9 @@ table.dataTable thead > tr > td.sorting {
 	content: '';
 	width: 5px;
 	height: 5px;
-	border: 5px solid #ff9b44;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
 	border-radius: 30px;
-	background-color: #ff9b44;
 	z-index: 10;
 	position: absolute;
 	right: 37px;
@@ -1609,7 +1609,7 @@ table.dataTable thead > tr > td.sorting {
 	margin-bottom: 20px;
 }
 .add-btn {
-    background-color: #ff9b44;
+    background-color: #FC041F;
     border: 1px solid #ff9b44;
     border-radius: 50px;
     color: #fff;

@@ -50,13 +50,16 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- table styles CSS -->
     <link rel="stylesheet" href="css/tstyles.css">
-<style>
+    <link rel="stylesheet" href="css/M.css">
+<!-- <style>
     /* Set a fixed height for the sidebar and enable scrollbar */
     #sidebar {
         height: 1000 px; /* Set a fixed height */
         overflow-y: auto; /* Enable vertical scrollbar */
+        background-color: purple;
     }
-</style>
+</style> -->
+ 
 <script>
     function toggleSubMenu(element) {
         var submenu = element.nextElementSibling;

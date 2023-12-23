@@ -42,6 +42,8 @@
         <link rel="stylesheet" href="css/style.css">
              <!-- table styles CSS -->
      <link rel="stylesheet" href="css/tstyles.css">
+     
+     <link rel="stylesheet" href="css/M.css">
 		
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -50,13 +52,7 @@
 		<![endif]-->
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
-<style>
-#table{
-    width:1210px;
-    margin-left: 30px;
-    border:2px;
-    }
-</style>    
+    
     </head>
     <body>
     <!-- filtering records -->
@@ -131,7 +127,7 @@ if (newRecordsPerPageParam != null) {
 								</ul>
 							</div>
 							<div class="col-auto float-right ml-auto">
-								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_expense"><i class="fa fa-plus"></i> Add Expense</a>
+								<a href="#" class="Addbutton" data-toggle="modal" data-target="#add_expense"><i class="fa fa-plus"></i> Add Expense</a>
 							</div>
 							
 						</div>
@@ -142,23 +138,22 @@ if (newRecordsPerPageParam != null) {
 		<form action="./ExpensesSearchSRV" method="post"> 
   		
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-				       <div class="form-group form-focus">
-					     <input name="ItemName" id="ItemName" type="text" class="form-control floating">
-					     <label class="focus-label">Item Name</label>
-				       </div>
-				    </div>
-				    
-                     <div class="col-sm-6 col-md-3">  
-				        <div class="form-group form-focus">
-					      <input name="id" id="id" type="text" class="form-control floating">
-					      <label class="focus-label">Item ID</label>
-				        </div>
-				      </div>
+                   <div class ="custom-input-field" class="col-sm-6 col-md-3">  
+					    <div class =" custom-input-field" class="form-group form-focus">
+					        <input class="input" name="ItemName" id="ItemName" placeholder="Item Name" type="text" class="form-control floating">
+					    </div>
+					</div>
+					
+					<div class="col-sm-6 col-md-3" >  
+					    <div class =" custom-input-field" class="form-group form-focus">
+					        <input class="input" name="id" id="id" type="text" placeholder="Item ID" class="form-control floating">					       
+					    </div>
+					</div>
+
 				      
-                    <div class="col-sm-6 col-md-3" >
-                        <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-                    </div> 
+                   <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div> 
                     
                 
                 	 <input type="hidden"  name="start" value="<%= currentPage %>">
@@ -166,15 +161,15 @@ if (newRecordsPerPageParam != null) {
 	
        	       <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
-			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+			       <select class="record" id="recordsPerPage" onchange="changeRecordsPerPage()">
 					    <option value="10">10</option>
 					</select>
 				
 			       </div>
 			       </div>
-	</form>  
+	</form>  <br><br>
 	
-<table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
+<table class="table">
     <tr>
         <th>ID</th>
         <th>Item</th>
@@ -246,10 +241,12 @@ if (newRecordsPerPageParam != null) {
             <td><%= expense.getStatus() %></td>
             <td><%= expense.getSupplierid()%></td>
             <td>
-        		<a href="edit_expenses.jsp?id=<%= expense.getId() %>">Edit</a>
+            <div >
+        		<a class="edit" href="edit_expenses.jsp?id=<%= expense.getId() %>">Edit</a>
+        		</div>
     		</td>
 			    <td>
-			        <a href="DeleteExpensesSrv?id=<%= expense.getId() %>">Delete</a>
+			        <a class="edit" href="DeleteExpensesSrv?id=<%= expense.getId() %>">Del</a>
 			    </td>
 			</tr>
         <%
@@ -258,24 +255,24 @@ if (newRecordsPerPageParam != null) {
           
         %>
 </table>
-   <div class="row justify-content-center align-items-center" id = "flag1">
+  <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="expenses.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="expenses.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%= i %>
+            <span class="pagination-number"><%=i%></span>
         <% } else { %>
-            <a href="expenses.jsp?page=<%=i%>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+            <a href="expenses.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="expenses.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="expenses.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
 
 </div>
