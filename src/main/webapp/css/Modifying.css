@@ -1,0 +1,39 @@
+@charset "ISO-8859-1";
+
+body{
+color: gray;
+}
+    .custom-pagination {
+        color: white;
+        padding: 10px; /* Adjust padding as needed */
+        border: 1px solid #fff; /* Adjust border style and color as needed */
+        border-radius: 5px; /* Optional: Add rounded corners */
+    }
+
+    .custom-pagination a {
+        color: white;
+        text-decoration: none;
+        margin: 0 5px; /* Optional: Adjust spacing between pagination links */
+    }
+
+    .custom-pagination a:hover {
+        text-decoration: underline;
+    }
+
+    .pagination-label {
+        background-color: #FC041F;
+        padding: 5px; /* Adjust padding as needed */
+        border-radius: 5px; /* Optional: Add rounded corners */
+    }
+    .pagination-number {
+        color: black;
+        background-color: white; /* Add a background color to enhance visibility if needed */
+        padding: 5px; /* Adjust padding as needed */
+        border-radius: 5px; /* Optional: Add rounded corners */
+        margin: 0 5px; /* Optional: Adjust spacing between numbers */
+    }
+    #tab{
+    width:1210px;
+    margin-left: 30px;
+    border: 5px solid gray;
+    }

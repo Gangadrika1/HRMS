@@ -30,7 +30,7 @@ public class AddRPSrv extends HttpServlet {
          status=ass.addRP(RoleID, ModuleName, FormName, PermissionType);
          
      		  
-     		   RequestDispatcher rd = request.getRequestDispatcher("rolepermission.jsp?message=" + status);
+     		   RequestDispatcher rd = request.getRequestDispatcher("roles-permissions.jsp?message=" + status);
         rd.forward(request, response);
      } 
      protected void doPost(HttpServletRequest request, HttpServletResponse response)

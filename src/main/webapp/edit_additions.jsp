@@ -1,4 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.weblabs.service.impl.EmployeeDAO" %>
 <%@ page import="com.weblabs.beans.EmployeeBean" %>
 <%@ page import="java.util.List" %>
@@ -45,7 +45,7 @@
     <![endif]-->
     <title>payroll List</title>
 </head>
-<body> --%>
+<body> 
 <form  action="./EditAdditionServlet" method="post">
 <div id="edit_addition" class="modal custom-modal fade" role="dialog">
 					<div class="modal-dialog modal-dialog-centered" role="document">

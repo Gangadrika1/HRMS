@@ -18,7 +18,6 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     
-    
 </head>
 <body class="account-page">
     <!-- Main Wrapper -->

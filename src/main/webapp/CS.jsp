@@ -205,8 +205,8 @@
 <!--     <button class="btn btn-primary submit-btn" type="submit" name="action" value="save" onclick="setAction('save')" id="saveBtn" >Save</button> -->
 <!-- ... Your form ... -->
 <div class="text-center">
-    <button class="btn btn-primary submit-btn" type="submit" name="action" value="save" onclick="setAction('save')" id="saveBtn" disabled>Save</button>
-    <button class="btn btn-primary submit-btn" type="submit" name="action" value="edit" onclick="setAction('edit')">Edit</button>
+    <button class="Addbutton" class="btn btn-primary submit-btn" type="submit" name="action" value="save" onclick="setAction('save')" id="saveBtn" disabled>Save</button>
+    <button class="Addbutton" class="btn btn-primary submit-btn" type="submit" name="action" value="edit" onclick="setAction('edit')">Edit</button>
 </div>
 <!-- ... Rest of your HTML ... -->
 

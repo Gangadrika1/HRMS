@@ -37,10 +37,10 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
 
     <!-- Lineawesome CSS -->
     <link rel="stylesheet" href="css/line-awesome.min.css">
-
+  
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="css/select2.min.css">
-
+    <link rel="stylesheet" href="css/M.css">
     <!-- Datetimepicker CSS -->
     <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 
@@ -79,7 +79,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -125,9 +125,9 @@ if (newRecordsPerPageParam != null) {
             <div class="page-header">
                 <div class="row align-items-center">
                 <div class="col">
-                <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
+               <%--  <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
                         Welcome <%= username %>!
-                      </div>
+                      </div> --%>
              
                         <h3 class="page-title">Termination</h3>
                         <ul class="breadcrumb">
@@ -136,7 +136,7 @@ if (newRecordsPerPageParam != null) {
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_termination"><i class="fa fa-plus"></i> Add Termination</a>
+                        <a href="#" class="Addbutton" data-toggle="modal" data-target="#add_termination"><i class="fa fa-plus"></i> Add Termination</a>
                     </div>
                 </div>
             </div>
@@ -144,36 +144,39 @@ if (newRecordsPerPageParam != null) {
             <!-- Search form -->
             <form action="./TerminationSearchSrv" method="post">
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <label for="terminatedemployee">TerminatedEmployee:</label>
-                            <input type="text" name="terminatedemployee" id="terminatedemployee">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <label for="terminationdate">TerminationDate:</label>
-                            <input type="text" name="terminationdate" id="terminationdate">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
-                </div>
-                <input type="hidden" name="start" value="<%= currentPage %>">
-                <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
+                
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                       
-                        <option value="10">10</option>
-                        
+                        <option value="10">10</option>                      
                     </select>
                 </div>
+                
+                    <div class="col-sm-6 col-md-3">
+                        <div class="custom-input-field form-group form-focus d-flex align-items-center">
+                            <label>TerminatedEmployee:</label>
+                            <input class="input" type="text" name="terminatedemployee" id="terminatedemployee">
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6 col-md-3">
+                       <div class="custom-input-field form-group form-focus d-flex align-items-center">
+                            <label>TerminationDate:</label>
+                            <input class="input" type="text" name="terminationdate" id="terminationdate">
+                        </div>
+                    </div>
+                    
+                   <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				   </div>
+                </div>
+                <input type="hidden" name="start" value="<%= currentPage %>">
+                <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
+                
             </form>
        
 
-        <table>
+         <table class="table" id="tab"  class="table-striped custom-table mb-0 datatable">
             <tr>
                 <th>Id</th>
                 <th>TerminatedEmployee</th>
@@ -181,8 +184,7 @@ if (newRecordsPerPageParam != null) {
                 <th>TerminationDate</th>
                 <th>Reason</th>
                 <th>NoticeDate</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th style="text-align: center;" colspan="2">Actions</th>
             </tr>
             <%
                 //int start = 0;
@@ -242,33 +244,33 @@ if (newRecordsPerPageParam != null) {
                 <td><%= train.getReason()%></td>
                 <td><%=train.getNoticeDate()%></td>
                 <td>
-                    <a href="edit_termination.jsp?id=<%= train.getId() %>">Edit</a>
+                    <a class="edit" href="edit_termination.jsp?id=<%= train.getId() %>">Edit</a>
                 </td>
                 <td>
-                    <a href="DeleteTerminationSrv?id=<%= train.getId() %>">Delete</a>
+                    <a class="delete" href="DeleteTerminationSrv?id=<%= train.getId() %>">Delete</a>
                 </td>
             </tr>
             <%
                 }
             %>
         </table>
-        <div class="row justify-content-center align-items-center" id = "flag1">
+        <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
 
             <!-- Pagination links -->
             <% if (pageno > 1) { %>
-            <a href="termination.jsp?page=<%=pageno - 1%>">Previous</a>
+            <a href="termination.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
             <% } %>
 
             <% for (int i = 1; i <= noOfPages; i++) { %>
             <% if (i == pageno) { %>
-            <%=i%>
+            <span class="pagination-number active"><%=i%></span>
             <% } else { %>
-            <a href="termination.jsp?page=<%=i%>"><%=i%></a>
+            <a href="termination.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
             <% } %>
             <% } %>
 
             <% if (pageno < noOfPages) { %>
-            <a href="termination.jsp?page=<%=pageno + 1%>">Next</a>
+            <a href="termination.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
             <% }} %>
 
         </div>

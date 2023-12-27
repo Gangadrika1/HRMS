@@ -33,7 +33,7 @@
     
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/tstyles.css">
+    <link rel="stylesheet" href="css/tstyles.css">
     
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -100,8 +100,6 @@
         <!-- Sidebar -->
         <!-- Include your sidebar HTML here -->
         <jsp:include page="sidebar.jsp" />
-
-   
         
         <!-- Page Wrapper -->
         <div class="page-wrapper">
@@ -164,7 +162,6 @@
 				
 			       </div>
 	</form>  
-	
 <table>
     <tr>
         <th>Emaployee ID</th>
@@ -263,9 +260,7 @@
                 }
                    }
              %>
-              
-
-
+      
 </table>
 
 <div class="row justify-content-center align-items-center">

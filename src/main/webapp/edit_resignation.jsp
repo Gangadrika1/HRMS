@@ -5,26 +5,25 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="java.util.ArrayList" %>
 
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Update Employee</title>
-    <!-- Add your CSS and JavaScript includes here -->
+    <!--Add your CSS and JavaScript includes here -->
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
 
-    <!-- Bootstrap CSS -->
+    <!--Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
 
-   <!-- Fontawesome CSS -->
+   <!--Fontawesome CSS -->
      <link rel="stylesheet" href="css/font-awesome.min.css">
 
- <!--    Lineawesome CSS -->
+ <!--Lineawesome CSS -->
     <link rel="stylesheet" href="css/line-awesome.min.css">
 
- <!--    Select2 CSS -->
+ <!--Select2 CSS -->
     <link rel="stylesheet" href="css/select2.min.css">
 
  <!--    Datetimepicker CSS -->
@@ -35,7 +34,6 @@
  <!--    table styles CSS -->
     <link rel="stylesheet" href="css/tstyles.css">
 
-   
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
  </head>
@@ -98,11 +96,11 @@
               
                         <div class="form-group">
                             <label class="col-form-label">Notice Date <span class="text-danger">*</span></label>
-                            <input name="noticedate" value="<%= resignation.getNoticeDate() %>" required class="form-control" type="text">
+                            <input name="noticedate" value="<%= resignation.getNoticeDate() %>" required class="form-control" type="date">
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Resignation Date <span class="text-danger">*</span></label>
-                            <input name="resignationdate" value="<%= resignation.getResignationDate() %>" required class="form-control" type="text">
+                            <input name="resignationdate" value="<%= resignation.getResignationDate() %>" required class="form-control" type="date">
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">reason <span class="text-danger">*</span></label>

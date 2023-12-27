@@ -1,22 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.weblabs.service.impl.AddRPDAO" %>
-<%@ page import="com.weblabs.beans.AddRolePermissionBean" %>
+<%@ page import="com.weblabs.service.impl.AddRolesDAO" %>
+<%@ page import="com.weblabs.beans.AddRolesBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 
 <%
-HttpSession sdsession = request.getSession(true);
-
-// Retrieve the username attribute from the session
-String username = (String) sdsession.getAttribute("username");
-String roleIDString = (String) sdsession.getAttribute("RoleID");
-// Check if the user is logged in or redirect to the login page
-if (roleIDString == null) {
-response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
-} else {
-   int roleid = Integer.parseInt(roleIDString);
-
+    // Getting the username from the session
+    String username = (String) session.getAttribute("username");
 %>
 
 <!DOCTYPE html>
@@ -60,6 +51,13 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <script src="js/respond.min.js"></script>
    
     <title>Leave List</title>
+    <style>
+#table{
+    width:1210px;
+    margin-left: 30px;
+    border: 2px solid gray;
+    }
+</style>
 </head>
 <body>
 <%
@@ -82,7 +80,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 10; // Default value
+int newRecordsPerPage = 5; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -127,66 +125,69 @@ if (newRecordsPerPageParam != null) {
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
-                <div class="col">
-				<div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                    Welcome <%= username %>!
-                  </div>
-					<h3 class="page-title">Role Permissions</h3>
-					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-						<li class="breadcrumb-item active">Rolepermissions</li>
-					</ul>
-				</div>
+                    <div class="col">
+								<h3 class="page-title">Roles</h3>
+								<ul class="breadcrumb">
+									<li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+									<li class="breadcrumb-item active">Roles</li>
+								</ul>
+							</div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_rp"><i class="fa fa-plus"></i> Add Roles</a>
-                        <!-- <div class="view-icons">
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#addroles"><i class="fa fa-plus"></i> Add Roles</a>
+                        <div class="view-icons">
                             <a href="leaves.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="leaves-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
-<form action="./RpSearchSrv" method="post">
+<form action="./LeaveSearchSrv" method="post">
   
             <div class="row filter-row">
+               <div  class="col-sm-6 col-md-3">  
+				      <div style="width:170px;" class="form-group form-focus">
+					   <input name="promotionfor" name="employee" id="employee" type="text" class="form-control floating">
+					   <label class="focus-label">promotion for</label>
+				     </div>
+				</div>
+				
+                <div class="col-sm-6 col-md-3"> 
+				     <div style="width:170px; margin-right:60px;" class="form-group form-focus select-focus">
+			            <input class="form-control floating" type="date" value="" name="start_date" id="start_date" placeholder=" ">
+			          <label class="focus-label">Promotion Date</label>
+			        </div>
+			       </div>
+                
+                 <div class="col-sm-6 col-md-3"> 
+				     <div style="width:170px;" class="form-group form-focus select-focus">
+			            <input class="form-control floating" type="date" value="" name="end_date" id="end_date" placeholder=" ">
+			          <label class="focus-label">Promotion Date</label>
+			        </div>
+			       </div>
+			       
                 <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <label for="RoleID">RoleID:</label>
-                        <input type="text" name="RoleID" id="RoleID">
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus select-focus">
-                        <label for="RolePermissionID">RolePermissionID :</label>
-                        <input type="text" name="RolePermissionID" id="RolePermissionID">
-                    </div>
-                </div>
-               
-                <div class="col-sm-6 col-md-3">
-                    <input type="submit" value="Search">
-                </div>
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#FC041F;" type="submit" value="SEARCH">
+               </div>
+                
                  </div>
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                <div class="col-sm-6 col-md-3" id = "flag">
+                <div class="col-sm-6 col-md-3">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        
                         <option value="10">10</option>
-                        
                     </select>
                 </div>
             </form>
                </div>
-            
-        <table>
 
+
+        <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid gray;">
+      
                 <tr>
-                     <th>RolePermissionID</th>
                     <th>RoleID</th>
-                    <th>ModuleName</th>
-                    <th>FormName</th>
-                    <th>PermissionType</th>
+                    <th>RoleName</th>
+                    <th>Description</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -206,52 +207,56 @@ if (newRecordsPerPageParam != null) {
 
        		      start = (pageno - 1) * limit;
        		     //pagenation code ended
-                String employeeFilter = request.getParameter("RoleID");
-                String startFilter = request.getParameter("RolePermissionID");
-               
-                List<AddRolePermissionBean> leaves;
+                String employeeFilter = request.getParameter("employee");
+                String startFilter = request.getParameter("start_date");
+                String endFilter = request.getParameter("end_date");
+                List<AddRolesBean> leaves;
                 String whereClause = ""; // Initialize an empty whereClause
 
                 if (employeeFilter != null && !employeeFilter.isEmpty()) {
-                    whereClause = "RoleID like '%" + employeeFilter +"%'";
+                    whereClause = "employee like '%" + employeeFilter +"%'";
                 }
 
                 if (startFilter != null && !startFilter.isEmpty()) {
                     if (!whereClause.isEmpty()) {
                         whereClause += " or ";
                     }
-                    whereClause += "RolePermissionID = '" + startFilter + "'";
+                    whereClause += "starting_at = '" + startFilter + "'";
                 }
 
-               
+                if (endFilter != null && !endFilter.isEmpty()) {
+                    if (!whereClause.isEmpty()) {
+                        whereClause += " or ";
+                    }
+                    whereClause += "ending_on = '" + endFilter + "'";
+                    
+                } 
 
               //page
-                int recordcount= AddRPDAO.totalCount();
+                int recordcount= AddRolesDAO.totalCount();
 
                noOfPages = (int) Math.ceil((double) recordcount / limit);
                //pagee
                 if (!whereClause.isEmpty()) {
                     // Apply the whereClause condition
-                    leaves = AddRPDAO.getFilteredRP(whereClause, start, limit);
+                    leaves = AddRolesDAO.getFilteredEmployees(whereClause, start, limit);
                 } else {
                     // Retrieve all data based on the limit
-                    leaves = AddRPDAO.getFilteredRP("", start, limit);
+                    leaves = AddRolesDAO.getFilteredEmployees("", start, limit);
                 }
 
-                for (AddRolePermissionBean leave : leaves) {
+                for (AddRolesBean leave : leaves) {
             %>
                 <tr>
-                     <td><%=leave.getRolePermissionID()%></td>
-                   <td><%=leave.getRoleID()%></td>
-                    <td><%=leave.getModuleName() %></td>
-                   <td><%=leave.getFormName()%></td>
-                   <td><%=leave.getPermissionType()%></td>
+                    <td><%=leave.getRoleID() %></td>
+                   <td><%=leave.getRoleName()%></td>
+                   <td><%=leave.getDescription()%></td>
                            
                     <td>
-                        <a href="edit_rp.jsp?RolePermissionID=<%= leave.getRolePermissionID() %>">Edit</a>
+                        <a href="edit_roles.jsp?RoleID=<%= leave.getRoleID() %>">Edit</a>
                     </td>
                     <td>
-                        <a href="DeleteRPSrv?RolePermissionID=<%= leave.getRolePermissionID() %>">Delete</a>
+                        <a href="DeleteRolesSrv?RoleID=<%= leave.getRoleID() %>">Delete</a>
                     </td>
                 </tr>
                 <%
@@ -259,31 +264,66 @@ if (newRecordsPerPageParam != null) {
                 %>
             </table>
             
-   <div class="row justify-content-center align-items-center" id = "flag1">
+                        
+<style>
+body{
+color: gray;
+}
+    .custom-pagination {
+        color: white;
+        padding: 10px; /* Adjust padding as needed */
+        border: 1px solid #fff; /* Adjust border style and color as needed */
+        border-radius: 5px; /* Optional: Add rounded corners */
+    }
+
+    .custom-pagination a {
+        color: white;
+        text-decoration: none;
+        margin: 0 5px; /* Optional: Adjust spacing between pagination links */
+    }
+
+    .custom-pagination a:hover {
+        text-decoration: underline;
+    }
+
+    .pagination-label {
+        background-color: #FC041F;
+        padding: 5px; /* Adjust padding as needed */
+        border-radius: 5px; /* Optional: Add rounded corners */
+    }
+    .pagination-number {
+        color: black;
+        background-color: white; /* Add a background color to enhance visibility if needed */
+        padding: 5px; /* Adjust padding as needed */
+        border-radius: 5px; /* Optional: Add rounded corners */
+        margin: 0 5px; /* Optional: Adjust spacing between numbers */
+    }
+</style>
+  <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="rolepermission.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="Roles.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
             <%=i%>
         <% } else { %>
-            <a href="rolepermission.jsp?page=<%=i%>"><%=i%></a>
+            <a href="Roles.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="rolepermission.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }} %>
+        <a href="Roles.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
+    <% } %>
 
 </div>
             </div> 
 
             <!-- Add Leave Modal -->
-            <jsp:include page="add_rp.jsp" />
+            <jsp:include page="add_roles.jsp" />
             <%-- <jsp:include page="edit_leave.jsp" />
             <jsp:include page="delete_leave.jsp" /> --%>
             <!-- Include your Add Leave Modal HTML here -->
@@ -311,7 +351,7 @@ if (newRecordsPerPageParam != null) {
             // Make an AJAX request to the server
             $.ajax({
                 type: "POST", // Use POST or GET depending on your servlet configuration
-                url: "./RpSearchSrv",
+                url: "./LeaveSearchSrv",
                 data: {
                     department: departmentFilter,
                     id: idFilter
@@ -326,32 +366,6 @@ if (newRecordsPerPageParam != null) {
         });
     });
 </script>
-
-<script>
-   
-    function updateFooterVisibility(resultCount) {
-        var dropdown = document.getElementById("flag1");
-        var dropdown1=document.getElementById("flag");
-        // Set the visibility based on the result count
-        if(resultCount==-1)
-        	{
-        		dropdown.style.display = "block";
-        		dropdown1.style.display = "block";
-        	}
-        if (resultCount < 4) {
-            dropdown.style.display = "none"; // Hide the dropdown
-            dropdown1.style.display = "none";
-        } else {
-            dropdown.style.display = "block"; // Show the dropdown
-            dropdown1.style.display = "block";
-        }
-    }
-    // Update dropdown visibility on page load
-    var initialResultCount = (parseInt('<%= request.getAttribute("client") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("client") %>');
-    console.log(initialResultCount);
-    updateFooterVisibility(initialResultCount);
-</script>
-
 
 
 </body>

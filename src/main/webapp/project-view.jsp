@@ -109,10 +109,10 @@
 									<li class="breadcrumb-item active">Project</li>
 								</ul>
 							</div>
-							<div class="col-auto float-right ml-auto">
+							<%-- <div class="col-auto float-right ml-auto">
 								<a href="includes/projects/edit.jsp?id=<%= expense.getProject_id()%>"> Edit Project</a>
 								<a href="task-board.jsp" class="btn btn-white float-right m-r-10" data-toggle="tooltip" title="Task Board"><i class="fa fa-bars"></i></a>
-							</div>
+							</div> --%>
 						</div>
 					</div>
 					<!-- /Page Header -->
@@ -567,12 +567,12 @@
 				<div id="edit_project" class="modal custom-modal fade" role="dialog">
 					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 						<div class="modal-content">
-							<div class="modal-header">
+							<!-- <div class="modal-header">
 								<h5 class="modal-title">Edit Project</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-							</div>
+							</div> -->
 							<div class="modal-body">
 								<form>
 									<div class="row">
@@ -702,11 +702,11 @@
 				<%
     HttpSession sessionstatus = request.getSession(true);
     if (sessionstatus.getAttribute("status") != null && sessionstatus.getAttribute("status").equals("Expenses Position Updated Successfully!")) {
-        response.sendRedirect("expenses.jsp");
+        response.sendRedirect("leads.jsp");
     } else {
 %>
    <div class="col-sm-6">
-		<p>Expenses not found with the provided ID.</p>
+		
 </div>
 <%
     }

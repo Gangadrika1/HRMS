@@ -1,5 +1,5 @@
 <form action="./AddHolidaySrv" method="post">
-<div class="modal custom-modal fade" id="add_holiday" role="dialog">
+<div class="modal custom-modal fade" id="addholiday" role="dialog">
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content">
 							<div class="modal-header">

@@ -36,7 +36,7 @@
 		
 		<!-- Datatable CSS -->
 		<link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
-		
+		 <link rel="stylesheet" href="css/M.css">
 		<!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
          
@@ -57,7 +57,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "5"; // Set a default value, e.g., 1
+    recordsPerPageStr = "10"; // Set a default value, e.g., 1
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -69,7 +69,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -121,7 +121,7 @@ if (newRecordsPerPageParam != null) {
 								</ul>
 							</div>
 							<div class="col-auto float-right ml-auto">
-								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_training"><i class="fa fa-plus"></i> Add New </a>
+								<a href="#" class="Addbutton" data-toggle="modal" data-target="#add_training"><i class="fa fa-plus"></i> Add New </a>
 							</div>
 							
 						</div>
@@ -133,43 +133,40 @@ if (newRecordsPerPageParam != null) {
 <form action="./TrainingSRV" method="post">
   		
                 <div class="row filter-row">
+                
+                 <div class="col-sm-6 col-md-3" id = "flag">
+			       <label>Records per page:</label>
+			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+					    <option value="10">10</option>
+					</select>
+					
+			       </div>
+                
                 <div class="col-sm-6 col-md-3">  
-				   <div class="form-group form-focus">
-					<input name="TrainingType" id="TrainingType" type="text" class="form-control floating">
-					<label class="focus-label">Training Type</label>
+				   <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				   	<label>Training Type</label>
+					<input class="input" name="TrainingType" id="TrainingType" type="text" class="form-control floating">
 				   </div>
 				</div>
 				
                <div class="col-sm-6 col-md-3">  
-				<div class="form-group form-focus">
-					<input name="TainingID" id="id" type="text" class="form-control floating">
-					<label class="focus-label">Taining ID</label>
+				 <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				 	<label >Taining ID</label>
+					<input class="input" name="TainingID" id="id" type="text" class="form-control floating">
 				</div>
 				</div>
 				
-                    <div class="col-sm-6 col-md-3" >
-                        <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-                    </div> 
+                  <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
+				 
                 </div>
                  <input type="hidden"  name="start" value="<%= currentPage %>">
-       	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
-	
-       	 			  
-		          
-			       <div class="col-sm-6 col-md-3" id = "flag">
-			       <label>Records per page:</label>
-			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-					    <option value="5">5</option>
-					    <option value="10">10</option>
-					    <option value="20">20</option>
-					   <option value="50">50</option>
-					</select>
-					
-			       </div>
+       	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">   
 	</form>
 	</div>
 	
-		<table id="table" class="table-striped custom-table mb-0 datatable">
+		<table id="table" style="margin-left: 10px;"  class="table-striped custom-table mb-0 datatable">
 								
 										<tr>
 											<th style="width: 30px;">ID</th>
@@ -181,8 +178,8 @@ if (newRecordsPerPageParam != null) {
 											<th>EndDate</th>
 											<th>Description</th>
 											<th>Status</th>
-											<th>Edit</th>
-											<th>Delete</th>
+											 <th style="text-align: center;" colspan="2">Actions</th>
+										
 											
 										</tr>
 								
@@ -243,10 +240,10 @@ if (newRecordsPerPageParam != null) {
             <td><%= train.getDescription()%></td>
             <td><%= train.getStatus()%></td>
              <td>
-        <a href="edit_training.jsp?TainingID=<%= train.getId()%>">Edit</a>
+        <a class="edit" href="edit_training.jsp?TainingID=<%= train.getId()%>">Edit</a>
     </td>
     <td>
-        <a href="DeleteTrainingServlet?TainingID=<%= train.getId() %>">Delete</a>
+        <a class="delete" href="DeleteTrainingServlet?TainingID=<%= train.getId() %>">Delete</a>
     </td>
 </tr>
        
@@ -254,26 +251,24 @@ if (newRecordsPerPageParam != null) {
             }
         %>
 </table>
-
-
-<div class="row justify-content-center align-items-center" id = "flag1">
+<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="training.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="training.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%=i%>
+           <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="training.jsp?page=<%=i%>"><%=i%></a>
+            <a href="training.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="training.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="training.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
 
 </div>
@@ -288,14 +283,14 @@ if (newRecordsPerPageParam != null) {
 				<!-- <?php include_once("includes/modals/training/add.jsp"); ?-->
 				<jsp:include page="add_training.jsp" />
 				<!-- /Add Training List Modal -->
-				
+			<%-- 	
 				<!-- Edit Training List Modal -->
 				<jsp:include page="delete_training.jsp" />
 				<!-- /Edit Training List Modal -->
 				
 				<!-- Delete Training List Modal -->
 				<jsp:include page="edit_training.jsp" />
-				<!-- /Delete Training List Modal -->
+				<!-- /Delete Training List Modal --> --%>
 		
 		<!-- jQuery -->
         <script src="js/jquery-3.2.1.min.js"></script>
@@ -310,9 +305,9 @@ if (newRecordsPerPageParam != null) {
 		<!-- Select2 JS -->
 		<script src="js/select2.min.js"></script>
 		
-		<!-- Datatable JS -->
+	<!-- 	<!-- Datatable JS 
 		<script src="js/jquery.dataTables.min.js"></script>
-		<script src="js/dataTables.bootstrap4.min.js"></script>
+		<script src="js/dataTables.bootstrap4.min.js"></script> -->
 		
 		<!-- Datetimepicker JS -->
 		<script src="js/moment.min.js"></script>

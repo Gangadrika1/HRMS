@@ -1,7 +1,22 @@
+<%@page import="com.weblabs.service.impl.GoalsTypeDAO"%>
+<%@page import="com.weblabs.beans.AddGoalsType"%>
 <%@ page import="com.weblabs.service.impl.GoalsDao" %>
 <%@ page import="com.weblabs.beans.AddGoals" %>
 <%@ page import="java.util.List" %>
-<form action="./AddGoalsSrv" method="post">
+<script>
+    function validateDates() {
+        var startDateStr = document.getElementsByName("StartDate")[0].value;
+        var endDateStr = document.getElementsByName("EndDate")[0].value;
+        var startDate = new Date(startDateStr);
+        var endDate = new Date(endDateStr);
+        if (startDate > endDate) {
+            alert("End date must be after the start date.");
+            return false;
+        }
+        return true;
+    }
+</script>
+<form action="./AddGoalsSrv" method="post" onsubmit="return validateDates();">
 <div id="add_goal" class="modal custom-modal fade" role="dialog">
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content">
@@ -18,8 +33,8 @@
 												<label class="col-form-label">Goal Type</label>
 												 <select required name="Type" class="select">
                                              <%
-											List<AddGoals> dept = GoalsDao.getAllGoals();
-											for(AddGoals dep: dept)
+											List<AddGoalsType> dept = GoalsTypeDAO.getAllGoals();
+											for(AddGoalsType dep: dept)
 											{
 											%>
                                            <option  value="<%= dep.getId()%>"> <%= dep.getType()%></option>
@@ -52,13 +67,13 @@
 										<div class="col-sm-6">
 											<div class="form-group">
 												<label>Start Date </label>
-												<input required name="StartDate" class="form-control " type="date">
+												<input id="StartDate" required name="StartDate" class="form-control " type="date">
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group">
 												<label>End Date <span class="text-danger">*</span></label>
-												<input required name="EndDate" class="form-control " type="date">
+												<input id="EndDate" required name="EndDate" class="form-control " type="date">
 											</div>
 										</div>
 										
@@ -79,8 +94,8 @@
 
 											<div class="col-sm-6">
 												<div class="form-group">
-													<label hidden class="col-form-label">Progress</label>
-													<input hidden name="Progress"  class="form-control" type="text">
+													<label  class="col-form-label">Progress</label>
+													<input name="Progress"  class="form-control" type="text">
 												</div>
 											</div>
 											
@@ -126,6 +141,4 @@
         return true;
     }
 </script>
-				 
-				
-				<%   response.sendRedirect("goal-tracking.jsp"); %>
+<%   response.sendRedirect("goal-tracking.jsp"); %>

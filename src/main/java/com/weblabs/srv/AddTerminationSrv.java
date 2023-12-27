@@ -65,8 +65,6 @@ import com.weblabs.service.impl.AddTerminationServiceImpl;
 @WebServlet("/AddTerminationSrv")
 public class AddTerminationSrv extends HttpServlet {
 
-   
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

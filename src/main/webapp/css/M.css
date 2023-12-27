@@ -1,6 +1,7 @@
 .table {
     width: 1210px;
     border: 2px solid gray;
+    
 }
 .custom-pagination {
         color: white;
@@ -24,7 +25,7 @@
         padding: 5px; /* Adjust padding as needed */
         border-radius: 5px; /* Optional: Add rounded corners */
     }
-    .pagination-number {
+   .pagination-number{
         color: black;
         background-color: white; /* Add a background color to enhance visibility if needed */
         padding: 5px; /* Adjust padding as needed */
@@ -36,17 +37,18 @@
    }
 .input{
 	width:180px;
-	height:30px;
-	border-radius: 15px;
-	margin-left: 20px;
+	height:38px;
+	border-radius: 10px;
+	margin-left: 5px;
    }
 .search{
 	color:white; 
 	border-radius:15px;
 	height:40px;
 	width:140px;
-	background-color:#f10edb;
-	border-color: #f10edb;
+	background-color:#80bafb;
+	border-color: #80bafb;
+	margin-left: 60px;
    }
     
     .Addbutton{
@@ -76,7 +78,24 @@
 .edit {
     background-color: #f10edb;
     border-radius: 5px;
+    color: white;
+    height: 20px; /* Adjust as needed */
+    width: 50px; /* Adjust as needed */
+    display: inline-block; /* Ensures the width and height properties work */
+    text-align: center; /* Centers the text horizontally */
+    line-height: 20px; /* Centers the text vertically */
+    text-decoration: none; /* Removes the default underline on links */
+}
+
+.delete {
+    background-color: #f10edb;
+    border-radius: 5px;
     font-size: 14px; /* Adjust the text size as needed */
     padding: 3px;
     color: white;
 }
+.active {
+        color: #f10edb; /* Set the color for the active page */
+    }
+    
+    

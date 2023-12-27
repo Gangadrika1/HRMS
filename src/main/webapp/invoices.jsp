@@ -122,7 +122,7 @@
                             </ul>
                         </div>
                         <div class="col-auto float-right ml-auto">
-                            <a href="create-invoice.jsp" class="btn add-btn"><i class="fa fa-plus"></i> Create Invoice</a>
+                            <a href="create-invoice.jsp" class="Addbutton"><i class="fa fa-plus"></i> Create Invoice</a>
                         </div>
                     </div>
                 </div>
@@ -202,7 +202,7 @@
                                         <td class="toggle"><%= invoice.getTaxamount() %></td>
                                         <td class="toggle"><%= invoice.getGrandtotal() %></td>
                                         <td>
-                                      <a href="edit_invoice.jsp?id=<%= invoice.getId() %>">Edit</a>
+                                      <a class="edit" href="edit_invoice.jsp?id=<%= invoice.getId() %>">Edit</a>
                                        </td>
                                         
                                     </tr>

@@ -37,9 +37,9 @@ public class EditRPSrv extends HttpServlet {
         AddRPServiveImpl dao = new AddRPServiveImpl();
         
 
-        String status11= dao.updateRP(rolepermissionId,roleid,modulename,formname,permissiontype);
+       status1= dao.updateRP(rolepermissionId,roleid,modulename,formname,permissiontype);
 
-        RequestDispatcher rd = request.getRequestDispatcher("rolepermission.jsp?message=" + status11);
+        RequestDispatcher rd = request.getRequestDispatcher("roles-permissions.jsp?message=" + status1);
         rd.forward(request, response);
     }
 

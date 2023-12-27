@@ -49,18 +49,10 @@ public class RpSearchSrv extends HttpServlet {
 	        		clients = AddRPDAO.getFilteredRP("", start, limit);
 	        }
 	        
-	        for (AddRolePermissionBean client : clients) {
-	            System.out.println(client); // Assuming AddClient class has a meaningful toString() implementation
-	        }
-
-
-	        System.out.println("Clients record count: " + clients.size());
-	        
-
 	      request.setAttribute("clients", clients);
 	      request.setAttribute("search", "true");
 	      request.setAttribute("client", clients.size());   
-	      request.getRequestDispatcher("/rolepermission.jsp").forward(request, response);
+	      request.getRequestDispatcher("roles-permissions.jsp").forward(request, response);
 
 	      //  request.getRequestDispatcher("/holidays.jsp").forward(request, response);
 	    }

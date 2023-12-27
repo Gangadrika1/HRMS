@@ -29,7 +29,7 @@
 
     <!-- Datetimepicker CSS -->
     <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
-
+      <link rel="stylesheet" href="css/M.css">
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     <!-- table styles CSS -->
@@ -164,7 +164,7 @@
                         </div>
                     </div>
                     <div class="submit-section">
-					<button class="btn btn-primary submit-btn" type="submit">Submit</button>
+					<button class="Addbutton" class="btn btn-primary submit-btn" type="submit">Submit</button>
 					</div>
                     
                 </div>

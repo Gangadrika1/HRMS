@@ -21,17 +21,6 @@ public class AddRolesSrv extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        HttpSession session = request.getSession();
-//        String userType = (String) session.getAttribute("usertype");
-//        String userName = (String) session.getAttribute("username");
-//        String password = (String) session.getAttribute("password");
-//
-//        if (userType == null || !userType.equals("admin")) {
-//            response.sendRedirect("login.jsp?message=Access Denied!");
-//        } else if (userName == null || password == null) {
-//            response.sendRedirect("login.jsp?message=Session Expired, Login Again to Continue!");
-//        }
-
         String status = "Add Role Failed!";
         String rolename = request.getParameter("rolename");
         String description = request.getParameter("description");

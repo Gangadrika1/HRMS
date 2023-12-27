@@ -81,7 +81,7 @@
     											for(AddRolesBean dep: dept)
     											{
     											%>
-                                               <option><%= dep.getRoleName() %></option>
+                                               <option value="<%= dep.getRoleID()%>"><%= dep.getRoleName() %></option>
                                             <%
                               					}
     									     %>                       
@@ -117,4 +117,4 @@
                          </div>
                         </div>
                       </form> 
-                      <%   response.sendRedirect("rolepermission.jsp"); %> 
+                      <%   response.sendRedirect("roles-permissions.jsp"); %> 

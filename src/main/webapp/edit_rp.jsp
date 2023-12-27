@@ -149,7 +149,7 @@ if (leaves != null && !leaves.isEmpty()) {
     HttpSession sessionstatus = request.getSession(true);
 
     if (sessionstatus.getAttribute("status") != null && sessionstatus.getAttribute("status").equals(" Position Updated Successfully!")) {
-        response.sendRedirect("rolepermission.jsp");
+        response.sendRedirect("roles-permissions.jsp");
     } else {
 %>
    <div class="col-sm-6">

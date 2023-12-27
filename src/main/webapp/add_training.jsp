@@ -7,7 +7,21 @@
 <%@ page import="com.weblabs.service.impl.AddTrainingDAO" %>
 <%@ page import="com.weblabs.beans.AddTraining" %>
 <%@ page import="java.util.List" %>
-<form action="./AddTrainingServlet">
+
+<script>
+    function validateDates() {
+        var startDateStr = document.getElementsByName("StartingDate")[0].value;
+        var endDateStr = document.getElementsByName("EndingDate")[0].value;
+        var startDate = new Date(startDateStr);
+        var endDate = new Date(endDateStr);
+        if (startDate > endDate) {
+            alert("End date must be after the start date.");
+            return false;
+        }
+        return true;
+    }
+</script>
+<form action="./AddTrainingServlet" method="post" onsubmit="return validateDates();">
 <div id="add_training" class="modal custom-modal fade" role="dialog">
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content">

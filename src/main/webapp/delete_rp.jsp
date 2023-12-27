@@ -29,6 +29,6 @@ console.log("you have entered deleteEmployee");
     });
 </script>
 
-<%   response.sendRedirect("rolepermission.jsp"); %>
+<%   response.sendRedirect("roles-permissions.jsp"); %>
 </body>
 </html>

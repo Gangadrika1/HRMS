@@ -1,3 +1,5 @@
+<%@page import="com.weblabs.service.impl.GoalsTypeDAO"%>
+<%@page import="com.weblabs.beans.AddGoalsType"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.weblabs.service.impl.GoalsDao" %>
 <%@ page import="com.weblabs.beans.AddGoals" %>
@@ -94,8 +96,8 @@
                             <label class="col-form-label">Goal Type <span class="text-danger">*</span></label>
                            <select required name="Type" class="select">
                                              <%
-											List<AddGoals> dept = GoalsDao.getAllGoals();
-											for(AddGoals dep: dept)
+											List<AddGoalsType> dept = GoalsTypeDAO.getAllGoals();
+											for(AddGoalsType dep: dept)
 											{
 											%>
                                            <option  value="<%= dep.getId()%>"> <%= dep.getType()%></option>

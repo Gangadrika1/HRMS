@@ -164,7 +164,7 @@ if (newRecordsPerPageParam != null) {
 							<div class="text-right mb-4 clearfix">
 							<!-- <button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#delete_addition"><i class="fa fa-plus"></i> Delete Addition</button>
 							<button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#edit_addition"><i class="fa fa-plus"></i>Edit Addition</button> -->
-						   <button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#add_addition"><i class="fa fa-plus"></i> Add Addition</button>
+						   <button class="Addbutton" type="button" data-toggle="modal" data-target="#add_addition"><i class="fa fa-plus"></i> Add Addition</button>
 							</div>
 							<!-- /Add Addition Button -->
 
@@ -234,34 +234,34 @@ if (newRecordsPerPageParam != null) {
                           <td><%= holiday.getUnitAmount()%></td>
                            <td><%= holiday.getPayroll_id()%></td>
                         <td>
-                            <a href="edit_additions.jsp?Payroll_id=<%= holiday.getPayroll_id()%>">Edit</a>
+                            <a class="edit" href="edit_additions.jsp?Payroll_id=<%= holiday.getPayroll_id()%>">Edit</a>
                             </td>
                             <td>
-                            <a href="DeleteAdditionServlet?id=<%= holiday.getPayroll_id()%>">Delete</a>
+                            <a class="delete" href="DeleteAdditionServlet?id=<%= holiday.getPayroll_id()%>">Delete</a>
                         </td>
                     </tr>
                     <%
                         }
                     %> 
                 </table>
-<div class="row justify-content-center align-items-center">
+<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="payroll-items.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="payroll-items.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%= i %>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="payroll-items.jsp?page=<%=i%>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+            <a href="payroll-items.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="payroll-items.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="payroll-items.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
 
 </div>
@@ -279,7 +279,7 @@ if (newRecordsPerPageParam != null) {
 							<div class="text-right mb-4 clearfix">
 							<!-- <button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#delete_overtime"><i class="fa fa-plus"></i> Delete Overtime</button>
 							<button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#edit_overtime"><i class="fa fa-plus"></i> Edit Overtime</button> -->
-								<button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#add_overtime"><i class="fa fa-plus"></i> Add Overtime</button>
+								<button class="Addbutton" type="button" data-toggle="modal" data-target="#add_overtime"><i class="fa fa-plus"></i> Add Overtime</button>
 							</div>
 							<!-- /Add Overtime Button -->
 
@@ -349,34 +349,33 @@ if (newRecordsPerPageParam != null) {
                           <td><%= holiday.getDescription()%></td>
                            
                         <td>
-                            <a href="edit_overtime.jsp?Employee_Id=<%= holiday.getEmployee_Id()%>">Edit</a>
+                            <a class="edit" href="edit_overtime.jsp?Employee_Id=<%= holiday.getEmployee_Id()%>">Edit</a>
                             </td>
                             <td>
-                            <a href="DeleteOverTimeSrv?id=<%= holiday.getEmployee_Id()%>">Delete</a>
+                            <a class="delete" href="DeleteOverTimeSrv?id=<%= holiday.getEmployee_Id()%>">Delete</a>
                         </td>
                     </tr>
                     <%
                         }
                     %> 
                 </table>
-<div class="row justify-content-center align-items-center">
-   
+<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1"> 
    <!-- Pagination links -->
 
     <% if (pageno2 > 1) { %>
-        <a href="payroll-items.jsp?tab_overtime&page=<%=pageno2 - 1%>">Previous</a>
+        <a href="payroll-items.jsp?tab_overtime&page=<%=pageno2 - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages2; i++) { %>
         <% if (i == pageno2) { %>
-            <%= i %>
+           <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="payroll-items.jsp?tab_overtime&page=<%=i%>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+            <a href="payroll-items.jsp?tab_overtime&page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno2 < noOfPages2) { %>
-      <a href="payroll-items.jsp?tab_overtime&page=<%=pageno2 + 1%>">Next</a>
+      <a href="payroll-items.jsp?tab_overtime&page=<%=pageno2 + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
 
 </div>
@@ -394,7 +393,7 @@ if (newRecordsPerPageParam != null) {
 							<div class="text-right mb-4 clearfix">
 							<!-- <button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#delete_deduction"><i class="fa fa-plus"></i> Delete Deduction</button>
 							<button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#edit_deduction"><i class="fa fa-plus"></i> Edit Deduction</button> -->
-								<button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#add_deduction"><i class="fa fa-plus"></i> Add Deduction</button>
+								<button class="Addbutton" type="button" data-toggle="modal" data-target="#add_deduction"><i class="fa fa-plus"></i> Add Deduction</button>
 							</div>
 							<!-- /Add Deductions Button -->
 
@@ -463,10 +462,10 @@ if (newRecordsPerPageParam != null) {
 								    <td><%= holiday.getPayroll_id()%></td>
 								
 								    <td>
-								        <a href="edit_deduction.jsp?id=<%= holiday.getPayrolldeductionid() %>">Edit</a>
+								        <a class="edit" href="edit_deduction.jsp?id=<%= holiday.getPayrolldeductionid() %>">Edit</a>
 								    </td>
 								    <td>
-								        <a href="DeleteDeductionServlet?payrolldeductionid=<%= holiday.getPayroll_id()%>">Delete</a>
+								        <a class="delete" href="DeleteDeductionServlet?payrolldeductionid=<%= holiday.getPayroll_id()%>">Delete</a>
 								    </td>
 								</tr>
 								<%
@@ -474,24 +473,24 @@ if (newRecordsPerPageParam != null) {
 								%> 
 								</table>
 								
-								<div class="row justify-content-center align-items-center">
+								<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
 								   
 								   <!-- Pagination links -->
 								
 								<% if (pageno3 > 1) { %>
-								    <a href="payroll-items.jsp?page=<%= pageno3 - 1 %>">Previous</a>
+								    <a href="payroll-items.jsp?page=<%= pageno3 - 1 %>"><span class="pagination-label">Previous</span></a>
 								<% } %>
 								
 								<% for (int i = 1; i <= noOfPages3; i++) { %>
 								    <% if (i == pageno3) { %>
-								        <%= i %>
+								       <span class="pagination-number active"><%=i%></span>
 								    <% } else { %>
-								        <a href="payroll-items.jsp?page=<%= i %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+								        <a href="payroll-items.jsp?page=<%= i %>"><span class="pagination-number"><%=i%></span></a>
 								    <% } %>
 								<% } %>
 								
 								<% if (pageno3 < noOfPages3) { %>
-								    <a href="payroll-items.jsp?page=<%= pageno3 + 1 %>">Next</a>
+								    <a href="payroll-items.jsp?page=<%= pageno3 + 1 %>"><span class="pagination-label">Next</span></a>
 								<% } %>
 
 
@@ -512,7 +511,7 @@ if (newRecordsPerPageParam != null) {
 							<div class="text-right mb-4 clearfix">
 							<!-- <button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#delete_payroll"><i class="fa fa-plus"></i> Delete Payroll</button>
 							<button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#edit_payroll"><i class="fa fa-plus"></i>Edit Payroll</button> -->
-						    <button class="btn btn-primary add-btn" type="button" data-toggle="modal" data-target="#add_payroll"><i class="fa fa-plus"></i> Add Payroll</button>
+						    <button class="Addbutton" type="button" data-toggle="modal" data-target="#add_payroll"><i class="fa fa-plus"></i> Add Payroll</button>
 							</div>
 							<!-- /Add Addition Button -->
 							<!-- Payroll Additions Table -->
@@ -583,10 +582,10 @@ if (newRecordsPerPageParam != null) {
 								        <td><%= holiday.getLast_modified_time()%></td>
 								
 								        <td>
-								            <a href="edit_deduction.jsp?id=<%= holiday.getPayroll_id()%>">Edit</a>
+								            <a class="edit" href="edit_deduction.jsp?id=<%= holiday.getPayroll_id()%>">Edit</a>
 								        </td>
 								        <td>
-								            <a href="DeletePayrollSrv?id=<%= holiday.getPayroll_id()%>">Delete</a>
+								            <a class="delete" href="DeletePayrollSrv?id=<%= holiday.getPayroll_id()%>">Delete</a>
 								        </td>
 								    </tr>
 								<%
@@ -594,24 +593,24 @@ if (newRecordsPerPageParam != null) {
 								%> 
 								</table>
 								
-								<div class="row justify-content-center align-items-center">
+								<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
 								   
 								   <!-- Pagination links -->
 								
 								<% if (pageno4 > 1) { %>
-								    <a href="payroll-items.jsp?page=<%= pageno4 - 1 %>">Previous</a>
+								    <a href="payroll-items.jsp?page=<%= pageno4 - 1 %>"><span class="pagination-label">Previous</span></a>
 								<% } %>
 								
 								<% for (int i = 1; i <= noOfPages4; i++) { %>
 								    <% if (i == pageno4) { %>
-								        <%= i %>
+								       <span class="pagination-number active"><%=i%></span>
 								    <% } else { %>
-								        <a href="payroll-items.jsp?page=<%= i %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+								        <a href="payroll-items.jsp?page=<%= i %>"><span class="pagination-number"><%=i%></span></a>
 								    <% } %>
 								<% } %>
 								
 								<% if (pageno4 < noOfPages4) { %>
-								    <a href="payroll-items.jsp?page=<%= pageno4 + 1 %>">Next</a>
+								    <a href="payroll-items.jsp?page=<%= pageno4 + 1 %>"><span class="pagination-label">Next</span></a>
 								<% } %>
 								
 								

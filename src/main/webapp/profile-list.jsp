@@ -163,7 +163,7 @@
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="information.jsp" class="btn add-btn"><i class="fa fa-plus"></i> Employee Information</a>
+                        <a href="information.jsp" class="Addbutton"><i class="fa fa-plus"></i> Employee Information</a>
                     </div>
                 </div>
             </div>
@@ -171,20 +171,7 @@
 					 <!-- Search form -->
             <form action="./ProfileSearchSrv" method="post">
                 <div class="row filter-row">
-                   
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                            <label for="date">EmployeeID:</label>
-                            <input type="text" name="employeeid" id="date">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
-                </div>
-                <input type="hidden" name="start" value="<%= currentPage %>">
-                <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                <div class="col-sm-6 col-md-3">
+                   <div class="col-sm-6 col-md-3">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
                         <option value="5">5</option>
@@ -193,6 +180,19 @@
                         <option value="50">50</option>
                     </select>
                 </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group form-focus select-focus">
+                            <label for="date">EmployeeID:</label>
+                            <input class="input" type="text" name="employeeid" id="date">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
+                </div>
+                <input type="hidden" name="start" value="<%= currentPage %>">
+                <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
+                
             </form>
         </div> <!-- Closes the filter-row div -->
 
@@ -201,8 +201,9 @@
 			 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                          <table class="table table-striped custom-table" id="parentTable">
-                                <thead>
+                        
+                         <table id="table" style="margin-left: 10px;"  class="table-striped custom-table mb-0 datatable">
+                             
                                     <tr>
                                         <th>ID</th>
                                         <th>Employee_id</th>
@@ -220,8 +221,7 @@
                                         <th>ReportsTo</th>
                                    </tr>
                                    
-                                </thead>
-                               <tbody>
+                               
 							    <%
 							        int start = 0;
 							        int limit = 25;

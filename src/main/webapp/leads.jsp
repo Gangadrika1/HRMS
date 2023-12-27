@@ -58,7 +58,7 @@
 	int currentPage = Integer.parseInt(currentPageStr);
 	
 	// Handle the change in recordsPerPage here
-	int newRecordsPerPage = 5; // Default value
+	int newRecordsPerPage = 10; // Default value
 	String newRecordsPerPageParam = request.getParameter("recordsPerPage");
 	if (newRecordsPerPageParam != null) {
 	    newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -187,7 +187,7 @@
 											<td>wilmerdeluna@example.com</td>
 											<td>9876543210</td>
 											<td>
-											<a href="project-view.jsp?projectname=<%=expense.getProjectname()%>"><%=expense.getProjectname()%></a>
+											<a  href="project-view.jsp?projectname=<%=expense.getProjectname()%>"><%=expense.getProjectname()%></a>
 											</td>
 											<td>
 												<ul class="team-members">
@@ -255,10 +255,10 @@
 											<%-- <td><%=expense.getCreated() %></td> --%>
 											
 							                <td>
-        		                              <a href="edit_expenses.jsp?id=<%= expense.getProject_id()%>">Edit</a>
+        		                              <a class="edit" href="edit_expenses.jsp?id=<%= expense.getProject_id()%>">Edit</a>
     		                                </td>
 			                                <td>
-			                                  <a href="DeleteExpensesSrv?id=<%= expense.getProject_id()%>">Delete</a>
+			                                  <a class="delete" href="DeleteExpensesSrv?id=<%= expense.getProject_id()%>">Delete</a>
 			                                </td>
 		<%
      
@@ -267,24 +267,24 @@
         %>
 							</tbody>
 								</table>
-								 <div class="row justify-content-center align-items-center">
-   
+							
+   <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="leads.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="leads.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%=i%>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="leads.jsp?page=<%=i%>"><%=i%></a>
+            <a href="leads.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="leads.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="leads.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
 
 </div>

@@ -1,4 +1,4 @@
-<form action="./AddGoalTypeSrv" method="post">
+<form action="./GoalTypeSRV" method="post">
 <div id="add_goaltype" class="modal custom-modal fade" role="dialog">
 					<div class="modal-dialog modal-dialog-centered" role="document">
 						<div class="modal-content">

@@ -17,7 +17,7 @@ public class rolesServiceImpl {
 		
 		
 		
-		String status = "Employee Adding Failed!";
+		String status = "Role Adding Failed!";
 
         Connection con = DBUtil.provideConnection();
         PreparedStatement ps = null;
@@ -46,17 +46,17 @@ public class rolesServiceImpl {
         return status;
 }
 
- public String deleteRole(String id) {
+ public String deleteRole(String RoleID) {
 	// TODO Auto-generated method stub
 	
-	 String status = "delete Removal Failed!";
+	 String status = "delete Role Failed!";
 
 	    Connection con = DBUtil.provideConnection();
 	    PreparedStatement ps = null;
 
 	    try {
 	        ps = con.prepareStatement("DELETE FROM roles WHERE RoleID = ?");
-	        ps.setString(1, id);
+	        ps.setString(1, RoleID);
 
 	        int k = ps.executeUpdate();
 
@@ -75,6 +75,41 @@ public class rolesServiceImpl {
 	}
 
 
+
+ public String editRole(String RoleID,String RoleName,String Description ) {
+	    String status = "Role updation failed!";
+	    
+	    Connection con = DBUtil.provideConnection();
+	    PreparedStatement ps = null;
+
+	    try {
+	        ps = con.prepareStatement("UPDATE roles SET RoleName =?, Description =? WHERE RoleID=?");  
+	        ps.setString(1, RoleName);
+	        ps.setString(2, Description);
+	        ps.setString(3, RoleID); 
+
+	        int k = ps.executeUpdate();
+
+	        if (k > 0) {
+	            status = "Role Position Updated Successfully!";
+	        }
+	    } catch (SQLException | NumberFormatException e) {
+	        e.printStackTrace();
+	    } finally {
+	        DBUtil.closeConnection(con);
+	        DBUtil.closeConnection(ps);
+	    }
+
+	    return status;
+	}
+
+	
+	
+	
+	
+	
+	
+	
 	public List<AddRolesBean> getRoles() {
 	    List<AddRolesBean> roles = new ArrayList<>();
 
@@ -111,38 +146,5 @@ public class rolesServiceImpl {
 	    }
 
 	    return roles;
-	}
-
-	public String editRole(String rolepermitionid, String roleid, String modulename, String formname,
-			String permissiontype) {
-		// TODO Auto-generated method stub
-		String status = "role updation Failed!";
-		
-		Connection con = DBUtil.provideConnection();
-	    PreparedStatement ps = null;
-
-	    try {
-	        ps = con.prepareStatement("UPDATE roles SET RoleName =?, Description =? WHERE RoleID=?");  
-	        ps.setString(1, rolepermitionid);
-	        ps.setString(2, roleid);
-	        ps.setString(3, modulename);
-	        ps.setString(3, formname);
-	        ps.setString(3, permissiontype);
-	       
-	       
-
-	        int k = ps.executeUpdate();
-
-	        if (k > 0) {
-	            status = "role Position Updated Successfully!";
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        DBUtil.closeConnection(con);
-	        DBUtil.closeConnection(ps);
-	    }
-
-	    return status;
 	}
 	}

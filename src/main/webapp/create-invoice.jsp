@@ -337,8 +337,8 @@ $(document).ready(function () {
 									</div>
 								</div>
 								<div class="submit-section">
-								<button class="btn btn-primary submit-btn m-r-10">Save &amp; Send</button>
-									<button class="btn btn-primary submit-btn">Save</button>
+								<button class="Addbutton" class="btn btn-primary submit-btn m-r-10">Save &amp; Send</button>
+									<button class="Addbutton" class="btn btn-primary submit-btn">Save</button>
 								</div>
 							
 						</div>
@@ -500,48 +500,8 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
  
- 
 	</script>
 	
-<!-- 	 <script>
-    $(document).ready(function () {
-        function reloadMonths() {
-            var selectedclientID = $("#client").val();
-            $.ajax({
-                type: "GET",
-                url: "FetchProjectnameServlet",
-                //console.log(url);
-                data: {client_username: selectedclientID},
-                success: function (data) {
-                    $("#projectname").html(data);
-                    
-                    // Trigger change event after updating invoice IDs to populate payment amount
-                    $("#projectname").trigger("change");
-                }
-            });
-        }
-
-        $("#client").change(function () {
-            reloadMonths();
-        });
-        
-        
-
-/*         $("#client").change(function () {
-            var selectedclientID = $(this).val(); */
-            $.ajax({
-                type: "GET",
-                url: "FetchEmailServlet", 
-                data: {client_username: selectedclientID},
-                success: function (aaaa) {
-                    $("#email").val(aaaa);
-                }
-            });
-
-        reloadMonths();
-    });
-</script>  
- -->		
           <script>
     var taxAmount = 0;
     var discount = 0;
@@ -696,10 +656,6 @@ window.addEventListener('DOMContentLoaded', function() {
         return true;
     }
 </script>
-
-
-
-
-		</form>
+</form>
     </body>
 </html>

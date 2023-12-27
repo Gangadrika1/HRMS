@@ -33,6 +33,7 @@
 		<!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/tstyles.css">
+        <link rel="stylesheet" href="css/M.css">
 		
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -66,7 +67,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -120,7 +121,7 @@ if (newRecordsPerPageParam != null) {
 								</ul>
 							</div>
 							<div class="col-auto float-right ml-auto">
-								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_goaltype"><i class="fa fa-plus"></i> Add New</a>
+								<a href="#" class="Addbutton" data-toggle="modal" data-target="#add_goaltype"><i class="fa fa-plus"></i> Add New</a>
 							</div>
 						</div>
 					</div>
@@ -129,35 +130,36 @@ if (newRecordsPerPageParam != null) {
 		<form action="./GoalTypeSRV" method="post" > 
   		
                 <div class="row filter-row">
-                 <div class="col-sm-6 col-md-3">  
-				      <div class="form-group form-focus">
-					   <input  name="GoalsType" id="Type" type="text" class="form-control floating">
-					   <label class="focus-label">Goals Type</label>
-				     </div>
-				</div>
-				
-                    <div class="col-sm-6 col-md-3">  
-				      <div class="form-group form-focus">
-					   <input name="GoalsTypeID" id="id" type="text" class="form-control floating">
-					   <label class="focus-label">GoalsType ID</label>
-				     </div>
-				     </div>
-				     
-                    <div class="col-sm-6 col-md-3" >
-                      <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-                    </div>
-                    
-             
-                 <input type="hidden"  name="start" value="<%= currentPage %>">
-       	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
-		          
-			       <div class="col-sm-6 col-md-3" id = "flag">
+                 <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
 					    <option value="10">10</option>
 					</select>
 					
 			       </div>
+                 <div class="col-sm-6 col-md-3">  
+				     <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				     <label>Goals Type</label>
+					   <input class="input"  name="GoalsType" id="Type" type="text" class="form-control floating">		   
+				     </div>
+				</div>
+				
+                    <div class="col-sm-6 col-md-3">  
+				      <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				       <label>GoalsType ID</label>
+					   <input class="input" name="GoalsTypeID" id="id" type="text" class="form-control floating">
+				     </div>
+				     </div>
+				     
+                    <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				   </div>
+                    
+             
+                 <input type="hidden"  name="start" value="<%= currentPage %>">
+       	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
+		          
+			      
 			       </div>
 	</form>
 								<table>
@@ -220,10 +222,10 @@ if (newRecordsPerPageParam != null) {
             <td><%=goal.getDescription()%></td>
             <td><%=goal.getStatus()%></td>
             <td>
-               <a href="edit_goaltype.jsp?GoalsTypeID=<%= goal.getId() %>">Edit</a>
+               <a class="edit" href="edit_goaltype.jsp?GoalsTypeID=<%= goal.getId() %>">Edit</a>
             </td>
             <td>
-               <a href="DeleteGoalTypeSrv?GoalsTypeID=<%= goal.getId() %>">Delete</a>
+               <a class="delete" href="DeleteGoalTypeSrv?GoalsTypeID=<%= goal.getId() %>">Delete</a>
             </td>
         </tr>
        
@@ -232,24 +234,24 @@ if (newRecordsPerPageParam != null) {
             %>	
 				</table>
 				
-<div class="row justify-content-center align-items-center" id = "flag1">
+<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="goal-type.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="goal-type.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%=i%>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="goal-type.jsp?page=<%=i%>"><%=i%></a>
+            <a href="goal-type.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="goal-type.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="goal-type.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
 
 </div>
@@ -286,9 +288,9 @@ if (newRecordsPerPageParam != null) {
 		<!-- Select2 JS -->
 		<script src="js/select2.min.js"></script>
 		
-		<!-- Datatable JS -->
+		<!-- Datatable JS 
 		<script src="js/jquery.dataTables.min.js"></script>
-		<script src="js/dataTables.bootstrap4.min.js"></script>
+		<script src="js/dataTables.bootstrap4.min.js"></script>-->
 		
 		<!-- Custom JS -->
 		<script src="js/app.js"></script>

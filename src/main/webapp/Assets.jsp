@@ -134,15 +134,15 @@ function changeRecordsPerPage() {
                     <div class="row align-items-center">
                         <div class="col">
                      
-								<h3 style="margin-left: 30px;" class="page-title">Goal Type</h3>
+								<h3 style="margin-left: 30px;" class="page-title">Assets</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-									<li class="breadcrumb-item active">Goal Type</li>
+									<li class="breadcrumb-item active">Assets</li>
 								</ul>
 							</div>
                         
                         <div class="col-auto float-right ml-auto">
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#AddAssets"><i class="fa fa-plus"></i> Add Asset</a>
+                            <a href="#" class="Addbutton" data-toggle="modal" data-target="#AddAssets"><i class="fa fa-plus"></i> Add Asset</a>
                                  </div>
                         </div>
                   </div> 
@@ -151,39 +151,41 @@ function changeRecordsPerPage() {
                  <form action="./AssetSearchSrv" method="post">
                  
                <div class="form-container">
-                    <div class="form-row filter-row">
-                         <div class="col-sm-6 col-md-3">  
-				           <div class="form-group form-focus">
-					         <input  name="assetName" id="assetName" type="text" class="form-control floating">
-					         <label class="focus-label">Assert Name</label>
-				            </div>
-				          </div>
-				          
-                        <div class="col-sm-6 col-md-3">  
-				          <div class="form-group form-focus">
-					         <input  name="Id" id="assetId" type="text" class="form-control floating">
-					        <label class="focus-label">Assert ID</label>
-				          </div>
-				        </div>
-
-                        <div class="col-sm-6 col-md-3" >
-                           <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-                         </div>
-                
-                  
-                    <input type="hidden" name="start" value="<%= currentPage %>">
-                    <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
+                    <div class="form-row filter-row">                  
                     <div class="col-sm-6 col-md-3" id = "flag">
                         <label>Records per page:</label>
                         <select id="recordsPerPage" onchange="changeRecordsPerPage()">
                             <option value="10">10</option>
                         </select>
                     </div>
+                    
+                         <div class="col-sm-6 col-md-3">  
+				          <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				            <label>Assert Name</label>
+					         <input class="input"  name="assetName" id="assetName" type="text" class="form-control floating">
+				            </div>
+				          </div>
+				          
+                        <div class="col-sm-6 col-md-3">  
+				        <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				             <label>Assert ID</label>
+					         <input class="input"  name="Id" id="assetId" type="text" class="form-control floating">					     
+				          </div>
+				        </div>
+
+                       <div class="col-sm-6 col-md-3">
+				         <input class="search" type="submit" value="SEARCH">
+				       </div>
+                
+                  
+                    <input type="hidden" name="start" value="<%= currentPage %>">
+                    <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
+                   
                        </div>
                      
                 </form>
                <div class="table-container" style="height: 400px; overflow-x: auto;">
-       <table>
+      <table class="table" id="tab"  class="table-striped custom-table mb-0 datatable">
                 <tr>
                 
                     <th>ID</th>
@@ -199,8 +201,7 @@ function changeRecordsPerPage() {
                     <th>Asset User</th>
                     <th>Description</th>
                     <th>DateTime</th>
-                     <th>EDIT</th>
-                      <th>DELETE</th>
+                     <th style="text-align: center;" colspan="2">Actions</th>
                     
                   
                 </tr>
@@ -274,10 +275,10 @@ function changeRecordsPerPage() {
                     <td>
 
  
- <a href="EditAssets.jsp?id=<%= asset.getId() %>">Edit</a>
+ <a class="edit" href="EditAssets.jsp?id=<%= asset.getId() %>">Edit</a>
     </td>
 		    <td>
-	 	 <a href="DeleteAssetSrv?id=<%= asset.getId() %>">Delete</a>
+	 	 <a class="delete" href="DeleteAssetSrv?id=<%= asset.getId() %>">Delete</a>
 		 
 		    </td>
 		</tr>
@@ -287,27 +288,26 @@ function changeRecordsPerPage() {
 		        %>
     </table>
     </div>
-    </div>
-						</div>
-					</div>
     
-    <div class="row justify-content-center align-items-center" id = "flag1">
+    
+       <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
+
     <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="Assets.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="Assets.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%=i%>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="Assets.jsp?page=<%=i%>"><%=i%></a>
+            <a href="Assets.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="Assets.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="Assets.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
    
    </div>

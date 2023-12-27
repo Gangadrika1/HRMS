@@ -35,19 +35,26 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     
-    <!-- Table styles CSS -->
-    <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-   
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
-   
     <title>Leave List</title>
 </head>
 <body>
+<script>
+    function validateDates() {
+        var startDateStr = document.getElementsByName("starting_at")[0].value;
+        var endDateStr = document.getElementsByName("ends_on")[0].value;
+        var startDate = new Date(startDateStr);
+        var endDate = new Date(endDateStr);
+        if (startDate > endDate) {
+            alert("End date must be after the start date.");
+            return false;
+        }
+        return true;
+    }
+</script>
 
-<form action="./AddLeavesSrv" method="post">
+<form action="./AddLeavesSrv" method="post" onsubmit="return validateDates();">
 <div id="add_leave" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
