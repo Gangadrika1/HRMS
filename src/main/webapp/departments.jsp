@@ -294,7 +294,6 @@ if (newRecordsPerPageParam != null) {
 
  <script>
    
-    
     function updateFooterVisibility(resultCount) {
         var dropdown = document.getElementById("flag1");
         var dropdown1=document.getElementById("flag");
