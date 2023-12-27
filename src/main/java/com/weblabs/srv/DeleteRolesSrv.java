@@ -1,3 +1,5 @@
+
+
 package com.weblabs.srv;
 
 import java.io.IOException;
@@ -8,32 +10,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.weblabs.service.impl.rolesServiceImpl;
 
 
-@WebServlet("/AddRolesSrv")
-public class AddRolesSrv extends HttpServlet{
+@WebServlet("/DeleteRolesSrv")
+public class DeleteRolesSrv extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String status = "Add Role Failed!";
-        String rolename = request.getParameter("rolename");
-        String description = request.getParameter("description");
-        
-        
-       
-        rolesServiceImpl role =new rolesServiceImpl();
-        status=role.addRole(rolename, description);
-        
-    		  
-    		   RequestDispatcher rd = request.getRequestDispatcher("roles.jsp?message=" + status);
-       rd.forward(request, response);
-    } 
+        String RoleID = request.getParameter("RoleID");
+        rolesServiceImpl role = new rolesServiceImpl();
+
+		String status = role.deleteRole(RoleID);
+		
+        RequestDispatcher rd = request.getRequestDispatcher("delete_roles.jsp?message=" + status);
+        rd.forward(request, response);
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

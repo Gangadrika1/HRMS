@@ -108,21 +108,21 @@ public class LeaveSearchSrv extends HttpServlet {
     		    String filterQuery = "";
 
     		    if (employeeFilter != null && !employeeFilter.isEmpty()) {
-    		        filterQuery += "username like '%" + employeeFilter + "%'";
+    		        filterQuery += "Employee like '%" + employeeFilter + "%'";
     		    }
 
     		    if (startFilter != null && !startFilter.isEmpty()) {
     		        if (!filterQuery.isEmpty()) {
     		            filterQuery += " AND ";
     		        }
-    		        filterQuery += "StartDate >= '" + startFilter + "'";
+    		        filterQuery += "Starting_At >= '" + startFilter + "'";
     		    }
 
     		    if (endFilter != null && !endFilter.isEmpty()) {
     		        if (!filterQuery.isEmpty()) {
     		            filterQuery += " AND ";
     		        }
-    		        filterQuery += "EndDate <= '" + endFilter + "'";
+    		        filterQuery += "Ending_On <= '" + endFilter + "'";
     		    }
 
     		    leaves = LeaveDAO.getFilteredLeaveRequests(filterQuery, start, limit);

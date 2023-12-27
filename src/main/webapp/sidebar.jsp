@@ -99,6 +99,7 @@
                                 
                                  PreparedStatement statement = con.prepareStatement(sql);
                                  statement.setInt(1, roleid);
+                                 
                                  //ResultSet resultSet = statement.executeQuery(sql);
                                   ResultSet resultSet = statement.executeQuery(); // Corrected line
                                  String currentModule = null;

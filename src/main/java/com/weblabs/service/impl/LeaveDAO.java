@@ -21,12 +21,12 @@ public class LeaveDAO {
         try {
             connection = DBUtil.provideConnection();
             String query;
+            
             if (whereClause != null && !whereClause.isEmpty()) {
                 query = "SELECT id, Employee, Starting_At, Ending_On, Days, Reason, Time_Added FROM leaves WHERE " + whereClause + " LIMIT ?, ?;";
             } else {
                 query = "SELECT id, Employee, Starting_At, Ending_On, Days, Reason, Time_Added FROM leaves LIMIT ?, ?;";
             }
-
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, start);
             preparedStatement.setInt(2, limit);

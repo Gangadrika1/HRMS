@@ -30,7 +30,7 @@
 		<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
         <meta name="author" content="Dreamguys - Bootstrap Admin Template">
         <meta name="robots" content="noindex, nofollow">
-        <title>Taxes - HRMS admin template</title>
+        <title>Tasks - HRMS admin template</title>
 		
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -153,10 +153,11 @@ if (newRecordsPerPageParam != null) {
     <div class="col-sm-6 col-md-3" id = "flag">
         <label>Records per page:</label>
         <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-            
-            <option value="10">10</option>
-           
-          
+						<option value="5" hidden=>5</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
         </select>
         
     </div>
@@ -247,25 +248,42 @@ for (TasksBean tasks : tax) {
 
 								</table>
 <div class="row justify-content-center align-items-center" id = "flag1">
-   
-   <!-- Pagination links -->
-
+		<!-- Pagination links -->
+   <% if (request.getParameter("task_id") ==null) { %>
     <% if (pageno > 1) { %>
-        <a href="tasks.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="tasks.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
     <% } %>
-
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
             <%=i%>
         <% } else { %>
-            <a href="tasks.jsp?page=<%=i%>"><%=i%></a>
+            <a href="tasks.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
         <% } %>
     <% } %>
-
     <% if (pageno < noOfPages) { %>
-        <a href="tasks.jsp?page=<%=pageno + 1%>">Next</a>
-    <% } }%>
-
+        <a href="tasks.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>       
+    <% } %>
+	
+	<% }else { %>
+	<!-- after search it will execute -->
+	 <% if (pageno > 1) { %>
+	        <a href="tasks.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&task_id=<%=request.getParameter("task_id")%>">Previous</a>
+	    <% } %>
+	
+	    <% for (int i = 1; i <= noOfPages; i++) { %>
+	        <% if (i == pageno) { %>
+	            <%=i%>
+	        <% } else { %>
+	            <a href="tasks.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>&task_id=<%=request.getParameter("task_id")%>"><%=i%></a>
+	        <% } %>
+	    <% } %>
+	
+	    <% if (pageno < noOfPages) { %>
+	        <a href="tasks.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&task_id=<%=request.getParameter("task_id")%>">next</a>
+	    <% } %>
+	
+	<% } %>
+    <% } %>
 </div>
 							</div>
 						</div>

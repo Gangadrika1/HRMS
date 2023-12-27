@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.weblabs.service.impl.AddRPDAO" %>
-<%@ page import="com.weblabs.beans.AddRolePermissionBean" %>
+<%@ page import="com.weblabs.service.impl.AddRolesDAO" %>
+<%@ page import="com.weblabs.beans.AddRolesBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+
+<%
+    // Getting the username from the session
+    String username = (String) session.getAttribute("username");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -40,15 +45,6 @@
     <!-- Table styles CSS -->
     <link rel="stylesheet" href="css/styles.css">
     
-    
-    <style>
-#table{
-    width:1210px;
-    margin-left: 30px;
-    border:2px;
-    }
-</style>
-    
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
    
     <script src="js/html5shiv.min.js"></script>
@@ -65,7 +61,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "10"; // Set a default value, e.g., 1
+    recordsPerPageStr = "5"; // Set a default value, e.g., 1
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -77,7 +73,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 10; // Default value
+int newRecordsPerPage = 5; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -122,59 +118,70 @@ if (newRecordsPerPageParam != null) {
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
-                <div class="col">
-				
-					<h3 class="page-title">Role Permissions</h3>
-					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-						<li class="breadcrumb-item active">Rolepermissions</li>
-					</ul>
-				</div>
+                    <div class="col">
+                        <h3 class="page-title">Roles</h3>
+                        <ul class="breadcrumb">
+                            <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
+                                Welcome <%= username %>😊😊
+                            </div>
+                            <li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Roles</li>
+                        </ul>
+                    </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_rp"><i class="fa fa-plus"></i> Add Roles</a>
-                        
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#addroles"><i class="fa fa-plus"></i> Add Roles</a>
+                        <div class="view-icons">
+                            <a href="leaves.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="leaves-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-<form action="./RpSearchSrv" method="post">
+<form action="./LeaveSearchSrv" method="post">
   
             <div class="row filter-row">
                 <div class="col-sm-6 col-md-3">
-                     <div style= margin-left:30px; class="form-group form-focus">
-                      <input class="form-control floating" type="text" value="" name="RoleID" id="RoleID" >
-			          <label class="focus-label">RoleID</label>
+                    <div class="form-group form-focus">
+                        <label for="employee">Employee:</label>
+                        <input type="text" name="employee" id="employee">
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="form-group form-focus select-focus">
-                         <input class="form-control floating" type="text" value="" name="RolePermissionID" id="RolePermissionID" >
-			          <label class="focus-label">PermissionID</label>
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" name="start_date" id="start_date">
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3" >
-                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-               </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus select-focus">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" name="end_date" id="end_date">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <input type="submit" value="Search">
+                </div>
+                 </div>
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                <div class="col-sm-6 col-md-3" id = "flag">
+                <div class="col-sm-6 col-md-3">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        
+                        <option value="5">5</option>
                         <option value="10">10</option>
-                        
+                        <option value="20">20</option>
+                        <option value="50">50</option>
                     </select>
                 </div>
             </form>
                </div>
             
-        <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
-       
+        <table>
+      
                 <tr>
-                     <th>RolePermissionID</th>
                     <th>RoleID</th>
-                    <th>ModuleName</th>
-                    <th>FormName</th>
-                    <th>PermissionType</th>
+                    <th>RoleName</th>
+                    <th>Description</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -194,53 +201,55 @@ if (newRecordsPerPageParam != null) {
 
        		      start = (pageno - 1) * limit;
        		     //pagenation code ended
-                String employeeFilter = request.getParameter("RoleID");
-                String startFilter = request.getParameter("RolePermissionID");
-               
-                List<AddRolePermissionBean> leaves;
+                String employeeFilter = request.getParameter("employee");
+                String startFilter = request.getParameter("start_date");
+                String endFilter = request.getParameter("end_date");
+                List<AddRolesBean> leaves;
                 String whereClause = ""; // Initialize an empty whereClause
 
                 if (employeeFilter != null && !employeeFilter.isEmpty()) {
-                    whereClause = "RoleID like '%" + employeeFilter +"%'";
+                    whereClause = "employee like '%" + employeeFilter +"%'";
                 }
 
                 if (startFilter != null && !startFilter.isEmpty()) {
                     if (!whereClause.isEmpty()) {
                         whereClause += " or ";
                     }
-                    whereClause += "RolePermissionID = '" + startFilter + "'";
+                    whereClause += "starting_at = '" + startFilter + "'";
                 }
 
-               
+                if (endFilter != null && !endFilter.isEmpty()) {
+                    if (!whereClause.isEmpty()) {
+                        whereClause += " or ";
+                    }
+                    whereClause += "ending_on = '" + endFilter + "'";
+                    
+                } 
 
               //page
-                int recordcount= AddRPDAO.totalCount();
-
+                int recordcount= AddRolesDAO.totalCount();
                noOfPages = (int) Math.ceil((double) recordcount / limit);
                //pagee
                 if (!whereClause.isEmpty()) {
                     // Apply the whereClause condition
-                    leaves = AddRPDAO.getFilteredRP(whereClause, start, limit);
+                    leaves = AddRolesDAO.getFilteredEmployees(whereClause, start, limit);
                 } else {
                     // Retrieve all data based on the limit
-                    leaves = AddRPDAO.getFilteredRP("", start, limit);
+                    leaves = AddRolesDAO.getFilteredEmployees("", start, limit);
                 }
 
-                for (AddRolePermissionBean leave : leaves) {
+                for (AddRolesBean leave : leaves) {
             %>
                 <tr>
-                     <td><%=leave.getRolePermissionID()%></td>
-                   <td><%=leave.getRoleID()%></td>
-                    <td><%=leave.getModuleName() %></td>
-                   <td><%=leave.getFormName()%></td>
-                   <td><%=leave.getPermissionType()%></td>
+                    <td><%=leave.getRoleID() %></td>
+                   <td><%=leave.getRoleName()%></td>
+                   <td><%=leave.getDescription()%></td>
                            
                     <td>
-                        <a href="edit_rp.jsp?RolePermissionID=<%= leave.getRolePermissionID() %>">Edit</a>
-                     &nbsp;  &nbsp;  &nbsp; 
+                        <a href="edit_roles.jsp?RoleID=<%= leave.getRoleID() %>">Edit</a>
                     </td>
                     <td>
-                        <a href="DeleteRPSrv?RolePermissionID=<%= leave.getRolePermissionID() %>">Delete</a>
+                        <a href="DeleteRolesSrv?RoleID=<%= leave.getRoleID() %>">Delete</a>
                     </td>
                 </tr>
                 <%
@@ -248,31 +257,31 @@ if (newRecordsPerPageParam != null) {
                 %>
             </table>
             
-   <div class="row justify-content-center align-items-center" id = "flag1">
+   <div class="row justify-content-center align-items-center">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="rolepermission.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="roles.jsp?page=<%=pageno - 1%>">Previous</a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
             <%=i%>
         <% } else { %>
-            <a href="rolepermission.jsp?page=<%=i%>"><%=i%></a>
+            <a href="roles.jsp?page=<%=i%>"><%=i%></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="rolepermission.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }%>
+        <a href="roles.jsp?page=<%=pageno + 1%>">Next</a>
+    <% } %>
 
 </div>
             </div> 
 
             <!-- Add Leave Modal -->
-            <jsp:include page="add_rp.jsp" />
+            <jsp:include page="add_roles.jsp" />
             <%-- <jsp:include page="edit_leave.jsp" />
             <jsp:include page="delete_leave.jsp" /> --%>
             <!-- Include your Add Leave Modal HTML here -->
@@ -300,7 +309,7 @@ if (newRecordsPerPageParam != null) {
             // Make an AJAX request to the server
             $.ajax({
                 type: "POST", // Use POST or GET depending on your servlet configuration
-                url: "./RpSearchSrv",
+                url: "./LeaveSearchSrv",
                 data: {
                     department: departmentFilter,
                     id: idFilter
@@ -315,32 +324,6 @@ if (newRecordsPerPageParam != null) {
         });
     });
 </script>
-
-<script>
-   
-    function updateFooterVisibility(resultCount) {
-        var dropdown = document.getElementById("flag1");
-        var dropdown1=document.getElementById("flag");
-        // Set the visibility based on the result count
-        if(resultCount==-1)
-        	{
-        		dropdown.style.display = "block";
-        		dropdown1.style.display = "block";
-        	}
-        if (resultCount < 4) {
-            dropdown.style.display = "none"; // Hide the dropdown
-            dropdown1.style.display = "none";
-        } else {
-            dropdown.style.display = "block"; // Show the dropdown
-            dropdown1.style.display = "block";
-        }
-    }
-    // Update dropdown visibility on page load
-    var initialResultCount = (parseInt('<%= request.getAttribute("client") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("client") %>');
-    console.log(initialResultCount);
-    updateFooterVisibility(initialResultCount);
-</script>
-
 
 
 </body>

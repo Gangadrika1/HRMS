@@ -139,16 +139,6 @@
                                 <input class="form-control" name="Address" required type="text">
                             </div>
                         </div>
-                         <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="custom-file">
-                                <label style="margin-top: 10px;" for="">Client Picture</label><br>
-                                <input name="Picture" type="file" class="custom-file-input" id="validatedCustomFile" required >
-                                <label style="margin-top: 37px;"  class="custom-file-label" for="validatedCustomFile" >Choose Profile Picture...</label>
-                                <div class="invalid-feedback">Example invalid custom file feedback</div>
-                            </div>
-                             </div>
-                        </div>
                     </div>
                     <div class="submit-section">
                         <button type="submit" name="add_client" class="btn btn-primary submit-btn">Submit</button>

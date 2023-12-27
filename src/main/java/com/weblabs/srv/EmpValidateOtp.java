@@ -47,17 +47,18 @@ public class EmpValidateOtp extends HttpServlet {
         // Storing the OTP in the session
         // Rest of your code
         int storedOTP = Integer.parseInt((String) session.getAttribute("otp"));
-        String username = (String) session.getAttribute("username");
-        if (otpMap.containsKey(username)) {
-            OTPDetails otpDetails = otpMap.get(username);
-            if (otpDetails.isUsed()) {
-                // OTP already used, show an error message
-                request.setAttribute("message", "OTP has already been used");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
-                dispatcher.forward(request, response);
-                return;
-            }
-        }
+//      String email = (String) session.getAttribute("myemail");
+        String email=request.getParameter("email");
+//        if (otpMap.containsKey(email)) {
+//            OTPDetails otpDetails = otpMap.get(email);
+//            if (otpDetails.isUsed()) {
+//                // OTP already used, show an error message
+//                request.setAttribute("message", "OTP has already been used");
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("EnterOtp.jsp");
+//                dispatcher.forward(request, response);
+//                return;
+//            }
+//        }
         RequestDispatcher dispatcher = null;
         if (isWithin10Minutes(session) &&enteredOTP == storedOTP  ) {
 			/* String email=request.getParameter("email"); */
@@ -74,9 +75,9 @@ public class EmpValidateOtp extends HttpServlet {
 
  // Method to check if the elapsed time is within 10 minutes
     private static boolean isWithin10Minutes(HttpSession session) {
-    	String username=(String) session.getAttribute("username");
+    	String email=(String) session.getAttribute("myemail");
     	int otp = Integer.parseInt((String) session.getAttribute("otp"));
-    	boolean flag=EmailDao.TimeOfOTP(otp,username);
+    	boolean flag=EmailDao.TimeOfOTP(otp,email);
         return flag;
     }
 }

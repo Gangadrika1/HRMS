@@ -171,7 +171,11 @@ if (newRecordsPerPageParam != null) {
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
 					   
-					    <option value="10">10</option>
+					   <option value="5" hidden=>5</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
 					    
 					</select>
 					
@@ -264,30 +268,45 @@ if (newRecordsPerPageParam != null) {
 	</table>
 	
 	<div class="row justify-content-center align-items-center" id = "flag1">
-   
-   <!-- Pagination links -->
-
+	 <!-- Pagination links -->
+   <% if (request.getParameter("ProvidentFundType") ==null && request.getParameter("ID") ==null) { %>
     <% if (pageno > 1) { %>
-        <a href="provident-fund.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="provident-fund.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
     <% } %>
-
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
             <%=i%>
         <% } else { %>
-            <a href="provident-fund.jsp?page=<%=i%>"><%=i%></a>
+            <a href="provident-fund.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
         <% } %>
     <% } %>
-
     <% if (pageno < noOfPages) { %>
-        <a href="provident-fund.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }} %>
-
+        <a href="provident-fund.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>       
+    <% } %>
+	
+	<% }else { %>
+	<!-- after search it will execute -->
+	 <% if (pageno > 1) { %>
+	        <a href="provident-fund.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&ProvidentFundType=<%=request.getParameter("ProvidentFundType")%>&ID=<%=request.getParameter("ID")%>">Previous</a>
+	    <% } %>
+	
+	    <% for (int i = 1; i <= noOfPages; i++) { %>
+	        <% if (i == pageno) { %>
+	            <%=i%>
+	        <% } else { %>
+	            <a href="provident-fund.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>&ProvidentFundType=<%=request.getParameter("ProvidentFundType")%>&ID=<%=request.getParameter("ID")%>"><%=i%></a>
+	        <% } %>
+	    <% } %>
+	
+	    <% if (pageno < noOfPages) { %>
+	        <a href="provident-fund.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&ProvidentFundType=<%=request.getParameter("ProvidentFundType")%>&ID=<%=request.getParameter("ID")%>">next</a>
+	    <% } %>	
+	<% } %>
+    <% } %>
 </div>
 							</div>
 						</div>
-					</div>
-            
+					</div>            
 				<!-- /Page Content -->
 				
 				<!-- Add PF Modal -->

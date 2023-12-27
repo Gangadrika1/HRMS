@@ -17,14 +17,12 @@ public class PasswordResetServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String toEmail = request.getParameter("email"); // Assuming the parameter name is "email"
-        
+        String toEmail = request.getParameter("email"); // Assuming the parameter name is "email"    
         if (isEmailExists(toEmail)) {
         String otp = OTPGenerator.sendOTPEmail(toEmail,request.getSession());
         // Store the OTP in the session to verify it later
         request.getSession().setAttribute("otp", otp);
-        
-
+        request.getSession().setAttribute("myemail", toEmail);
         // Redirect to the page where the user can enter the OTP
         response.sendRedirect("EnterOtp.jsp");
         }

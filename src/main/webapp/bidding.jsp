@@ -5,7 +5,6 @@
 <%@ page import="javax.servlet.http.*" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -43,11 +42,20 @@
              <!-- table styles CSS -->
      <link rel="stylesheet" href="css/styles.css">
 		
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="js/html5shiv.min.js"></script>
-			<script src="js/respond.min.js"></script>
-		<![endif]-->
+		<style>
+        .page-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .page-title {
+            text-align: center;
+        }
+        
+    </style>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
     
@@ -159,6 +167,7 @@
        	       <div class="col-sm-6 col-md-3">
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+			       		<option value="5" hidden>5</option>
 					    <option value="5">5</option>
 					    <option value="10">10</option>
 					    <option value="20">20</option>

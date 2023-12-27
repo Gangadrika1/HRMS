@@ -1,14 +1,11 @@
 <%@page import="com.weblabs.service.impl.AddClientsDAO"%>
 <%@ page import="com.weblabs.service.impl.ExpensesDao" %>
 <%@ page import="com.weblabs.beans.AddClient" %>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html lang="en">
-
-
 <%
 HttpSession sdsession = request.getSession(true);
-
 // Retrieve the username attribute from the session
 String username = (String) sdsession.getAttribute("username");
 String roleIDString = (String) sdsession.getAttribute("RoleID");
@@ -17,7 +14,6 @@ if (roleIDString == null) {
 response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
 } else {
    int roleid = Integer.parseInt(roleIDString);
-
 %>
 <head>
     <meta charset="utf-8">
@@ -41,15 +37,11 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <link rel="stylesheet" href="css/line-awesome.min.css">
     
     <!-- Select2 CSS -->
-    <link rel="stylesheet" href="css/select2.min.css">
-    
+    <link rel="stylesheet" href="css/select2.min.css">  
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
-    
      <!-- Main CSS -->
     <link rel="stylesheet" href="css/tstyles.css">
-    
-    
 </head>
 <body>
 
@@ -60,7 +52,8 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
 	// Initialize recordsPerPage and currentPage as Java variables
 	String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 	String currentPageStr = (String) sessionRec.getAttribute("currentPage");
-	
+	out.print("currentpage="+currentPageStr);
+	out.print("currentpage="+currentPageStr);
 	if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
 	    recordsPerPageStr = "10"; // Set a default value, e.g., 1
 	    sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
@@ -168,17 +161,16 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
        	       <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-					   
+					   	<option value="5" hidden>5</option>
+					   	<option value="5">5</option>
 					    <option value="10">10</option>
-					    
+					    <option value="20">20</option>
 					</select>
 				
 			       </div>
 			       	</div>
 			       	  </div>
 	</form>
-	
-	
 	<table>
     <tr>
     
@@ -250,35 +242,46 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
 			        <a href="DeleteClientSRV?Clientid=<%= clients.getClientID()%>">Delete</a>
 			    </td>
 			</tr>
-        <%
-     
-            }
-          
+        <%     
+            }         
         %>
 </table>
    <div class="row justify-content-center align-items-center" id = "flag1">
-   
-   <!-- Pagination links -->
-
+     <% if (request.getParameter("UserName") ==null && request.getParameter("Clientid")==null) { %>
     <% if (pageno > 1) { %>
-        <a href="clients.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="clients.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
     <% } %>
-
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%= i %>
+            <%=i%>
         <% } else { %>
-            <a href="clients.jsp?page=<%=i%>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+            <a href="clients.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
         <% } %>
     <% } %>
-
     <% if (pageno < noOfPages) { %>
-        <a href="clients.jsp?page=<%=pageno + 1%>">Next</a>
-    <% } }%>
-
-</div>
-                
-               
+        <a href="clients.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>       
+    <% } %>
+	
+	<% }else { %>
+	<!-- after search it will execute -->
+	 <% if (pageno > 1) { %>
+	        <a href="clients.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&UserName=<%=request.getParameter("UserName")%>&Clientid=<%=request.getParameter("Clientid")%>">Previous</a>
+	    <% } %>	
+	    <% for (int i = 1; i <= noOfPages; i++) { %>
+	        <% if (i == pageno) { %>
+	            <%=i%>
+	        <% } else { %>
+	            <a href="clients.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>&UserName=<%=request.getParameter("UserName")%>&Clientid=<%=request.getParameter("Clientid")%>"><%=i%></a>
+	        <% } %>
+	    <% } %>	
+	    <% if (pageno < noOfPages) { %>
+	        <a href="clients.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&UserName=<%=request.getParameter("UserName")%>&Clientid=<%=request.getParameter("Clientid")%>">next</a>
+	    <% } %>
+	
+	<% } %>
+ 
+    <%  }%>
+</div>               
                 </div>
             </div>
             <!-- /Page Content -->
@@ -287,17 +290,14 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
             <jsp:include page="addClients.jsp" />
             <!-- Add Client Modal content goes here -->
             <!-- /Add Client Modal -->
-            
-           
+          
         </div>
         <!-- /Page Wrapper -->
     <!-- /Main Wrapper -->
     
-    <!-- JavaScript libraries and custom scripts go here -->
-    
+    <!-- JavaScript libraries and custom scripts go here -->    
     <!-- jQuery -->
     <script src="js/jquery-3.2.1.min.js"></script>
-
     <!-- Bootstrap Core JS -->
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -307,13 +307,10 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <!-- Datatable JS -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap4.min.js"></script>
-
     <!-- Custom JS -->
-    <script src="js/app.js"></script>
-    
+    <script src="js/app.js"></script>    
     <!-- Custom JS -->
-   <!--  <script src="js/search.js"></script> -->
-    
+   <!--  <script src="js/search.js"></script> -->    
     <script>
     $(document).ready(function () {
         $("#filterButton").click(function () {
@@ -340,8 +337,7 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
         });
     });
 </script>
-<script>
-   
+<script>   
     function updateFooterVisibility(resultCount) {
         var dropdown = document.getElementById("flag1");
         var dropdown1=document.getElementById("flag");
@@ -360,16 +356,10 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
         }
     }
     // Update dropdown visibility on page load
-    var initialResultCount = (parseInt('<%= request.getAttribute("client") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("client") %>');
-    console.log(initialResultCount);
+    var initialResultCount = (parseInt('<%= request.getAttribute("client") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("client") %>'); console.log(initialResultCount);
+ // Calculate the total number of pages based on the actual number of records per page
     updateFooterVisibility(initialResultCount);
 </script>
-
-
-
-
-
-
 </body>
 </html>
 

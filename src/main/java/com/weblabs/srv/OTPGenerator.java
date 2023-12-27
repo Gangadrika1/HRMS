@@ -1,5 +1,5 @@
 
-package com.weblabs.service.impl;
+package com.weblabs.srv;
 
 import java.util.Properties;
 

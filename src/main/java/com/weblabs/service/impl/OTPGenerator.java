@@ -16,7 +16,7 @@ public class OTPGenerator {
     private static final String FROM_PASSWORD = "fmwk ojpa zbms cokm";
     
     public static String sendOTPEmail(String toEmail,HttpSession session) {
-        String otp = generateOTP(session);
+        String otp = generateOTP(toEmail,session);
         
         String subject = "Password Reset OTP";	
         String body = "Your OTP for password reset is: " + otp+" valid for 10 minutes click here to reset password now : http://localhost:2506/Hrms/EnterOtp.jsp?otp="+otp;
@@ -24,12 +24,11 @@ public class OTPGenerator {
         return otp;
     }
    
-    private static String generateOTP(HttpSession session) {
+    private static String generateOTP(String email,HttpSession session) {
         Random random = new Random();
         int otp = 100000 + random.nextInt(900000);
         session.setAttribute("otpCreationTime", System.currentTimeMillis());
-        String email=(String)session.getAttribute("Email");
-        String username=(String) session.getAttribute("username");
+        String username="chintu";
         EmailDao.storeOTP(email,username,otp);
         return String.valueOf(otp);
     }
