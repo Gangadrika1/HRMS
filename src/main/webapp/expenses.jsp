@@ -19,7 +19,7 @@
 		
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/logo.png">
-		
+		 <link rel="stylesheet" href="css/M.css">
 		<!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
 		
@@ -42,21 +42,13 @@
         <link rel="stylesheet" href="css/style.css">
              <!-- table styles CSS -->
      <link rel="stylesheet" href="css/tstyles.css">
+     
+     <link rel="stylesheet" href="css/M.css">
 		
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="js/html5shiv.min.js"></script>
-			<script src="js/respond.min.js"></script>
-		<![endif]-->
+
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
-<style>
-#table{
-    width:1210px;
-    margin-left: 30px;
-    border:2px;
-    }
-</style>    
+    
     </head>
     <body>
     <!-- filtering records -->
@@ -80,7 +72,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 //Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
  newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -131,7 +123,7 @@ if (newRecordsPerPageParam != null) {
 								</ul>
 							</div>
 							<div class="col-auto float-right ml-auto">
-								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_expense"><i class="fa fa-plus"></i> Add Expense</a>
+								<a href="#" class="Addbutton" data-toggle="modal" data-target="#add_expense"><i class="fa fa-plus"></i> Add Expense</a>
 							</div>
 							
 						</div>
@@ -142,39 +134,42 @@ if (newRecordsPerPageParam != null) {
 		<form action="./ExpensesSearchSRV" method="post"> 
   		
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-				       <div class="form-group form-focus">
-					     <input name="ItemName" id="ItemName" type="text" class="form-control floating">
-					     <label class="focus-label">Item Name</label>
-				       </div>
-				    </div>
-				    
-                     <div class="col-sm-6 col-md-3">  
-				        <div class="form-group form-focus">
-					      <input name="id" id="id" type="text" class="form-control floating">
-					      <label class="focus-label">Item ID</label>
-				        </div>
-				      </div>
-				      
-                    <div class="col-sm-6 col-md-3" >
-                        <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-                    </div> 
+                <div class="col-sm-6 col-md-3" id = "flag">
+                 <label>Records per page:</label>
+			       <select class="record" id="recordsPerPage" onchange="changeRecordsPerPage()">
+					    <option value="10">10</option>
+					</select>
+			    </div>
+		 
+
+            <div class="col-sm-6 col-md-3">  
+					 <div class="custom-input-field form-group form-focus d-flex align-items-center">
+					     <label style="margin-right:5px;" for="ItemName">Item ID</label>
+					        <input  class="input" name="id" id="id"  type="text" class="form-control floating">
+					  
+					    </div>
+					</div>
+
+                   <div class="col-sm-6 col-md-3">  
+					 <div class="custom-input-field form-group form-focus d-flex align-items-center">
+					     <label style="margin-right:5px;" for="ItemName">Item Name</label>
+					        <input class="input" name="ItemName" id="ItemName"  type="text" class="form-control floating">
+					  
+					    </div>
+					</div>
+			      
+                   <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div> 
                     
                 
                 	 <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
 	
-       	       <div class="col-sm-6 col-md-3" id = "flag">
-			       <label>Records per page:</label>
-			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-					    <option value="10">10</option>
-					</select>
-				
 			       </div>
-			       </div>
-	</form>  
+	</form>  <br><br>
 	
-<table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
+<table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
     <tr>
         <th>ID</th>
         <th>Item</th>
@@ -246,10 +241,12 @@ if (newRecordsPerPageParam != null) {
             <td><%= expense.getStatus() %></td>
             <td><%= expense.getSupplierid()%></td>
             <td>
-        		<a href="edit_expenses.jsp?id=<%= expense.getId() %>">Edit</a>
+            <div >
+        		<a class="edit" href="edit_expenses.jsp?id=<%= expense.getId() %>">Edit</a>
+        		</div>
     		</td>
 			    <td>
-			        <a href="DeleteExpensesSrv?id=<%= expense.getId() %>">Delete</a>
+			        <a class="delete" href="DeleteExpensesSrv?id=<%= expense.getId() %>">Delete</a>
 			    </td>
 			</tr>
         <%
@@ -258,24 +255,24 @@ if (newRecordsPerPageParam != null) {
           
         %>
 </table>
-   <div class="row justify-content-center align-items-center" id = "flag1">
+  <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="expenses.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="expenses.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%= i %>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="expenses.jsp?page=<%=i%>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+            <a href="expenses.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="expenses.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="expenses.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
 
 </div>
@@ -317,11 +314,11 @@ if (newRecordsPerPageParam != null) {
 		
 		<!-- Select2 JS -->
 		<script src="js/select2.min.js"></script>
-		
-		<!-- Datatable JS -->
+		<!-- 
+	 	Datatable JS
 		<script src="js/jquery.dataTables.min.js"></script>
-		<script src="js/dataTables.bootstrap4.min.js"></script>
-		
+		<script src="js/dataTables.bootstrap4.min.js"></script> -->
+		 
 		<!-- Datetimepicker JS -->
 		<script src="js/moment.min.js"></script>
 		<script src="js/bootstrap-datetimepicker.min.js"></script>

@@ -4,8 +4,6 @@
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="en">
-
-
 <%
 HttpSession sdsession = request.getSession(true);
 
@@ -45,7 +43,7 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
-    
+    <link rel="stylesheet" href="css/M.css">
      <!-- Main CSS -->
     <link rel="stylesheet" href="css/tstyles.css">
     
@@ -131,7 +129,7 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
 							
                         <!-- Other content goes here -->
                         <div class="col-auto float-right ml-auto">
-						   <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Client</a>
+						   <a href="#" class="Addbutton" data-toggle="modal" data-target="#add_client"><i class="fa fa-plus"></i> Add Client</a>
 						</div>
                     </div>
                 </div>
@@ -142,30 +140,7 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
   		
 		<div class="form-container">
 	    <div class="form-row">
-	        <div class="col-sm-6 col-md-3">  
-				      <div class="form-group form-focus">
-					   <input name="UserName" id="username" type="text" class="form-control floating">
-					   <label class="focus-label">Username</label>
-				     </div>
-				</div>
-				
-	        <div class="col-sm-6 col-md-3">  
-				      <div class="form-group form-focus">
-					   <input  name="Clientid" id="id" type="text" class="form-control floating">
-					   <label class="focus-label">Client ID</label>
-				     </div>
-				</div>
-
-	        <div class="col-sm-6 col-md-3" >
-               <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-            </div>
-            
-	  
-
-                	 <input type="hidden"  name="start" value="<%= currentPage %>">
-       	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
-	
-       	       <div class="col-sm-6 col-md-3" id = "flag">
+	     <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
 					   
@@ -174,6 +149,31 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
 					</select>
 				
 			       </div>
+	    
+	        <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+				     <label>Username</label>
+					   <input class="input" name="UserName" id="username" type="text" class="form-control floating">
+				     </div>
+				</div>
+				
+	        <div class="col-sm-6 col-md-3">  
+				      <div class="form-group form-focus">
+				      	<label>Client ID</label>
+					   <input class="input" name="Clientid" id="id" type="text" class="form-control floating">				
+				     </div>
+				</div>
+
+	       <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
+            
+	  
+
+                	 <input type="hidden"  name="start" value="<%= currentPage %>">
+       	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
+	
+       	      
 			       	</div>
 			       	  </div>
 	</form>
@@ -244,10 +244,10 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
             <td><%= clients.getCompany()%></td>
             <td><%= clients.getAddress() %></td>
              <td>
-        		<a href="editClients.jsp?Clientid=<%= clients.getClientID()%>">Edit</a>
+        		<a class="edit" href="editClients.jsp?Clientid=<%= clients.getClientID()%>">Edit</a>
     		</td>
 			    <td>
-			        <a href="DeleteClientSRV?Clientid=<%= clients.getClientID()%>">Delete</a>
+			        <a class="delete" href="DeleteClientSRV?Clientid=<%= clients.getClientID()%>">Delete</a>
 			    </td>
 			</tr>
         <%
@@ -256,24 +256,23 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
           
         %>
 </table>
-   <div class="row justify-content-center align-items-center" id = "flag1">
-   
+    <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1"> 
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="clients.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="clients.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%= i %>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="clients.jsp?page=<%=i%>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+            <a href="clients.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="clients.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="clients.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } }%>
 
 </div>
@@ -364,12 +363,6 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     console.log(initialResultCount);
     updateFooterVisibility(initialResultCount);
 </script>
-
-
-
-
-
-
 </body>
 </html>
 

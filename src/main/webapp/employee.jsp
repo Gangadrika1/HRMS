@@ -149,7 +149,7 @@ if (newRecordsPerPageParam != null) {
                          <div class="col-auto float-right ml-auto">
 <!--                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#deleteEmployee"><i class="fa fa-plus"></i>Delete </a> -->
 <!--                                 <a href="#" class="btn add-btn" data-toggle="modal" data-target="#editEmployee"><i class="fa fa-plus"></i>Edit </a> -->
-                             	<a href="#" class="btn add-btn" data-toggle="modal" data-target="#addemployee"><i class="fa fa-plus"></i> Add Employee</a><div class="view-icons">
+                             	<a href="#" class="Addbutton" data-toggle="modal" data-target="#addemployee"><i class="fa fa-plus"></i> Add Employee</a><div class="view-icons">
                                 <!-- <a href="employee.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                                 <a href="employees-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                           -->   </div>
@@ -160,34 +160,34 @@ if (newRecordsPerPageParam != null) {
 
      	<form action="./EmployeeSearchServlet" method="post" >
   		    <div style="margin-left:3px;" class="row filter-row">
+  		     <div class="col-sm-6 col-md-3" id = "flag">
+                 <label>Records per page:</label>
+			       <select class="record" id="recordsPerPage" onchange="changeRecordsPerPage()">
+					    <option value="10">10</option>
+					</select>
+			    </div>
+  		    
 			    <div class="col-sm-6 col-md-3">  
-				 <div class="form-group form-focus">
-					<input name="username" id="username" type="text" class="form-control floating">
-					<label class="focus-label">Username</label>
+				 <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				 <label>Username</label>
+					<input class="input" name="username" id="username" type="text" class="form-control floating">					
 				 </div>
 				</div>
 			    
 			    <div class="col-sm-6 col-md-3">  
-				<div class="form-group form-focus">
-					<input name="Employee_Id" id="id" type="text" class="form-control floating">
-					<label class="focus-label">Employee ID</label>
+				<div class="custom-input-field form-group form-focus d-flex align-items-center">
+				<label>Employee ID</label>
+					<input class="input" name="Employee_Id" id="id" type="text" class="form-control floating">
 				</div>
 				</div>
 				
-				 <div class="col-sm-6 col-md-3" >
-                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-               </div>
+				 <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
                 
 			     <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
-	                <div class="col-sm-6 col-md-3" id = "flag" >
-			       <label>Records per page:</label>
-			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">				    
-					    <option value="10">10</option>
-					  
-					</select>
-				
-			       </div>
+	                
 			        </form> 
 			         </div> 
 			          <div class="table-container" style="height: 400px; overflow-y: auto;">
@@ -302,11 +302,11 @@ if (newRecordsPerPageParam != null) {
     <td><%= employee.getDepartment()%></td>
     <td><%= employee.getDesignation() %></td>
              <td>
-        <a href="editEmployee.jsp?id=<%= employee.getEmployee_ID()%>">Edit</a>
+        <a class="edit" href="editEmployee.jsp?id=<%= employee.getEmployee_ID()%>">Edit</a>
     </td>
 		    <td>
 		 
-		 <a href="DeleteEmployeeSrv?id=<%= employee.getEmployee_ID()%>">Delete</a>
+		 <a class="delete" href="DeleteEmployeeSrv?id=<%= employee.getEmployee_ID()%>">Delete</a>
 		 
 		    </td>
 		</tr>
@@ -317,41 +317,22 @@ if (newRecordsPerPageParam != null) {
     </table>
     </div>
     
-    <div class="row justify-content-center align-items-center" id = "flag1">
-    <!-- Pagination links -->
-
-    <%-- <% if (pageno > 1) { %>
-        <a href="employee.jsp?page=<%=pageno - 1%>&recordsPerPage=<%= recordsPerPage %>">Previous</a>
-        
-    <% } %>
-
-    <% for (int i = 1; i <= noOfPages; i++) { %>
-        <% if (i == pageno) { %>
-            <%=i%>
-        <% } else { %>
-            <a href="employee.jsp?page=<%=i%>"><%=i%></a>
-            
-    <% } %>
-
-    <% if (pageno < noOfPages) { %>
-        <a href="employee.jsp?page=<%=pageno + 1%>&recordsPerPage=<%= recordsPerPage %>">Next</a>
-    <% } }%>
-    --%>
+   <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
     
      <% if (pageno > 1) { %>
-        <a href="employee.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="employee.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%= i %>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="employee.jsp?page=<%=i%>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+            <a href="employee.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="employee.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="employee.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } }%>
    </div>
 </div>
@@ -385,62 +366,7 @@ if (newRecordsPerPageParam != null) {
     
     <!--  <!-- Custom JS -->
     <script src="js/validateForm.js"></script> -->
-  
-<%-- <script>
-$(document).ready(function () {
-    // Attach the changeRecordsPerPage function to the change event of the recordsPerPage select
-    $("#recordsPerPage").change(function () {
-        changeRecordsPerPage();
-    });
-
-    $("#filterButton").click(function (event) {
-        // Get filter criteria (username and id)
-        event.preventDefault();
-        var usernameFilter = $("#username").val();
-        var idFilter = $("#Employee_Id").val();
-        
-        // Make an AJAX request to the server
-        $.ajax({
-            type: "POST", // Use POST or GET depending on your servlet configuration
-            url: "./EmployeeSearchServlet",
-            data: {
-                username: usernameFilter,
-                id: idFilter
-            },
-            success: function (data) {
-                console.log("myFunction has been invoked.");
-                // Handle the response data, e.g., update the table with the filtered data
-                // You might need to format the data as required
-                $("#holidaysTable").html(data);
-            }
-        });
-    });
-
-    // Function to change records per page
-    function changeRecordsPerPage() {
-        var recordsPerPageSelect = $("#recordsPerPage");
-        var selectedValue = recordsPerPageSelect.val();
-
-        var form = $("<form>")
-            .attr("method", "POST")
-            .attr("action", "./EmployeeSearchServlet");
-
-        var inputRecordsPerPage = $("<input>")
-            .attr("type", "hidden")
-            .attr("name", "newRecordsPerPage")
-            .val(selectedValue);
-
-        var inputCurrentPage = $("<input>")
-            .attr("type", "hidden")
-            .attr("name", "start")
-            .val("<%= currentPage %>");
-
-        form.append(inputRecordsPerPage, inputCurrentPage);
-        $("body").append(form);
-        form.submit();
-    }
-});
-</script> --%>
+ 
 
 <script>
    

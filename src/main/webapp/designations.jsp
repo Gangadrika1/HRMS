@@ -3,7 +3,19 @@
 <%@ page import="com.weblabs.beans.AddDesignation" %>
 <%@ page import="java.util.List" %>
 
+<%
+HttpSession sdsession = request.getSession(true);
 
+// Retrieve the username attribute from the session
+String username = (String) sdsession.getAttribute("username");
+String roleIDString = (String) sdsession.getAttribute("RoleID");
+// Check if the user is logged in or redirect to the login page
+if (roleIDString == null) {
+response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
+} else {
+   int roleid = Integer.parseInt(roleIDString);
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +27,8 @@
     <meta name="robots" content="noindex, nofollow">
     <title>Designations - HRMS admin template</title>
 
-     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/logo.png">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -36,13 +48,9 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     
-    <style>
-#table{
-    width:1210px;
-    margin-left: 30px;
-    border:2px;
-    }
-</style>
+    <!-- table styles CSS -->
+    <link rel="stylesheet" href="css/tstyles.css">
+    
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     
     <script src="js/html5shiv.min.js"></script>
@@ -118,15 +126,25 @@ if (newRecordsPerPageParam != null) {
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
-                	<div class="col">
+               <div class="page-header">
+                    
+                        <div class="col">
+							<%-- <div id="welcomeMessage" style="text-align: center; margin-left: 500px; font-size: 24px;">
+                                Welcome <%= username %>!
+                              </div> --%>
 								<h3 class="page-title">Designation</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
 									<li class="breadcrumb-item active">Designation</li>
 								</ul>
 							</div>
+                        </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_designation"><i class="fa fa-plus"></i> Add Designation</a>
+                        <a href="#" class="Addbutton" data-toggle="modal" data-target="#add_designation"><i class="fa fa-plus"></i> Add Designation</a>
+                        <!-- <div class="view-icons">
+                            <a href="designations.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="designations-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -134,37 +152,40 @@ if (newRecordsPerPageParam != null) {
             <!-- Search form -->
               <form action="./DesignationSearchSrv" method="post">
             <div class="row filter-row">
+            <div class="col-sm-6 col-md-3" id = "flag">
+                 <label>Records per page:</label>
+			       <select class="record" id="recordsPerPage" onchange="changeRecordsPerPage()">
+					    <option value="10">10</option>
+					</select>
+			    </div>
+			    
                 <div class="col-sm-6 col-md-3">
-                <div style= margin-left:30px; class="form-group form-focus">
-                <input  name="DesignationName" type="text" class="form-control floating" id="designation">
-					<label class="focus-label">Designation</label>
-		           </div>
+                    <div class="custom-input-field form-group form-focus d-flex align-items-center">
+                        <label>Designation:</label>
+                        <input class="input" type="text" name="DesignationName" id="designation">
+                    </div>
                 </div>
+                
                 <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus select-focus">
-                         <input class="form-control floating" type="date" value="" name="Designationid" id="department" >
-			          <label class="focus-label">ID</label>
-			       </div>
+                    <div class="custom-input-field form-group form-focus d-flex align-items-center">
+                        <label>ID:</label>
+                        <input class="input" type="text" name="Designationid" id="department">
+                    </div>
                 </div>
-                <div class="col-sm-6 col-md-3" >
-                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+                
+                <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
+                
                </div>
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                <div class="col-sm-6 col-md-3" id = "flag">
-                    <label>Records per page:</label>
-                    <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                     
-                        <option value="10">10</option>
-                      
-                    </select>
-                </div>
+               
             </form>
             </div>
 
             <!-- Designation List Table -->
-             <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
-       
+           <table id="table" style="margin-left:40px; width: 1200px;"  class="table-striped custom-table mb-0 datatable">
                 <tr>
                     <th>ID</th>
                     <th>Designation</th>
@@ -231,35 +252,33 @@ if (newRecordsPerPageParam != null) {
                     
                     <td>
                    
-                        <a href="edit_designation.jsp?Designationid=<%= designation.getId() %>">Edit</a>
-                          &nbsp;  &nbsp;  &nbsp; 
+                        <a class="edit" href="edit_designation.jsp?Designationid=<%= designation.getId() %>">Edit</a>
                     </td>
                     <td>
-                       <a href="DeleteDesignationSrv?Designationid=<%= designation.getId() %>">Delete</a> </td>
+                       <a class="delete" href="DeleteDesignationSrv?Designationid=<%= designation.getId() %>">Delete</a> </td>
                 </tr>
                 <%
                     }
                 %>
             </table>
-<div class="row justify-content-center align-items-center" id = "flag1">
-   
+<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="designations.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="designations.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%=i%>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="designations.jsp?page=<%=i%>"><%=i%></a>
+            <a href="designations.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="designations.jsp?page=<%=pageno + 1%>">Next</a>
-    <% } %>
+        <a href="designations.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
+    <% }} %>
 </div>
             </div>
 
@@ -280,7 +299,6 @@ if (newRecordsPerPageParam != null) {
 <script src="js/moment.min.js"></script>
 <script src="js/bootstrap-datetimepicker.min.js"></script>
 <script src="js/app.js"></script>
-
 
 <script>
    

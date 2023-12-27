@@ -128,7 +128,7 @@ if (newRecordsPerPageParam != null) {
 							</div>
 							
 							<div class="col-auto float-right ml-auto">
-							<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_tax"><i class="fa fa-plus"></i> Add Tax</a>
+							<a href="#" class="Addbutton" data-toggle="modal" data-target="#add_tax"><i class="fa fa-plus"></i> Add Tax</a>
 							</div>
 						</div>
 					</div>
@@ -138,36 +138,37 @@ if (newRecordsPerPageParam != null) {
 		<form action="./TaxesSearchSRV" method="post" > 
   		
                 <div class="row filter-row">
-                
-                     <div class="col-sm-6 col-md-3">  
-				       <div class="form-group form-focus">
-					     <input  name="TaxName" id="TaxName" type="text" class="form-control floating">
-					     <label class="focus-label">Tax Name</label>
-				       </div>
-				    </div>
-				    
-                   <div class="col-sm-6 col-md-3">  
-				      <div class="form-group form-focus">
-					   <input  name="ID" id="TaxID" type="text" class="form-control floating">
-					   <label class="focus-label">Tax ID</label>
-				     </div>
-				</div>
-				
-	                    <div class="col-sm-6 col-md-3" >
-                          <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-                        </div>
-             
-                 <input type="hidden"  name="start" value="<%= currentPage %>">
-       	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
-	   
-		</form>          
-			       <div class="col-sm-6 col-md-3" id = "flag">
+                 <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">   
 					    <option value="10">10</option> 
 					</select>
 					
 			       </div>
+                
+                     <div class="col-sm-6 col-md-3">  
+				        <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				          <label>Tax Name</label>
+					     <input class="input" name="TaxName" id="TaxName" type="text" class="form-control floating">
+				       </div>
+				    </div>
+				    
+                   <div class="col-sm-6 col-md-3">  
+				      <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				      	   <label>Tax ID</label>
+					   <input class="input"  name="ID" id="TaxID" type="text" class="form-control floating">
+				     </div>
+				</div>
+				
+	                    <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
+             
+                 <input type="hidden"  name="start" value="<%= currentPage %>">
+       	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
+	   
+		</form>          
+			      
 			       </div>
 	
 					<!-- <div class="row">
@@ -237,12 +238,12 @@ if (newRecordsPerPageParam != null) {
             <td><%=taxes.getStatus()%></td>
             
              <td>
-        <a href="edit_tax.jsp?Id=<%= taxes.getID() %>">Edit</a>
+        <a class="edit" href="edit_tax.jsp?Id=<%= taxes.getID() %>">Edit</a>
        
   
     </td>
     <td>
-       <a href="DeleteTaxSrv?ID=<%= taxes.getID() %>">Delete</a>
+       <a class="delete" href="DeleteTaxSrv?ID=<%= taxes.getID() %>">Delete</a>
     </td>
 </tr>
        
@@ -250,24 +251,24 @@ if (newRecordsPerPageParam != null) {
             }
         %>
 								</table>
-<div class="row justify-content-center align-items-center" id = "flag1">
+    <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="empTaxes.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="empTaxes.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%=i%>
+             <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="empTaxes.jsp?page=<%=i%>"><%=i%></a>
+            <a href="empTaxes.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="empTaxes.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="empTaxes.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% }} %>
 
 </div>

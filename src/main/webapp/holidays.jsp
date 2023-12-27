@@ -2,21 +2,32 @@
 <%@ page import="com.weblabs.service.impl.HolidayDAO" %>
 <%@ page import="com.weblabs.beans.HolidayBean" %>
 <%@ page import="java.util.List" %>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-        <meta name="description" content="Smarthr - Bootstrap Admin Template">
-		<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-        <meta name="author" content="Dreamguys - Bootstrap Admin Template">
-        <meta name="robots" content="noindex, nofollow">
-        
-        
 
-        <title>Holidays - HRMS admin template</title>
-		
-		<!-- Favicon -->
+<%
+HttpSession sdsession = request.getSession(true);
+
+// Retrieve the username attribute from the session
+String username = (String) sdsession.getAttribute("username");
+String roleIDString = (String) sdsession.getAttribute("RoleID");
+// Check if the user is logged in or redirect to the login page
+if (roleIDString == null) {
+response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
+} else {
+   int roleid = Integer.parseInt(roleIDString);
+
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="Smarthr - Bootstrap Admin Template">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Holidays - HRMS admin template</title>
+
+    <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/logo.png">
 
     <!-- Bootstrap CSS -->
@@ -36,25 +47,18 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
-   
-     
-    <style>
-#table{
-    width:1210px;
-    margin-left: 30px;
-    border:2px;
-    }
-</style>
+    <!-- table styles CSS -->
+    <link rel="stylesheet" href="css/tstyles.css">
 
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
-    </head>
-    <body>
-    
-    <%
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+ 
+    <title>Holiday List</title>
+</head>
+<body>
+<%
 HttpSession sessionRec = request.getSession(true);
 
 // Initialize recordsPerPage and currentPage as Java variables
@@ -85,7 +89,7 @@ if (newRecordsPerPageParam != null) {
 
 %>
 <script>
-    var recordsPerPage = <%= recordsPerPage %>; // Use Java variable in JavaScript
+    var recordsPerPage = <%= newRecordsPerPage %>; // Use Java variable in JavaScript
     var currentPage = <%= currentPage %>; 
  
     function changeRecordsPerPage() {
@@ -99,93 +103,95 @@ if (newRecordsPerPageParam != null) {
     }
 
 </script>
-		<!-- Main Wrapper -->
-        <div class="main-wrapper">
-		
-		 <!-- Header -->
+
+
+ 
+ <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Header -->
          <jsp:include page="header.jsp" />
 
         <!-- Sidebar -->
 		<jsp:include page="sidebar.jsp" />
-		
-			<!-- Page Wrapper -->
-            <div class="page-wrapper">
-			
-				<!-- Page Content -->
-                <div class="content container-fluid">
-				
-					<!-- Page Header -->
-					<div class="page-header">
-						<div class="row align-items-center">
-							<div class="col">
-								<h3 class="page-title">All Holidays </h3>
-								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-									<li class="breadcrumb-item active">Holidays</li>
-								</ul>
-							</div>
-							<div class="col-auto float-right ml-auto">
-								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_holiday"><i class="fa fa-plus"></i> Add Holiday</a>
-							</div>
-						</div>
+	   <!-- Page Wrapper -->
+        <div class="page-wrapper">
+          <!-- Page Content -->
+            <div class="content container-fluid">
+               <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                    <div class="col">
+					<%-- <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
+                        Welcome <%= username %>!
+                      </div> --%>
+						<h3 class="page-title">Holidays</h3>
+						<ul class="breadcrumb">
+							<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
+							<li class="breadcrumb-item active">Holidays</li>
+						</ul>
 					</div>
-					<!-- /Page Header -->
-					
-					<form action="./HolidaySearchSrv" method="post" > 
-				   <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
-                            <input name="holiday_name" type="text" class="form-control floating" id="holiday_name">
-					       <label class="focus-label">Holiday Name</label>
-			               </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
-                           <input class="form-control floating" type="date" value="" name="id" id="id" >
-			          <label class="focus-label">ID</label>
+                        <div class="col-auto float-right ml-auto">
+                            <a href="#"  class="Addbutton" data-toggle="modal" data-target="#addholiday"><i class="fa fa-plus"></i> Add Holiday</a>
+                            <!-- <div class="view-icons">
+                                <a href="holidays.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                                <a href="holidays-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                            </div> -->
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3" >
-                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-               </div>
-                <input type="hidden" name="start" value="<%= currentPage %>">
-                <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                <div class="col-sm-6 col-md-3" id = "flag">
-                    <label>Records per page:</label>
-                    <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        
-                        <option value="10">10</option>
-                       
-                    </select>
+                   
                 </div>
-            </form>
-		</div> 			
-	 		
-	       <table class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
-   
-				   <!--   <tr>
-				    <th>ID</th>
-				    <th style="width: 180px;">Holiday Name</th>
-				    <th style="width: 200px;">Holiday Date</th>
-				   <th style="text-align: center; width: 200px;" colspan="2">Actions</th>
 
-				   </tr> -->
-				   
-				   <tr>
-				    <th>ID</th>
-				    <th>Holiday Name</th>
-				    <th>Holiday Date</th>
-				   <th style="text-align: center; width: 200px;" colspan="2">Actions</th>
-
-				   </tr> 
-
- 
- 
-                     <%
-                          int start = 0;
-                          int limit = 25;
+                <!-- Search form -->
+                <form action="./HolidaySearchSrv" method="post" > 		
+                 <div class="row filter-row">
+                 
+                   <div class="col-sm-6 col-md-3"  id="flag">
+			       <label>Records per page:</label>
+			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">					    
+					    <option value="10">10</option>					    
+					</select>					
+			       </div>	
+			       
+                    <div class="col-sm-6 col-md-3">
+                        <div class="custom-input-field form-group form-focus d-flex align-items-center">
+                            <label>Holiday Name:</label>
+                            <input class="input" type="text" name="holiday_name" id="holiday_name">
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6 col-md-3">
+                        <div class="custom-input-field form-group form-focus d-flex align-items-center">
+                            <label> ID:</label>
+                            <input class="input" type="text" name="id" id="id">
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
+                </div>
+                 <input type="hidden"  name="start" value="<%= currentPage %>">
+       	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
+       	 			
+	          
+			        </form> 
+			         </div> 
+                <table id="table" style="margin-left: 30px;width:1200px;"  class="table-striped custom-table mb-0 datatable">
+                    <tr>
+                        <th>ID</th>
+                        <th>Holiday Name</th>
+                        <th>Holiday Date</th>
+                        <th style="text-align: center;" colspan="2">Actions</th>
+                        
+                        
+                    </tr> 
+              <%
+                         // int start = 0;
+                       //   int limit = 25;
                        
-                      
+                       int start = currentPage ;
+                       int limit = newRecordsPerPage;
                      //pagenation code start
            		    int pageno = 1;
            		    int noOfPages =0;
@@ -196,7 +202,9 @@ if (newRecordsPerPageParam != null) {
            		         pageno = Integer.parseInt(pageNoStr);
            		     }
 
-           		     
+           		      start = (pageno - 1) * limit;
+           		     //pagenation code ended
+		                
                         String holidayNameFilter = request.getParameter("holiday_name");
                         String idFilter = request.getParameter("id");
                         
@@ -217,7 +225,11 @@ if (newRecordsPerPageParam != null) {
                             whereClause += "Id = '" + idFilter + "'";
                         }
 
-                      
+                      //page
+                        int recordcount= HolidayDAO.totalCount();
+
+                       noOfPages = (int) Math.ceil((double) recordcount / limit);
+                       //pagee
                         if (!whereClause.isEmpty()) {
                             holidays = HolidayDAO.getFilteredHolidays(whereClause, start, limit);
                         } else {
@@ -225,44 +237,56 @@ if (newRecordsPerPageParam != null) {
                         }
                         for (HolidayBean holiday : holidays) {
                     %>
-									
-									
-										 <tr>
+                    <tr>
                         <td><%= holiday.getId() %></td>
                         <td><%= holiday.getHoliday_Name() %></td>
                         <td><%= holiday.getHoliday_Date() %></td>
                         <td>
-                            <a style="color: Blue;" href="update-holiday.jsp?id=<%= holiday.getId() %>">Edit</a>
-                             &nbsp;  &nbsp;  &nbsp;    
-                           </td>
-                            <!-- &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;   -->
-                            <td>
-                            <a style="color: Blue;" href="DeleteHolidaySrv?id=<%= holiday.getId() %>">Delete</a>
+                            <a class="edit" href="update-holiday.jsp?id=<%= holiday.getId() %>">Edit</a>
+                         </td>
+                         <td>
+                            <a class="delete" href="DeleteHolidaySrv?id=<%= holiday.getId() %>">Delete</a>
                         </td>
                     </tr>
-									
-									 <%
-									 }
+                    <%
+                        }
                     %> 
                 </table> 
-							<!-- </div>
-						</div>
-					</div>
-                </div> -->
-				<!-- /Page Content -->
-				
-				 <!-- Add Holiday Modal -->
-                  <jsp:include page="addholiday.jsp" />
-				
+                
+<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
+   
+   <!-- Pagination links -->
+
+    <% if (pageno > 1) { %>
+        <a href="holidays.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
+    <% } %>
+
+    <% for (int i = 1; i <= noOfPages; i++) { %>
+        <% if (i == pageno) { %>
+          <span class="pagination-number active"><%=i%></span>
+        <% } else { %>
+            <a href="holidays.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
+        <% } %>
+    <% } %>
+
+    <% if (pageno < noOfPages) { %>
+        <a href="holidays.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
+    <% }} %>
+
+</div>
             </div>
-			<!-- /Page Wrapper -->
-			
-        </div>
-		<!-- /Main Wrapper -->
-		
-		
-		
-		 <!-- jQuery -->
+       
+  
+
+      
+
+    <!-- Add Holiday Modal -->
+    <jsp:include page="addholiday.jsp" />
+
+    <!-- Include your Add Holiday Modal HTML here -->
+     </div>
+
+    <!-- jQuery -->
     <script src="js/jquery-3.2.1.min.js"></script>
 
     <!-- Bootstrap Core JS -->
@@ -281,6 +305,89 @@ if (newRecordsPerPageParam != null) {
 
     <!-- Custom JS -->
     <script src="js/app.js"></script>
-		
-    </body>
+  
+<%-- <script>
+$(document).ready(function () {
+    // Attach the changeRecordsPerPage function to the change event of the recordsPerPage select
+    $("#recordsPerPage").change(function () {
+        changeRecordsPerPage();
+    });
+
+    $("#filterButton").click(function (event) {
+        // Get filter criteria (username and id)
+        event.preventDefault();
+        var usernameFilter = $("#holiday_name").val();
+        var idFilter = $("#id").val();
+        
+        // Make an AJAX request to the server
+        $.ajax({
+            type: "POST", // Use POST or GET depending on your servlet configuration
+            url: "./EmployeeSearchServlet",
+            data: {
+                username: usernameFilter,
+                id: idFilter
+            },
+            success: function (data) {
+                console.log("myFunction has been invoked.");
+                // Handle the response data, e.g., update the table with the filtered data
+                // You might need to format the data as required
+                $("#employeeTable").html(data);
+            }
+        });
+    });
+
+    // Function to change records per page
+    function changeRecordsPerPage() {
+        var recordsPerPageSelect = $("#recordsPerPage");
+        var selectedValue = recordsPerPageSelect.val();
+
+        var form = $("<form>")
+            .attr("method", "POST")
+            .attr("action", "./HolidaySearchSrv");
+
+        var inputRecordsPerPage = $("<input>")
+            .attr("type", "hidden")
+            .attr("name", "newRecordsPerPage")
+            .val(selectedValue);
+
+        var inputCurrentPage = $("<input>")
+            .attr("type", "hidden")
+            .attr("name", "start")
+            .val("<%= currentPage %>");
+
+        form.append(inputRecordsPerPage, inputCurrentPage);
+        $("body").append(form);
+        form.submit();
+    }
+});
+</script> --%>
+
+<script>
+  
+    function updateFooterVisibility(resultCount) {
+        var dropdown = document.getElementById("flag1");
+        var dropdown1=document.getElementById("flag");
+        // Set the visibility based on the result count
+        if(resultCount==-1)
+        	{
+        		dropdown.style.display = "block";
+        		dropdown1.style.display = "block";
+        	}
+        if (resultCount < 4) {
+            dropdown.style.display = "none"; // Hide the dropdown
+            dropdown1.style.display = "none";
+        } else {
+            dropdown.style.display = "block"; // Show the dropdown
+            dropdown1.style.display = "block";
+        }
+    }
+    // Update dropdown visibility on page load
+    var initialResultCount = (parseInt('<%= request.getAttribute("holiday") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("holiday") %>');
+    console.log(initialResultCount);
+    updateFooterVisibility(initialResultCount);
+</script>
+   
+</body>
 </html>
+
+

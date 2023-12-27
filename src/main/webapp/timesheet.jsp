@@ -37,7 +37,7 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
-
+ <link rel="stylesheet" href="css/M.css">
     <!-- table styles CSS -->
     <link rel="stylesheet" href="css/styles.css">
 
@@ -76,7 +76,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -131,11 +131,11 @@ if (newRecordsPerPageParam != null) {
 								</ul>
 							</div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_timesheet"><i class="fa fa-plus"></i> Add Timesheet</a>
+                        <a href="#" class="Addbutton" data-toggle="modal" data-target="#add_timesheet"><i class="fa fa-plus"></i> Add Timesheet</a>
                         <div class="view-icons">
-                            <a href="timesheet.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <!-- <a href="timesheet.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="timesheet-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                        </div>
+                        --> </div>
                     </div>
                 </div>
             </div>
@@ -143,31 +143,35 @@ if (newRecordsPerPageParam != null) {
             <!-- Search form -->
              <form action="./TimesheetSearchSrv" method="post">
             <div class="row filter-row">
-                <div class="col-sm-6 col-md-3">  
-				      <div class="form-group form-focus">
-					   <input  name="TimesheetID" id="TimesheetID" type="text" class="form-control floating">
-					   <label class="focus-label">Timesheet ID</label>
-				     </div>
-				</div>
-				
-               <div class="col-sm-6 col-md-3"> 
-				<div class="form-group form-focus select-focus">
-			            <input class="form-control floating" type="date" value="" name="DateWorked" id="DateWorked" placeholder=" ">
-			          <label class="focus-label">Date Worked</label>
-			        </div>
-			  </div>
-                <div class="col-sm-6 col-md-3" >
-                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-               </div> 
-            
-            <input type="hidden" name="start" value="<%= currentPage %>">
-                <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                <div class="col-sm-6 col-md-3" id = "flag">
+               <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
                         <option value="10">10</option>
                     </select>
                 </div>
+                <div class="col-sm-6 col-md-3">  
+				      <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				         <label style="margin-right:5px;" for="ItemName">Timesheet ID</label>
+					   <input class="input" name="TimesheetID" id="TimesheetID" type="text" class="form-control floating">
+				     </div>
+				</div>
+				
+               <div class="col-sm-6 col-md-3"> 
+				<div class="custom-input-field form-group form-focus d-flex align-items-center">
+					<label>Date Worked</label>
+			            <input class="input" type="date" value="" name="DateWorked" id="DateWorked" placeholder=" ">
+			        </div>
+			  </div>
+			  
+               <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
+ 
+               
+            
+            <input type="hidden" name="start" value="<%= currentPage %>">
+                <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
+                
                 </div>
             </form>
         </div> <!-- Closes the filter-row div -->
@@ -254,24 +258,25 @@ if (newRecordsPerPageParam != null) {
                     }
                 %>
             </table>
- <div class="row justify-content-center align-items-center" id = "flag1">
+            
+<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="timesheet.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="timesheet.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%=i%>
+           <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="timesheet.jsp?page=<%=i%>"><%=i%></a>
+            <a href="timesheet.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="timesheet.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="timesheet.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
 
 </div>
