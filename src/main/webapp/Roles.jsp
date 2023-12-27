@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.weblabs.service.impl.LeaveDAO" %>
-<%@ page import="com.weblabs.beans.AddLeaves" %>
+<%@ page import="com.weblabs.service.impl.AddRolesDAO" %>
+<%@ page import="com.weblabs.beans.AddRolesBean" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
@@ -8,7 +8,7 @@
 <%
     // Getting the username from the session
     String username = (String) session.getAttribute("username");
-%> 
+%>
 
 <!DOCTYPE html>
 <html>
@@ -49,14 +49,17 @@
    
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+   
     <title>Leave List</title>
 </head>
 <body>
 <%
 HttpSession sessionRec = request.getSession(true);
+
 // Initialize recordsPerPage and currentPage as Java variables
 String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
+
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
     recordsPerPageStr = "5"; // Set a default value, e.g., 1
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
@@ -80,6 +83,21 @@ if (newRecordsPerPageParam != null) {
 }
 
 %>
+<script>
+    var recordsPerPage = <%= recordsPerPage %>; // Use Java variable in JavaScript
+    var currentPage = <%= currentPage %>; 
+ 
+    function changeRecordsPerPage() {
+        var recordsPerPageSelect = document.getElementById("recordsPerPage");
+        var selectedValue = recordsPerPageSelect.value;
+        
+        // Update the URL with the selected "recordsPerPage" value and navigate to it
+        var baseUrl = window.location.href.split('?')[0];
+        var newUrl = baseUrl + '?newRecordsPerPage=' + selectedValue;
+        window.location.href = newUrl;
+    }
+
+</script>
 <!-- Main Wrapper -->
 <div class="main-wrapper">
 
@@ -101,17 +119,17 @@ if (newRecordsPerPageParam != null) {
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Leaves</h3>
+                        <h3 class="page-title">Roles</h3>
                         <ul class="breadcrumb">
                             <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
                                 Welcome <%= username %>😊😊
                             </div>
                             <li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Leaves</li>
+                            <li class="breadcrumb-item active">Roles</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#addroles"><i class="fa fa-plus"></i> Add Roles</a>
                         <div class="view-icons">
                             <a href="leaves.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="leaves-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
@@ -119,10 +137,8 @@ if (newRecordsPerPageParam != null) {
                     </div>
                 </div>
             </div>
-
-            <!-- Search form -->
-            <form action="./LeaveSearchSrv" method="post">
-             
+<form action="./LeaveSearchSrv" method="post">
+  
             <div class="row filter-row">
                 <div class="col-sm-6 col-md-3">
                     <div class="form-group form-focus">
@@ -145,10 +161,10 @@ if (newRecordsPerPageParam != null) {
                 <div class="col-sm-6 col-md-3">
                     <input type="submit" value="Search">
                 </div>
-            </div>
-             <input type="hidden" name="start" value="<%= currentPage %>">
+                 </div>
+                <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                <div class="col-sm-6 col-md-3" id="flag">
+                <div class="col-sm-6 col-md-3">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
                         <option value="5">5</option>
@@ -158,17 +174,14 @@ if (newRecordsPerPageParam != null) {
                     </select>
                 </div>
             </form>
-        </div> 
-
-            <!-- Leave List Table -->
-            <table>
+               </div>
+            
+        <table>
+      
                 <tr>
-                    <th>ID</th>
-                    <th>Employee</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Days</th>
-                    <th>Reason</th>
+                    <th>RoleID</th>
+                    <th>RoleName</th>
+                    <th>Description</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -191,7 +204,7 @@ if (newRecordsPerPageParam != null) {
                 String employeeFilter = request.getParameter("employee");
                 String startFilter = request.getParameter("start_date");
                 String endFilter = request.getParameter("end_date");
-                List<AddLeaves> leaves;
+                List<AddRolesBean> leaves;
                 String whereClause = ""; // Initialize an empty whereClause
 
                 if (employeeFilter != null && !employeeFilter.isEmpty()) {
@@ -202,76 +215,73 @@ if (newRecordsPerPageParam != null) {
                     if (!whereClause.isEmpty()) {
                         whereClause += " or ";
                     }
-                    whereClause += "starting_at >= '" + startFilter + "'";
+                    whereClause += "starting_at = '" + startFilter + "'";
                 }
 
                 if (endFilter != null && !endFilter.isEmpty()) {
                     if (!whereClause.isEmpty()) {
-                        whereClause += " And ";
+                        whereClause += " or ";
                     }
-                    whereClause += "ending_on <= '" + endFilter + "'";
+                    whereClause += "ending_on = '" + endFilter + "'";
                     
                 } 
 
               //page
-                int recordcount= LeaveDAO.totalCount();
-
+                int recordcount= AddRolesDAO.totalCount();
                noOfPages = (int) Math.ceil((double) recordcount / limit);
                //pagee
                 if (!whereClause.isEmpty()) {
                     // Apply the whereClause condition
-                    leaves = LeaveDAO.getFilteredLeaveRequests(whereClause, start, limit);
+                    leaves = AddRolesDAO.getFilteredEmployees(whereClause, start, limit);
                 } else {
                     // Retrieve all data based on the limit
-                    leaves = LeaveDAO.getFilteredLeaveRequests("", start, limit);
+                    leaves = AddRolesDAO.getFilteredEmployees("", start, limit);
                 }
 
-                for (AddLeaves leave : leaves) {
-		           		 %>
-			                <tr>
-			                    <td><%=leave.getId() %></td>
-			                                        <td><%=leave.getEmployee()%></td>
-			                                        <td><%=leave.getStarting_At()%></td>
-			                                        <td><%=leave.getEnding_On()%></td>
-			                                        <td><%=leave.getDays()%></td>
-			                                        <td><%=leave.getReason()%></td>
-			                    <td>
-			                        <a href="edit_leave.jsp?id=<%= leave.getId() %>">Edit</a>
-			                    </td>
-			                    <td>
-			                        <a href="DeleteLeaveSrv?id=<%= leave.getId() %>">Delete</a>
-			                    </td>
-			                </tr>
-		                <%
+                for (AddRolesBean leave : leaves) {
+            %>
+                <tr>
+                    <td><%=leave.getRoleID() %></td>
+                   <td><%=leave.getRoleName()%></td>
+                   <td><%=leave.getDescription()%></td>
+                           
+                    <td>
+                        <a href="edit_roles.jsp?RoleID=<%= leave.getRoleID() %>">Edit</a>
+                    </td>
+                    <td>
+                        <a href="DeleteRolesSrv?RoleID=<%= leave.getRoleID() %>">Delete</a>
+                    </td>
+                </tr>
+                <%
                     }
                 %>
             </table>
             
-   <div class="row justify-content-center align-items-center" id="flag1">
+   <div class="row justify-content-center align-items-center">
    
-	   <!-- Pagination links -->
-	
-	    <% if (pageno > 1) { %>
-	        <<a href="leaves_search.jsp?page=<%=pageno - 1%>&employee=<%=request.getParameter("employee")%>&start_date=<%=request.getParameter("start_date")%>&end_date=<%=request.getParameter("end_date")%>">Previous</a>
-	    <% } %>
-	
-	    <% for (int i = 1; i <= noOfPages; i++) { %>
-	        <% if (i == pageno) { %>
-	            <%=i%>
-	        <% } else { %>
-	            <a href="leaves_search.jsp?page=<%=i%>&employee=<%=request.getParameter("employee")%>&start_date=<%=request.getParameter("start_date")%>&end_date=<%=request.getParameter("end_date")%>"><%=i%></a>
-	        <% } %>
-	    <% } %>
-	
-	    <% if (pageno < noOfPages) { %>
-	        <a href="leaves_search.jsp?page=<%=pageno + 1%>&employee=<%=request.getParameter("employee")%>&start_date=<%=request.getParameter("start_date")%>&end_date=<%=request.getParameter("end_date")%>">next</a>
-	    <% } %>
+   <!-- Pagination links -->
 
-	</div>
+    <% if (pageno > 1) { %>
+        <a href="roles.jsp?page=<%=pageno - 1%>">Previous</a>
+    <% } %>
+
+    <% for (int i = 1; i <= noOfPages; i++) { %>
+        <% if (i == pageno) { %>
+            <%=i%>
+        <% } else { %>
+            <a href="roles.jsp?page=<%=i%>"><%=i%></a>
+        <% } %>
+    <% } %>
+
+    <% if (pageno < noOfPages) { %>
+        <a href="roles.jsp?page=<%=pageno + 1%>">Next</a>
+    <% } %>
+
+</div>
             </div> 
 
             <!-- Add Leave Modal -->
-            <jsp:include page="add_leave.jsp" />
+            <jsp:include page="add_roles.jsp" />
             <%-- <jsp:include page="edit_leave.jsp" />
             <jsp:include page="delete_leave.jsp" /> --%>
             <!-- Include your Add Leave Modal HTML here -->
@@ -290,96 +300,31 @@ if (newRecordsPerPageParam != null) {
 <script src="js/app.js"></script>
 
 <script>
-$(document).ready(function () {
-    // Attach the changeRecordsPerPage function to the change event of the recordsPerPage select
-    $("#recordsPerPage").change(function () {
-        changeRecordsPerPage();
-    });
-
-    $("#filterButton").click(function (event) {
-        // Get filter criteria (username and id)
-        event.preventDefault();
-        var usernameFilter = $("#username").val();
-        var idFilter = $("#id").val();
-        
-        // Make an AJAX request to the server
-        $.ajax({
-            type: "POST", // Use POST or GET depending on your servlet configuration
-            url: "./LeaveSearchSrv",
-            data: {
-                username: usernameFilter,
-                id: idFilter
-            },
-            success: function (data) {
-                console.log("myFunction has been invoked.");
-                // Handle the response data, e.g., update the table with the filtered data
-                // You might need to format the data as required
-                $("#holidaysTable").html(data);
-            }
+    $(document).ready(function () {
+        $("#filterButton").click(function () {
+            // Get filter criteria (username and id)
+            var departmentFilter = $("#username").val();
+            var idFilter = $("#id").val();
+            
+            // Make an AJAX request to the server
+            $.ajax({
+                type: "POST", // Use POST or GET depending on your servlet configuration
+                url: "./LeaveSearchSrv",
+                data: {
+                    department: departmentFilter,
+                    id: idFilter
+                },
+                success: function (data) {
+                    console.log("myFunction has been invoked.");
+                    // Handle the response data, e.g., update the table with the filtered data
+                    // You might need to format the data as required
+                    $("#employeeTable").html(data);
+                }
+            });
         });
     });
-
-    // Function to change records per page
-    function changeRecordsPerPage() {
-        var recordsPerPageSelect = $("#recordsPerPage");
-        var selectedValue = recordsPerPageSelect.val();
-
-        var form = $("<form>")
-            .attr("method", "POST")
-            .attr("action", "./LeaveSearchSrv");
-
-        var inputRecordsPerPage = $("<input>")
-            .attr("type", "hidden")
-            .attr("name", "newRecordsPerPage")
-            .val(selectedValue);
-
-        var inputCurrentPage = $("<input>")
-            .attr("type", "hidden")
-            .attr("name", "start")
-            .val("<%= currentPage %>");
-
-        form.append(inputRecordsPerPage, inputCurrentPage);
-        $("body").append(form);
-        form.submit();
-    }
-});
-
 </script>
-<script>
-    var recordsPerPage = <%= recordsPerPage %>; // Use Java variable in JavaScript
-    var currentPage = <%= currentPage %>; 
- 
-    function changeRecordsPerPage() {
-        var recordsPerPageSelect = document.getElementById("recordsPerPage");
-        var selectedValue = recordsPerPageSelect.value;
-        
-        // Update the URL with the selected "recordsPerPage" value and navigate to it
-        var baseUrl = window.location.href.split('?')[0];
-        var newUrl = baseUrl + '?newRecordsPerPage=' + selectedValue;
-        window.location.href = newUrl;
-    }
-    function updateFooterVisibility(resultCount) {
-        var dropdown = document.getElementById("flag1");
-        var dropdown1=document.getElementById("flag");
-        // Set the visibility based on the result count
-        if(resultCount==-1)
-        	{
-        		dropdown.style.display = "none";
-        		dropdown1.style.display = "none";
-        	}
-        if (resultCount < 4) {
-            dropdown.style.display = "none"; // Hide the dropdown
-            dropdown1.style.display = "none";
-        } else {
-            dropdown.style.display = "block"; // Show the dropdown
-            dropdown1.style.display = "block";
-        }
-    }
-    // Update dropdown visibility on page load
-    var initialResultCount = (parseInt('<%= request.getAttribute("size") %>') == 'null') ? -1 : parseInt('<%= request.getAttribute("size") %>');
-    console.log(initialResultCount);
-    updateFooterVisibility(initialResultCount);
-</script>
+
 
 </body>
 </html>

@@ -48,7 +48,7 @@ public class ClientsSearchSRV extends HttpServlet {
 	        }
 	        
 	        for (AddClient client : clients) {
-	            System.out.println(client); // Assuming AddClient class has a meaningful toString() implementation
+	            System.out.println(client.getId()); // Assuming AddClient class has a meaningful toString() implementation
 	        }
 
 

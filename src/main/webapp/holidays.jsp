@@ -8,13 +8,14 @@ HttpSession sdsession = request.getSession(true);
 
 // Retrieve the username attribute from the session
 String username = (String) sdsession.getAttribute("username");
+
 String roleIDString = (String) sdsession.getAttribute("RoleID");
 // Check if the user is logged in or redirect to the login page
 if (roleIDString == null) {
 response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
 } else {
    int roleid = Integer.parseInt(roleIDString);
-
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -52,8 +53,7 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   
-    <script src="js/html5shiv.min.js"></script>
-    <script src="js/respond.min.js"></script>
+   
  
     <title>Holiday List</title>
 </head>
@@ -168,7 +168,10 @@ if (newRecordsPerPageParam != null) {
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
 					    
+					    <option value="5" hidden>5</option>
+					   	<option value="5">5</option>
 					    <option value="10">10</option>
+					    <option value="20">20</option>
 					    
 					</select>
 					
@@ -256,20 +259,20 @@ if (newRecordsPerPageParam != null) {
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="holidays.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="holidays.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
             <%=i%>
         <% } else { %>
-            <a href="holidays.jsp?page=<%=i%>"><%=i%></a>
+            <a href="holidays.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="holidays.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }} %>
+        <a href="holidays.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>
+    <% } %>
 
 </div>
             </div>

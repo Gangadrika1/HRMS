@@ -157,7 +157,11 @@ if (newRecordsPerPageParam != null) {
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+                        <option value="5" hidden=>5</option>
+                        <option value="5">5</option>
                         <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
                     </select>
                 </div>
                 </div>
@@ -248,21 +252,42 @@ if (newRecordsPerPageParam != null) {
 				</table>
 			<div class="row justify-content-center align-items-center" id = "flag1">
 			<!-- Pagination links -->
-            <% if (pageno > 1) { %>
-            <a href="promotion.jsp?page=<%=pageno - 1%>">Previous</a>
-            <% } %>
-
-            <% for (int i = 1; i <= noOfPages; i++) { %>
-            <% if (i == pageno) { %>
+   <% if (request.getParameter("promotionfor") ==null && request.getParameter("promotiondate") ==null) { %>
+    <% if (pageno > 1) { %>
+        <a href="promotion.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
+    <% } %>
+    <% for (int i = 1; i <= noOfPages; i++) { %>
+        <% if (i == pageno) { %>
             <%=i%>
-            <% } else { %>
-            <a href="promotion.jsp?page=<%=i%>"><%=i%></a>
-            <% } %>
-            <% } %>
+        <% } else { %>
+            <a href="promotion.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+        <% } %>
+    <% } %>
+    <% if (pageno < noOfPages) { %>
+        <a href="promotion.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>       
+    <% } %>
+	
+	<% }else { %>
+	<!-- after search it will execute -->
+	 <% if (pageno > 1) { %>
+	        <a href="promotion.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&promotionfor=<%=request.getParameter("promotionfor")%>&promotiondate=<%=request.getParameter("promotiondate")%>">Previous</a>
+	    <% } %>
+	
+	    <% for (int i = 1; i <= noOfPages; i++) { %>
+	        <% if (i == pageno) { %>
+	            <%=i%>
+	        <% } else { %>
+	            <a href="promotion.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>&promotionfor=<%=request.getParameter("promotionfor")%>&promotiondate=<%=request.getParameter("promotiondate")%>"><%=i%></a>
+	        <% } %>
+	    <% } %>
+	
+	    <% if (pageno < noOfPages) { %>
+	        <a href="promotion.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&promotionfor=<%=request.getParameter("promotionfor")%>&promotiondate=<%=request.getParameter("promotiondate")%>">next</a>
+	    <% } %>
+	
+	<% } %>
+   
 
-            <% if (pageno < noOfPages) { %>
-            <a href="promotion.jsp?page=<%=pageno + 1%>">Next</a>
-            <% } %>
 
         </div>
     </div>
@@ -298,9 +323,10 @@ if (newRecordsPerPageParam != null) {
 		<script src="js/bootstrap-datetimepicker.min.js"></script>
 		
 		<!-- Datatable JS -->
+		<!--
 		<script src="js/jquery.dataTables.min.js"></script>
 		<script src="js/dataTables.bootstrap4.min.js"></script>
-		
+		-->
 		<!-- Custom JS -->
 		<script src="js/app.js"></script>
 

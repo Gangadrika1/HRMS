@@ -171,9 +171,11 @@ if (newRecordsPerPageParam != null) {
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        
+                       <option value="5" hidden=>5</option>
+                        <option value="5">5</option>
                         <option value="10">10</option>
-                        
+                        <option value="20">20</option>
+                        <option value="50">50</option>
                     </select>
                 </div>
             </form>
@@ -260,25 +262,42 @@ if (newRecordsPerPageParam != null) {
             </table>
             
    <div class="row justify-content-center align-items-center" id = "flag1">
-   
-   <!-- Pagination links -->
-
+    <!-- Pagination links -->
+   <% if (request.getParameter("RoleID") ==null && request.getParameter("RolePermissionID") ==null) { %>
     <% if (pageno > 1) { %>
-        <a href="rolepermission.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="rolepermission.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
     <% } %>
-
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
             <%=i%>
         <% } else { %>
-            <a href="rolepermission.jsp?page=<%=i%>"><%=i%></a>
+            <a href="rolepermission.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
         <% } %>
     <% } %>
-
     <% if (pageno < noOfPages) { %>
-        <a href="rolepermission.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }} %>
-
+        <a href="rolepermission.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>       
+    <% } %>
+	
+	<% }else { %>
+	<!-- after search it will execute -->
+	 <% if (pageno > 1) { %>
+	        <a href="rolepermission.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&RoleID=<%=request.getParameter("RoleID")%>&RolePermissionID=<%=request.getParameter("RolePermissionID")%>">Previous</a>
+	    <% } %>
+	
+	    <% for (int i = 1; i <= noOfPages; i++) { %>
+	        <% if (i == pageno) { %>
+	            <%=i%>
+	        <% } else { %>
+	            <a href="rolepermission.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>&RoleID=<%=request.getParameter("RoleID")%>&RolePermissionID=<%=request.getParameter("RolePermissionID")%>"><%=i%></a>
+	        <% } %>
+	    <% } %>
+	
+	    <% if (pageno < noOfPages) { %>
+	        <a href="rolepermission.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&RoleID=<%=request.getParameter("RoleID")%>&RolePermissionID=<%=request.getParameter("RolePermissionID")%>">next</a>
+	    <% } %>
+	
+	<% } %>
+    <% } %>
 </div>
             </div> 
 

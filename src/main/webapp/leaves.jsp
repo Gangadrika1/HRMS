@@ -4,11 +4,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+
 <%
     // Getting the username from the session
     String username = (String) session.getAttribute("username");
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +18,7 @@
     <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>newLeaves - HRMS admin template</title>
+    <title>Leaves - HRMS admin template</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="css/style.css">
     
     <!-- Table styles CSS -->
-    <!-- <link rel="stylesheet" href="css/tstyles.css"> -->
+    <link rel="stylesheet" href="css/tstyles.css">
     
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
    
@@ -60,7 +60,7 @@ String recordsPerPageStr = (String) sessionRec.getAttribute("recordsPerPage");
 String currentPageStr = (String) sessionRec.getAttribute("currentPage");
 
 if (recordsPerPageStr == null || "0".equals(recordsPerPageStr)) {
-    recordsPerPageStr = "10"; // Set a default value, e.g., 1
+    recordsPerPageStr = "5"; // Set a default value, e.g., 1
     sessionRec.setAttribute("recordsPerPage", recordsPerPageStr);
 }
 int recordsPerPage = Integer.parseInt(recordsPerPageStr);
@@ -98,14 +98,6 @@ if (newRecordsPerPageParam != null) {
 
 </script>
 
-<style>
-#table{
-    width:1210px;
-    margin-left: 30px;
-    border:2px;
-    }
-</style>
-
 <!-- Main Wrapper -->
 <div class="main-wrapper">
 
@@ -127,21 +119,20 @@ if (newRecordsPerPageParam != null) {
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                       <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
-                        Welcome <%= username %>!
-                      </div>
-             
-                    <h3 class="page-title">Leaves</h3>
-						<ul class="breadcrumb">
-							<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-							<li class="breadcrumb-item active">Leaves</li>
-						</ul>
+                        <h3 class="page-title">Leaves</h3>
+                        <ul class="breadcrumb">
+                            <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
+                                Welcome <%= username %>😊😊
+                            </div>
+                            <li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Leaves</li>
+                        </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
                         <div class="view-icons">
-                           <!--  <a href="leaves.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="leaves-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a> -->
+                            <a href="leaves.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="leaves-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
                         </div>
                     </div>
                 </div>
@@ -151,46 +142,45 @@ if (newRecordsPerPageParam != null) {
             <form action="./LeaveSearchSrv" method="post">
              
             <div class="row filter-row">
-               <div class="col-sm-6 col-md-3">  
-				<div class="form-group form-focus">
-					<input name="employee" type="text" class="form-control floating">
-					<label class="focus-label">Employee Name</label>
-				</div>
-				</div>
-		       
-			    <div class="col-sm-6 col-md-3"> 
-				<div class="form-group form-focus select-focus">
-			            <input class="form-control floating" type="date" value="" name="start_date" id="start_date" placeholder=" ">
-			          <label class="focus-label">StarDate</label>
-			        </div>
-			    </div>
-		
-
-                <div class="col-sm-6 col-md-3"> 
-				<div class="form-group form-focus select-focus">
-			            <input class="form-control floating" type="date" value="" name="end_date" id="end_date" placeholder=" ">
-			             <label class="focus-label">EndDate</label>
-			        </div>
-			    </div>
-			
-			
-               <div class="col-sm-6 col-md-3" >
-                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-               </div>  
-               
-           </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus">
+                        <label for="employee">Employee:</label>
+                        <input type="text" name="employee" id="employee">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus select-focus">
+                        <label for="start_date">Start Date:</label>
+                        <input type="text" name="start_date" id="start_date">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus select-focus">
+                        <label for="end_date">End Date:</label>
+                        <input type="text" name="end_date" id="end_date">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <input type="submit" value="Search">
+                </div>
+            </div>
              <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+                    	<option value="5" hidden=>5</option>
+                        <option value="5">5</option>
                         <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
                     </select>
                 </div>
             </form>
         </div> 
+
             <!-- Leave List Table -->
-            <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
+            <table>
                 <tr>
                     <th>ID</th>
                     <th>Employee</th>
@@ -198,10 +188,9 @@ if (newRecordsPerPageParam != null) {
                     <th>End Date</th>
                     <th>Days</th>
                     <th>Reason</th>
-                    <th style="text-align: center;" colspan="2">Actions</th>
-                    
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
-    
                 <%
                 
                 int start = currentPage ;
@@ -275,30 +264,46 @@ if (newRecordsPerPageParam != null) {
                 <%
                     }
                 %>
-              
             </table>
-           
             
    <div class="row justify-content-center align-items-center" id = "flag1">
    
    <!-- Pagination links -->
-
+   <% if (request.getParameter("employee") ==null) { %>
     <% if (pageno > 1) { %>
-        <a href="leaves.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="leaves.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
     <% } %>
-
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
             <%=i%>
         <% } else { %>
-            <a href="leaves.jsp?page=<%=i%>"><%=i%></a>
+            <a href="leaves.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
         <% } %>
     <% } %>
-
     <% if (pageno < noOfPages) { %>
-        <a href="leaves.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="leaves.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>       
     <% } %>
-
+	
+	<% }else { %>
+	<!-- after search it will execute -->
+	 <% if (pageno > 1) { %>
+	        <a href="leaves.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&employee=<%=request.getParameter("employee")%>&start_date=<%=request.getParameter("start_date")%>&end_date=<%=request.getParameter("end_date")%>">Previous</a>
+	    <% } %>
+	
+	    <% for (int i = 1; i <= noOfPages; i++) { %>
+	        <% if (i == pageno) { %>
+	            <%=i%>
+	        <% } else { %>
+	            <a href="leaves.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>&employee=<%=request.getParameter("employee")%>&start_date=<%=request.getParameter("start_date")%>&end_date=<%=request.getParameter("end_date")%>"><%=i%></a>
+	        <% } %>
+	    <% } %>
+	
+	    <% if (pageno < noOfPages) { %>
+	        <a href="leaves.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&employee=<%=request.getParameter("employee")%>&start_date=<%=request.getParameter("start_date")%>&end_date=<%=request.getParameter("end_date")%>">next</a>
+	    <% } %>
+	
+	<% } %>
+	
 </div>
             </div> 
 

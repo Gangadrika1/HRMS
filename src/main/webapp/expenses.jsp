@@ -167,7 +167,10 @@ if (newRecordsPerPageParam != null) {
        	       <div class="col-sm-6 col-md-3" id = "flag">
 			       <label>Records per page:</label>
 			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+						<option value="5" hidden>5</option>
+					   	<option value="5">5</option>
 					    <option value="10">10</option>
+					    <option value="20">20</option>
 					</select>
 				
 			       </div>
@@ -319,8 +322,9 @@ if (newRecordsPerPageParam != null) {
 		<script src="js/select2.min.js"></script>
 		
 		<!-- Datatable JS -->
+		<!--
 		<script src="js/jquery.dataTables.min.js"></script>
-		<script src="js/dataTables.bootstrap4.min.js"></script>
+		<script src="js/dataTables.bootstrap4.min.js"></script>-->
 		
 		<!-- Datetimepicker JS -->
 		<script src="js/moment.min.js"></script>

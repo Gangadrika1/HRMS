@@ -164,6 +164,7 @@
                     <div class="col-sm-6 col-md-3">
                         <label>Records per page:</label>
                         <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+                        	<option value="5" hidden=>5</option>
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -248,20 +249,43 @@
 
 
             <div class="row justify-content-center align-items-center">
-                <!-- Pagination links -->
-                <% if (pageno > 1) { %>
-                    <a href="supplier.jsp?page=<%=pageno - 1%>">Previous</a>
-                <% } %>
-                <% for (int i = 1; i <= noOfPages; i++) { %>
-                    <% if (i == pageno) { %>
-                        <%=i%>
-                    <% } else { %>
-                        <a href="supplier.jsp?page=<%=i%>"><%=i%></a>
-                    <% } %>
-                <% } %>
-                <% if (pageno < noOfPages) { %>
-                    <a href="supplier.jsp?page=<%=pageno + 1%>">Next</a>
-                <% } %>
+             <% if (request.getParameter("supplierName") ==null && request.getParameter("supplierID") ==null) { %>
+    <% if (pageno > 1) { %>
+        <a href="supplier.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
+    <% } %>
+    <% for (int i = 1; i <= noOfPages; i++) { %>
+        <% if (i == pageno) { %>
+            <%=i%>
+        <% } else { %>
+            <a href="supplier.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+        <% } %>
+    <% } %>
+    <% if (pageno < noOfPages) { %>
+        <a href="supplier.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>       
+    <% } %>
+	
+	<% }else { %>
+	<!-- after search it will execute -->
+	 <% if (pageno > 1) { %>
+	        <a href="supplier.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&supplierName=<%=request.getParameter("supplierName")%>&supplierID=<%=request.getParameter("supplierID")%>">Previous</a>
+	    <% } %>
+	
+	    <% for (int i = 1; i <= noOfPages; i++) { %>
+	        <% if (i == pageno) { %>
+	            <%=i%>
+	        <% } else { %>
+	            <a href="supplier.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>&supplierName=<%=request.getParameter("supplierName")%>&supplierID=<%=request.getParameter("supplierID")%>"><%=i%></a>
+	        <% } %>
+	    <% } %>
+	
+	    <% if (pageno < noOfPages) { %>
+	        <a href="supplier.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&supplierName=<%=request.getParameter("supplierName")%>&supplierID=<%=request.getParameter("supplierID")%>">next</a>
+	    <% } %>
+	
+	<% } %>
+    
+            
+               
             </div>
         </div>
     </div>

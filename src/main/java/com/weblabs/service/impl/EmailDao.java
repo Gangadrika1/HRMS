@@ -9,12 +9,10 @@ import java.time.format.DateTimeFormatter;
 import com.weblabs.utility.DBUtil;
 
 public class EmailDao {
-	public static int getFilteredEmail(String email) {
-        
+	public static int getFilteredEmail(String email) {        
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-
         try {
             connection = DBUtil.provideConnection();
             String query;
@@ -47,16 +45,12 @@ public class EmailDao {
                 e.printStackTrace();
             }
         }
-
         return 0;
     }
-
-public static void storeOTP(String email,String username,int otp) {
-        
+public static void storeOTP(String email,String username,int otp) {        
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-
         try {
             connection = DBUtil.provideConnection();
             String query=null;
@@ -69,8 +63,6 @@ public static void storeOTP(String email,String username,int otp) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, username);
             preparedStatement.setInt(3, otp);
-            
-
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("OTP details inserted successfully.");
@@ -95,7 +87,7 @@ public static void storeOTP(String email,String username,int otp) {
 
         
     }
-public static boolean TimeOfOTP(int otp,String username) {
+public static boolean TimeOfOTP(int otp,String email) {
     
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -104,13 +96,13 @@ public static boolean TimeOfOTP(int otp,String username) {
     try {
         connection = DBUtil.provideConnection();
         String query=null;
-        if (username != null && !username.isEmpty()) {
+        if (email != null && !email.isEmpty()) {
 
-            query = "select time from otpdetails where username= ? and otp= ?"  ;
+            query = "select time from otpdetails where email= ? and otp= ?"  ;
         } 
 
         preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, username);
+        preparedStatement.setString(1, email);
         preparedStatement.setInt(2, otp);
         resultSet= preparedStatement.executeQuery();
         String dbTime=null;

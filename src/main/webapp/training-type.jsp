@@ -296,9 +296,9 @@ if (newRecordsPerPageParam != null) {
 		<!-- Select2 JS -->
 		<script src="js/select2.min.js"></script>
 		
-		<!-- Datatable JS -->
+		<!-- Datatable JS 
 		<script src="js/jquery.dataTables.min.js"></script>
-		<script src="js/dataTables.bootstrap4.min.js"></script>
+		<script src="js/dataTables.bootstrap4.min.js"></script>-->
 		
 		<!-- Custom JS -->
 		<script src="js/app.js"></script>

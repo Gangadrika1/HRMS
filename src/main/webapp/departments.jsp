@@ -171,7 +171,11 @@ if (newRecordsPerPageParam != null) {
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
                         
+                        <option value="5" hidden=>5</option>
+                        <option value="5">5</option>
                         <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
                        
                     </select>
                 </div>
@@ -251,23 +255,44 @@ if (newRecordsPerPageParam != null) {
         </table>
     <div class="row justify-content-center align-items-center" id = "flag1">
    
-   <!-- Pagination links -->
-
+    <!-- Pagination links -->
+   <% if (request.getParameter("DepartmentName") ==null && request.getParameter("DepartmentId") ==null) { %>
     <% if (pageno > 1) { %>
-        <a href="departments.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="departments.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
     <% } %>
-
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
             <%=i%>
         <% } else { %>
-            <a href="departments.jsp?page=<%=i%>"><%=i%></a>
+            <a href="departments.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
         <% } %>
     <% } %>
-
     <% if (pageno < noOfPages) { %>
-        <a href="departments.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }} %>
+        <a href="departments.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>       
+    <% } %>
+	
+	<% }else { %>
+	<!-- after search it will execute -->
+	 <% if (pageno > 1) { %>
+	        <a href="departments.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&DepartmentName=<%=request.getParameter("DepartmentName")%>&DepartmentId=<%=request.getParameter("DepartmentId")%>">Previous</a>
+	    <% } %>
+	
+	    <% for (int i = 1; i <= noOfPages; i++) { %>
+	        <% if (i == pageno) { %>
+	            <%=i%>
+	        <% } else { %>
+	            <a href="departments.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>&DepartmentName=<%=request.getParameter("DepartmentName")%>&DepartmentId=<%=request.getParameter("DepartmentId")%>"><%=i%></a>
+	        <% } %>
+	    <% } %>
+	
+	    <% if (pageno < noOfPages) { %>
+	        <a href="departments.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&DepartmentName=<%=request.getParameter("DepartmentName")%>&DepartmentId=<%=request.getParameter("DepartmentId")%>">next</a>
+	    <% } %>
+	
+	<% } %>
+   
+  
+    <% } %>
 
 </div>
     </div> <!-- Closes the content container-fluid div -->

@@ -21,7 +21,7 @@ public class HolidayDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         List<HolidayBean> holidays = new ArrayList<>();
-
+        System.out.println("in holidaydao "+whereClause);    
         try {
             // Establish a database connection (you should use your connection method)
         	connection =  DBUtil.provideConnection();

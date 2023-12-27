@@ -151,7 +151,11 @@ if (newRecordsPerPageParam != null) {
                 <div class="col-sm-6 col-md-3" id = "flag">
                     <label>Records per page:</label>
                     <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+                        <option value="5" hidden=>5</option>
+                        <option value="5">5</option>
                         <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
                     </select>
                 </div>
             </form>
@@ -236,22 +240,44 @@ if (newRecordsPerPageParam != null) {
         %>
         </table>
         <div class="row justify-content-center align-items-center" id = "flag1">
-            <!-- Pagination links -->
-            <% if (pageno > 1) { %>
-            <a href="resignation.jsp?page=<%= pageno - 1 %>">Previous</a>
-            <% } %>
-
-            <% for (int i = 1; i <= noOfPages; i++) { %>
-            <% if (i == pageno) { %>
-            <%= i %>
-            <% } else { %>
-            <a href="resignation.jsp?page=<%= i %>"><%= i %></a>
-            <% } %>
-            <% } %>
-
-            <% if (pageno < noOfPages) { %>
-            <a href="resignation.jsp?page=<%= pageno + 1 %>">Next</a>
-            <% } %>
+        
+        <!-- Pagination links -->
+   <% if (request.getParameter("resigningemployee") ==null && request.getParameter("resignationdate") ==null) { %>
+    <% if (pageno > 1) { %>
+        <a href="resignation.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Previous</a>
+    <% } %>
+    <% for (int i = 1; i <= noOfPages; i++) { %>
+        <% if (i == pageno) { %>
+            <%=i%>
+        <% } else { %>
+            <a href="resignation.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+        <% } %>
+    <% } %>
+    <% if (pageno < noOfPages) { %>
+        <a href="resignation.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>">Next</a>       
+    <% } %>
+	
+	<% }else { %>
+	<!-- after search it will execute -->
+	 <% if (pageno > 1) { %>
+	        <a href="resignation.jsp?page=<%=pageno - 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&resigningemployee=<%=request.getParameter("resigningemployee")%>&resignationdate=<%=request.getParameter("resignationdate")%>">Previous</a>
+	    <% } %>
+	
+	    <% for (int i = 1; i <= noOfPages; i++) { %>
+	        <% if (i == pageno) { %>
+	            <%=i%>
+	        <% } else { %>
+	            <a href="resignation.jsp?page=<%=i%>&newRecordsPerPage=<%= newRecordsPerPage %>&resigningemployee=<%=request.getParameter("resigningemployee")%>&resignationdate=<%=request.getParameter("resignationdate")%>"><%=i%></a>
+	        <% } %>
+	    <% } %>
+	
+	    <% if (pageno < noOfPages) { %>
+	        <a href="resignation.jsp?page=<%=pageno + 1%>&newRecordsPerPage=<%= newRecordsPerPage %>&resigningemployee=<%=request.getParameter("resigningemployee")%>&resignationdate=<%=request.getParameter("resignationdate")%>">next</a>
+	    <% } %>
+	
+	<% } %>
+    
+        
         </div>
     </div>
     <!-- /Page Content -->
@@ -280,9 +306,10 @@ if (newRecordsPerPageParam != null) {
 <script src="js/bootstrap-datetimepicker.min.js"></script>
 
 <!-- Datatable JS -->
+<!--
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap4.min.js"></script>
-
+-->
 <!-- Custom JS -->
 <script src="js/app.js"></script>
 <script>

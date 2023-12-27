@@ -19,7 +19,7 @@ public class HolidaySearchSrv extends HttpServlet {
       
     	String holidaynameFilter = request.getParameter("holiday_name");
         String idFilter = request.getParameter("id");
-  
+        System.out.println("in holidaysearchsrv line 22"+holidaynameFilter+" "+idFilter);  
        // String startParam = request.getParameter("start");
         String startParam = request.getParameter("start");
         int start = (startParam != null) ? Integer.parseInt(startParam) : 0;
@@ -37,10 +37,10 @@ public class HolidaySearchSrv extends HttpServlet {
             // Apply filters for both username and ID
         	if (idFilter == null || idFilter.isEmpty()) {
         	 int idFilterInt = 0;
-        	  holidays = HolidayDAO.getFilteredHolidays("username like '%" + holidaynameFilter + "%' and Id = '" + idFilter + "'", start, limit);
+        	  holidays = HolidayDAO.getFilteredHolidays("Holiday_Name like '%" + holidaynameFilter + "%' and Id = '" + idFilter + "'", start, limit);
         	}
         	else {
-        holidays = HolidayDAO.getFilteredHolidays("username like '%" + holidaynameFilter + "%' and Id = '" + idFilter + "'", start, limit);
+        holidays = HolidayDAO.getFilteredHolidays("Holiday_Name like '%" + holidaynameFilter + "%' and Id = '" + idFilter + "'", start, limit);
         	}
         	} else {
             // Retrieve all data
@@ -50,7 +50,7 @@ public class HolidaySearchSrv extends HttpServlet {
       request.setAttribute("holidays", holidays);
       request.setAttribute("search", "true");
       request.setAttribute("holiday", holidays.size());   
-      
+      System.out.println("in holidaysearchsrv line 53 "+holidays.size());  
       // request.getRequestDispatcher("/employee.jsp").forward(request, response);
       RequestDispatcher rd = request.getRequestDispatcher("holidays.jsp");
       rd.forward(request, response);
