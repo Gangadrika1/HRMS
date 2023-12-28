@@ -47,6 +47,7 @@
 		<!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 		 <link rel="stylesheet" href="css/tstyles.css">
+		 <!-- <link rel="stylesheet" href="css/M.css"> -->
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
@@ -108,7 +109,7 @@ if (newRecordsPerPageParam != null) {
 
         <!-- Sidebar -->
         <!-- Include your sidebar HTML here -->
-        <jsp:include page="sidebar.jsp" />
+        <jsp:include page="sidebar.jsp" /> 
 			
 			
 			<!-- Page Wrapper -->

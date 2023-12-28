@@ -28,6 +28,7 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
     <title>Your Page Title</title>
     <!-- Add your CSS and other meta tags here -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/M.css">
 </head>
 <body>
     <div class="header">

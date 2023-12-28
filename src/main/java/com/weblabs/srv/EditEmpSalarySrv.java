@@ -2,13 +2,13 @@ package com.weblabs.srv;
 
 	import java.io.IOException;
 
+
 	import javax.servlet.RequestDispatcher;
 	import javax.servlet.ServletException;
 	import javax.servlet.annotation.WebServlet;
 	import javax.servlet.http.HttpServlet;
 	import javax.servlet.http.HttpServletRequest;
 	import javax.servlet.http.HttpServletResponse;
-	import javax.servlet.http.HttpSession;
 
 	import com.weblabs.beans.AddsalaryBean;
 	import com.weblabs.service.impl.Addempsalaryserviceimpl;
@@ -53,9 +53,6 @@ package com.weblabs.srv;
 	        String proftax= request.getParameter("proftax");
 	        String labourwelfare= request.getParameter("labourwelfare");
 	        
-	      
-	        
-
 	        AddsalaryBean employee = new AddsalaryBean();
 	        employee.setEmployee_id(empid);
 	        employee.setBasic(basic);
@@ -73,10 +70,10 @@ package com.weblabs.srv;
 	      
 	        Addempsalaryserviceimpl dao = new Addempsalaryserviceimpl();
 	        
-	        String status1 = dao.editempsalary(empid,basic,da,hra,conveyance,
+	        status = dao.editempsalary(empid,basic,da,hra,conveyance,
 	        		allowance, medicalallowance, tds,  esi,  pf, leave,  proftax,labourwelfare);
 
-	        RequestDispatcher rd = request.getRequestDispatcher("editsalary.jsp?message=" + status1);
+	        RequestDispatcher rd = request.getRequestDispatcher("editsalary.jsp?message=" + status);
 	        rd.forward(request, response);
 	    }
 

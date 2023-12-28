@@ -21,7 +21,7 @@
     <title>Assets - Your Admin Template</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/logo.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">

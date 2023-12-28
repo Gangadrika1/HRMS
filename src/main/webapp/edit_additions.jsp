@@ -1,4 +1,6 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page import="com.weblabs.service.impl.AdditionDAO"%>
+<%@page import="com.weblabs.beans.AddAddition"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.weblabs.service.impl.EmployeeDAO" %>
 <%@ page import="com.weblabs.beans.EmployeeBean" %>
 <%@ page import="java.util.List" %>
@@ -45,38 +47,81 @@
     <![endif]-->
     <title>payroll List</title>
 </head>
-<body> --%>
+<body> 
+<%
+    int start = 0;
+    int limit = 25;
+
+    String idFilter = request.getParameter("Payroll_id"); // Make sure the parameter name matches your form
+    List<AddAddition> terminations = null; // Initialize the list as empty
+
+    String whereClause = ""; // Initialize an empty whereClause
+
+    if (idFilter != null && !idFilter.isEmpty()) {
+        whereClause += "Payroll_id = '" + idFilter + "'";
+    }
+
+    if (!whereClause.isEmpty()) {
+        // Apply the whereClause condition
+        terminations = AdditionDAO.getFilteredAddClient(whereClause, start, limit);
+    }
+
+    if (terminations != null && !terminations.isEmpty()) {
+    	AddAddition train = terminations.get(0); // Access the first element
+        if (train != null) {
+%>
+<div class="main-wrapper">
+
+    <!-- Header -->
+    <!-- Include your header HTML here -->
+    <jsp:include page="header.jsp" />
+
+    <!-- Sidebar -->
+    <!-- Include your sidebar HTML here -->
+    <jsp:include page="sidebar.jsp" />
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+
+        <!-- Page Content -->
+        <div class="content container-fluid">
+
+            <!-- Page Header -->
+            <div class="page-header">
 <form  action="./EditAdditionServlet" method="post">
-<div id="edit_addition" class="modal custom-modal fade" role="dialog">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Edit Addition</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
+<div  role="dialog">
+					
+							
 							<div class="modal-body">
 					                <div class="form-group">
 				                      <label>ID <span class="text-danger">*</span></label>
-				                      <input name="id" required class="form-control" type="text">
+				                      <input readonly value="<%=train.getPayroll_id() %>" name="id" required class="form-control" type="text">
 				                     </div>
 									<div class="form-group">
 										<label>Name <span class="text-danger">*</span></label>
-										<input name="name" class="form-control" type="text">
+                                        <select class="select" name="name"  required >
+											
+											<option value="CONVEYANCE" <%= (train.getAdditionName().equals("CONVEYANCE")) ? "selected" : "" %>>CONVEYANCE</option>
+											<option value="ALLOWANCE" <%= (train.getAdditionName().equals("ALLOWANCE")) ? "selected" : "" %>>ALLOWANCE</option>
+											<option value="MEDICAL" <%= (train.getAdditionName().equals("MEDICAL")) ? "selected" : "" %>>MEDICAL</option>
+											<option value="BASIC" <%= (train.getAdditionName().equals("BASIC")) ? "selected" : "" %>>Basic</option>
+											<option value="DA" <%= (train.getAdditionName().equals("DA")) ? "selected" : "" %>>DA</option>
+											<option value="HRA" <%= (train.getAdditionName().equals("HRA")) ? "selected" : "" %>>HRA</option>
+										</select>									
 									</div>
 									<div class="form-group">
 										<label>Category <span class="text-danger">*</span></label>
-										<select name="category" class="select">
+										<select value="<%=train.getCategory()%>" name="category" class="select">
 											<option>Select a category</option>
 											<option>Monthly remuneration</option>
 											<option>Additional remuneration</option>
 										</select>
+										
 									</div>
 									<div class="form-group">
 										<label class="d-block">Unit calculation</label>
 										<div class="status-toggle">
-											<input name="unitcalculation" type="checkbox" id="edit_unit_calculation" class="check">
+											<input value="<%=train.getUnitcalculation()%>" name="unitcalculation" type="checkbox" id="edit_unit_calculation" class="check">
 											<label for="edit_unit_calculation" class="checktoggle">checkbox</label>
 										</div>
 									</div>
@@ -86,102 +131,43 @@
 											<div class="input-group-prepend">
 												<span class="input-group-text">$</span>
 											</div>
-											<input name="unitamount" type="text" class="form-control">
+											<input value="<%=train.getUnitAmount()%>" name="unitamount" type="text" class="form-control">
 											<div class="input-group-append">
 												<span class="input-group-text">.00</span>
 											</div>
 										</div>
 									</div>
-									<!-- <div class="form-group">
-										<label class="d-block">Assignee</label>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="edit_addition_assignee" id="edit_addition_no_emp" value="option1" checked="">
-											<label class="form-check-label" for="edit_addition_no_emp">
-											No assignee
-											</label>
-										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="edit_addition_assignee" id="edit_addition_all_emp" value="option2">
-											<label class="form-check-label" for="edit_addition_all_emp">
-											All employees
-											</label>
-										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="edit_addition_assignee" id="edit_addition_single_emp" value="option3">
-											<label class="form-check-label" for="edit_addition_single_emp">
-											Select Employee
-											</label>
-										</div>
-										<div class="form-group">
-											<select class="select">
-												<option>-</option>
-												<option>Select All</option>
-												<option>John Doe</option>
-												<option>Richard Miles</option>
-											</select>
-										</div>
-									</div> -->
+									
 									<div class="submit-section">
 										<button class="btn btn-primary submit-btn">Save</button>
 									</div>
-							
+									</div>
+									</div>
+							</form>
 							</div>
 						</div>
 					</div>
 				</div>
-					</form>
-					<script>
-    // JavaScript to handle checking all employee checkboxes when "All employees" is selected
-    document.getElementById("addition_all_emp").addEventListener("change", function() {
-        if (this.checked) {
-            const checkboxes = document.querySelectorAll("input[name='selectedEmployees']");
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = true;
-            });
-        }
-    });
+					
+					 <%
+    HttpSession sessionstatus = request.getSession(true);
 
-    // JavaScript to handle checking or unchecking all employee checkboxes when "No assignee" is selected
-    document.getElementById("addition_no_emp").addEventListener("change", function() {
-        if (this.checked) {
-            const checkboxes = document.querySelectorAll("input[name='selectedEmployees']");
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = false;
-            });
-        }
-    });
-
-    
- // JavaScript to clear selections when "Select Employee" is chosen and allow selections when "Select Employee" is chosen
-    const singleEmployeeRadio = document.getElementById("addition_single_emp");
-    const checkboxes = document.querySelectorAll("input[name='selectedEmployees']");
-
-    singleEmployeeRadio.addEventListener("change", toggleCheckboxes);
-
-    function toggleCheckboxes() {
-        const isChecked = singleEmployeeRadio.checked;
-        checkboxes.forEach(checkbox => {
-            checkbox.disabled = !isChecked;
-            checkbox.checked = false; // Uncheck all checkboxes when "Select Employee" is chosen
-        });
+    if (sessionstatus.getAttribute("status") != null && sessionstatus.getAttribute("status").equals("termination Position Updated Successfully!")) {
+        response.sendRedirect("payroll-items.jsp");
+    } else {
+%>
+   <div class="col-sm-6">
+		<p>termination not found with the provided ID.</p>
+</div>
+<%
     }
-    
-    
-    // JavaScript to read the selected employees
-    const selectedEmployeesButton = document.getElementById("readSelectedEmployeesButton");
-
-    selectedEmployeesButton.addEventListener("click", function() {
-        const selectedEmployeeIDs = [];
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                selectedEmployeeIDs.push(checkbox.value);
-            }
-        });
-
-        // Do something with the selected employee IDs
-        alert("Selected Employee IDs: " + selectedEmployeeIDs.join(", "));
-    });
-</script>	
-<!-- 				
+%>
+<%
+        }
+%>
+<%
+        }
+%>
+			
 </body>
-</html> -->
+</html>

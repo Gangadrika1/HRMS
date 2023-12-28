@@ -35,7 +35,7 @@
                 // Loop through the list and generate <option> elements
                 for (EmployeeBean employee : employees) {
             %>
-            <option  value="<%= employee.getEmployee_ID() %>"><%= employee.getEmployee_ID() %></option>
+            <option  value="<%= employee.getEmployee_ID() %>"><%= employee.getEmployee_ID()%></option>
             <%
                 }
             } catch (Exception e) {
@@ -72,7 +72,7 @@
                 // Loop through the list and generate <option> elements
                 for (CreateProject employee : allProjects) {
             %>
-            <option  value="<%= employee.getProject_id() %>"><%= employee.getProject_id() %></option>
+            <option  value="<%= employee.getProject_id() %>"><%= employee.getProjectname()%></option>
             <%
                 }
             } catch (Exception e) {
@@ -102,7 +102,7 @@
                 // Loop through the list and generate <option> elements
                 for (TasksBean employee : allProjects) {
             %>
-            <option  value="<%= employee.getTask_id() %>"><%= employee.getTask_id() %></option>
+            <option  value="<%= employee.getTask_id() %>"><%= employee.getDescription()%></option>
             <%
                 }
             } catch (Exception e) {

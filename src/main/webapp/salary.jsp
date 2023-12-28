@@ -64,7 +64,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -191,13 +191,13 @@ if (newRecordsPerPageParam != null) {
 
 				      start = (pageno - 1) * limit;
 				     //pagenation code ended
-    String idFilter = request.getParameter("employee_id");
+    String idFilter = request.getParameter("Employee_Id");
     List<AddsalaryBean> trainers;
 
     String whereClause = ""; // Initialize an empty whereClause
 
     if (idFilter != null && !idFilter.isEmpty()) {
-        whereClause = "employee_id = '" + idFilter + "'";
+        whereClause = "Employee_Id = '" + idFilter + "'";
     }
     //page
     int recordcount= SalaryDAO.totalCount();
@@ -230,10 +230,10 @@ if (newRecordsPerPageParam != null) {
             <td><%= train.getOTHERS()%></td>
             <td><%= train.getNetSal() %></td>
              <td>
-        <a class="edit" href="editsalary.jsp?employee_id=<%= train.getEmployee_id() %>">Edit</a>
+        <a class="edit" href="editsalary.jsp?Employee_Id=<%= train.getEmployee_id() %>">Edit</a>
     </td>
     <td>
-        <a class="delete" href="deletesalary.jsp?employee_id=<%= train.getEmployee_id() %>">Delete</a>
+        <a class="delete" href="DeleteEmpsalarySrv?Employee_Id=<%= train.getEmployee_id() %>">Delete</a>
     </td>
 </tr>
        

@@ -246,9 +246,9 @@ response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login p
              <td>
         		<a class="edit" href="editClients.jsp?Clientid=<%= clients.getClientID()%>">Edit</a>
     		</td>
-			    <td>
+			   <%--  <td>
 			        <a class="delete" href="DeleteClientSRV?Clientid=<%= clients.getClientID()%>">Delete</a>
-			    </td>
+			    </td> --%>
 			</tr>
         <%
      

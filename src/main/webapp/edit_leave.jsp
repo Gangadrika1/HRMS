@@ -86,8 +86,6 @@ if (leaves != null && !leaves.isEmpty()) {
             
             <div class="page-header">
 
-
-
         <form action="./UpdateLeave" method="post">
             <div class="col-sm-6">
                 <div class="form-group">
@@ -100,11 +98,11 @@ if (leaves != null && !leaves.isEmpty()) {
                 </div>
                 <div class="form-group">
                     <label class="col-form-label">Starting Date <span class="text-danger">*</span></label>
-                    <input name="starting_at" value="<%= leave.getStarting_At() %>" required class="form-control" type="text">
+                    <input name="starting_at" value="<%= leave.getStarting_At() %>" required class="form-control" type="date">
                 </div>
                 <div class="form-group">
                     <label class="col-form-label">Ending Date <span class="text-danger">*</span></label>
-                    <input name="ends_on" value="<%= leave.getEnding_On() %>" required class="form-control" type="text">
+                    <input name="ends_on" value="<%= leave.getEnding_On() %>" required class="form-control" type="date">
                 </div>
                 <div class="form-group">
                     <label class="col-form-label">Days <span class="text-danger">*</span></label>

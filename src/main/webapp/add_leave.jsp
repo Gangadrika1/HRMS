@@ -2,7 +2,22 @@
 <%@ page import="com.weblabs.service.impl.EmployeeDAO" %>
 <%@ page import="com.weblabs.beans.EmployeeBean" %>
 <%@ page import="java.util.List" %>
+<script>
+    function validateDates() {
+        var startDateStr = document.getElementsByName("starting_at")[0].value;
+        var endDateStr = document.getElementsByName("ends_on")[0].value;
 
+        var startDate = new Date(startDateStr);
+        var endDate = new Date(endDateStr);
+
+        if (startDate > endDate) {
+            alert("End date must be after the start date.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +62,7 @@
 </head>
 <body>
 
-<form action="./AddLeavesSrv" method="post">
+<form action="./AddLeavesSrv" method="post" onsubmit="return validateDates();">
 <div id="add_leave" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

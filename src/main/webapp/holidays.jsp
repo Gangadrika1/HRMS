@@ -132,7 +132,7 @@ if (newRecordsPerPageParam != null) {
 						</ul>
 					</div>
                         <div class="col-auto float-right ml-auto">
-                            <a href="#"  class="Addbutton" data-toggle="modal" data-target="#addholiday"><i class="fa fa-plus"></i> Add Holiday</a>
+                            <a href="#"  class="Addbutton" data-toggle="modal" data-target="#add_holiday"><i class="fa fa-plus"></i> Add Holiday</a>
                             <!-- <div class="view-icons">
                                 <a href="holidays.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                                 <a href="holidays-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>

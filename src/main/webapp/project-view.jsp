@@ -702,11 +702,11 @@
 				<%
     HttpSession sessionstatus = request.getSession(true);
     if (sessionstatus.getAttribute("status") != null && sessionstatus.getAttribute("status").equals("Expenses Position Updated Successfully!")) {
-        response.sendRedirect("expenses.jsp");
+        response.sendRedirect("leads.jsp");
     } else {
 %>
    <div class="col-sm-6">
-		<p>Expenses not found with the provided ID.</p>
+		<!-- <p>Expenses not found with the provided ID.</p> -->
 </div>
 <%
     }

@@ -82,4 +82,45 @@ public class GoalsTypeDAO {
 		 }
 		 return count;
 		 }
+	
+	
+	
+	 public static List<AddGoalsType> getAllGoals() {
+	        List<AddGoalsType> allEmployees = new ArrayList<>();
+	        Connection connection = null;
+	        PreparedStatement preparedStatement = null;
+	        ResultSet resultSet = null;
+
+	        try {
+	            connection = DBUtil.provideConnection();
+	            String query ="SELECT GoalsTypeID,GoalsType,Description,Status  FROM goaltype";
+	            preparedStatement = connection.prepareStatement(query);
+	            resultSet = preparedStatement.executeQuery();
+
+	            while (resultSet.next()) {
+	            	AddGoalsType employee = new AddGoalsType();
+	               
+	                employee.setId(resultSet.getString("GoalsTypeID"));
+	                employee.setType(resultSet.getString("GoalsType"));
+	                employee.setDescription(resultSet.getString("Description"));
+	                employee.setStatus(resultSet.getString("Status"));
+	                allEmployees.add(employee);
+	            }
+	        } catch (Exception e) {
+	            // Handle exceptions
+	            e.printStackTrace();
+	        } finally {
+	            // Close database resources (connection, statement, result set)
+	            try {
+	                if (resultSet != null) resultSet.close();
+	                if (preparedStatement != null) preparedStatement.close();
+	                if (connection != null) connection.close();
+	            } catch (Exception e) {
+	                // Handle exceptions
+	                e.printStackTrace();
+	            }
+	        }
+
+	        return allEmployees;
+	    }
 }

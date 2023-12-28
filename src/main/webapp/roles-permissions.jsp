@@ -4,6 +4,19 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+<%
+HttpSession sdsession = request.getSession(true);
+
+// Retrieve the username attribute from the session
+String username = (String) sdsession.getAttribute("username");
+String roleIDString = (String) sdsession.getAttribute("RoleID");
+// Check if the user is logged in or redirect to the login page
+if (roleIDString == null) {
+response.sendRedirect("login.jsp"); // Change "login.jsp" to your actual login page
+} else {
+   int roleid = Integer.parseInt(roleIDString);
+
+%>
 
 <!DOCTYPE html>
 <html>
@@ -39,22 +52,21 @@
     
     <!-- Table styles CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/M.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+   
+    <!-- <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script> -->
+   
+    <title>Leave List</title>
     
-    
-    <style>
+<style>
 #table{
     width:1210px;
     margin-left: 30px;
     border:2px;
     }
 </style>
-    
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-   
-    <script src="js/html5shiv.min.js"></script>
-    <script src="js/respond.min.js"></script>
-   
-    <title>Leave List</title>
 </head>
 <body>
 <%
@@ -123,52 +135,61 @@ if (newRecordsPerPageParam != null) {
             <div class="page-header">
                 <div class="row align-items-center">
                 <div class="col">
-				
-					<h3 class="page-title">Role Permissions</h3>
-					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
-						<li class="breadcrumb-item active">Rolepermissions</li>
-					</ul>
-				</div>
+                       
+                    <h3 class="page-title">Roles Permission</h3>
+						<ul class="breadcrumb">
+							<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
+							<li class="breadcrumb-item active">Rolepermission</li>
+						</ul>
+                    </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_rp"><i class="fa fa-plus"></i> Add Roles</a>
-                        
+                        <a href="#" class="Addbutton" data-toggle="modal" data-target="#add_rp"><i class="fa fa-plus"></i> Add Roles</a>
+                        <!-- <div class="view-icons">
+                            <a href="leaves.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+                            <a href="leaves-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+                        </div> -->
                     </div>
                 </div>
             </div>
 <form action="./RpSearchSrv" method="post">
   
             <div class="row filter-row">
-                <div class="col-sm-6 col-md-3">
-                     <div style= margin-left:30px; class="form-group form-focus">
-                      <input class="form-control floating" type="text" value="" name="RoleID" id="RoleID" >
-			          <label class="focus-label">RoleID</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus select-focus">
-                         <input class="form-control floating" type="text" value="" name="RolePermissionID" id="RolePermissionID" >
-			          <label class="focus-label">PermissionID</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3" >
-                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-               </div>
+            <div class="col-sm-6 col-md-3" id = "flag">
+                    <label>Records per page:</label>
+                    <select id="recordsPerPage" onchange="changeRecordsPerPage()">                        
+                        <option value="10">10</option>                        
+                    </select>
+            </div>
+            
+                <div class="col-sm-6 col-md-3">  
+				<div class="custom-input-field form-group form-focus d-flex align-items-center">
+					<label>Role ID</label>
+					<input class="input" name="RoleID" id="RoleID"  type="text" class="form-control floating">
+				
+				</div>
+				</div>
+				
+                <div class="col-sm-6 col-md-3">  
+				<div class="custom-input-field form-group form-focus d-flex align-items-center">
+					<label>RolePermission ID</label>
+					<input class="input" name="RolePermissionID" id="RolePermissionID"  type="text" class="form-control floating">
+				</div>
+				</div>
+               
+               <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div> 
+               
+               
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                <div class="col-sm-6 col-md-3" id = "flag">
-                    <label>Records per page:</label>
-                    <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        
-                        <option value="10">10</option>
-                        
-                    </select>
-                </div>
+                
+                  </div>
             </form>
                </div>
             
-        <table  id ="table" class="table table-striped custom-table mb-0 datatable" style="border: 2px solid black;">
-       
+        <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
+
                 <tr>
                      <th>RolePermissionID</th>
                     <th>RoleID</th>
@@ -236,11 +257,10 @@ if (newRecordsPerPageParam != null) {
                    <td><%=leave.getPermissionType()%></td>
                            
                     <td>
-                        <a href="edit_rp.jsp?RolePermissionID=<%= leave.getRolePermissionID() %>">Edit</a>
-                     &nbsp;  &nbsp;  &nbsp; 
+                        <a class="edit" href="edit_rp.jsp?RolePermissionID=<%= leave.getRolePermissionID() %>">Edit</a>
                     </td>
                     <td>
-                        <a href="DeleteRPSrv?RolePermissionID=<%= leave.getRolePermissionID() %>">Delete</a>
+                        <a class="delete" href="DeleteRPSrv?RolePermissionID=<%= leave.getRolePermissionID() %>">Delete</a>
                     </td>
                 </tr>
                 <%
@@ -248,25 +268,24 @@ if (newRecordsPerPageParam != null) {
                 %>
             </table>
             
-   <div class="row justify-content-center align-items-center" id = "flag1">
-   
+			<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="rolepermission.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="roles-permissions.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%=i%>
+      <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="rolepermission.jsp?page=<%=i%>"><%=i%></a>
+            <a href="roles-permissions.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="rolepermission.jsp?page=<%=pageno + 1%>">Next</a>
-    <% }%>
+        <a href="roles-permissions.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
+    <% }} %>
 
 </div>
             </div> 

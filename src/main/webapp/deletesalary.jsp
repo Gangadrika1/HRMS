@@ -1,25 +1,34 @@
-<form action="./DeleteEmpsalarySrv" method="post">
-<div class="modal custom-modal fade" id="delete_salary" role="dialog">
-					<div class="modal-dialog modal-dialog-centered">
-						<div class="modal-content">
-							<div class="modal-body">
-								<div class="form-header">
-									<h3>Delete Salary</h3>
-									<p>Are you sure want to delete?</p>
-								</div>
-								<!-- Delete employee input fields here -->
-                                   <label for="deleteid"> ID:</label>
-                                           <input type="number" id="deleteid" name="deleteid" required><br>
-	 							<div class="modal-btn delete-action">
-									<div class="row">
-										
-										<div class="col-6">
-											<button href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Delete</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Employee Form</title>
+</head>
+<body>
+
+<!-- Script to automatically trigger deletion when the page loads -->
+<script>
+    window.addEventListener('load', function() {
+        // Extract the 'id' parameter from the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var employeeId = urlParams.get('employee_id');
+console.log("you have entered deleteEmployee");
+        // Make an AJAX request to delete the employee
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', './DeleteEmpsalarySrv', true);
+        console.log("deleteDesignationsrv called");
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('employee_id=' + employeeId);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Handle the response if needed
+                var response = xhr.responseText;
+                console.log(response); // You can log the response to the console
+            }
+        };
+    });
+</script>
+
+<%   response.sendRedirect("salary.jsp"); %>
+</body>
+</html>

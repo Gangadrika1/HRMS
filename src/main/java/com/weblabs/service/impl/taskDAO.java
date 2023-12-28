@@ -187,7 +187,7 @@ public class taskDAO {
 
 		    try {
 		        connection = DBUtil.provideConnection();
-		        String query = "SELECT * FROM tasks WHERE projectID = ?";
+		        String query = "SELECT * FROM tasks WHERE project_id = ?";
 		        preparedStatement = connection.prepareStatement(query);
 		        preparedStatement.setInt(1, projectId);
 		        resultSet = preparedStatement.executeQuery();
@@ -226,7 +226,7 @@ public class taskDAO {
 
 		    try {
 		        connection = DBUtil.provideConnection();
-		        String query = "SELECT description FROM tasks WHERE projectID = ? AND is_completed = 'Pending'";
+		        String query = "SELECT description FROM tasks WHERE project_id = ? AND is_completed = 'Pending'";
 		        preparedStatement = connection.prepareStatement(query);
 		        preparedStatement.setInt(1, projectId);
 		        resultSet = preparedStatement.executeQuery();
@@ -263,7 +263,7 @@ public class taskDAO {
 
 		    try {
 		        connection = DBUtil.provideConnection();
-		        String query = "SELECT description FROM tasks WHERE projectID = ? AND is_completed = 'Approved'";
+		        String query = "SELECT description FROM tasks WHERE project_id = ? AND is_completed = 'Approved'";
 		        preparedStatement = connection.prepareStatement(query);
 		        preparedStatement.setInt(1, projectId);
 		        resultSet = preparedStatement.executeQuery();

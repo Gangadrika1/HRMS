@@ -74,10 +74,8 @@ public class AddAdditionServiceimpl {
 
 	    Connection con = DBUtil.provideConnection();
 	    PreparedStatement ps = null;
-
 	    try {
 	        ps = con.prepareStatement("UPDATE payroll_addition SET AdditionName =? ,Category =?,Unitcalculation =? ,UnitAmount =? WHERE Payrolladditionid=?");  
-	        
 	        ps.setString(1, AdditionName);
 	        ps.setString(2, Category);
 	        ps.setString(3, Unitcalculation);
@@ -88,6 +86,7 @@ public class AddAdditionServiceimpl {
 
 	        if (k > 0) {
 	            status = "addition Updated Successfully!";
+	            
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();

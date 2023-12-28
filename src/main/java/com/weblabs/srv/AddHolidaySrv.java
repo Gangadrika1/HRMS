@@ -37,7 +37,7 @@ public class AddHolidaySrv extends HttpServlet {
        status =holiday.addHoliday(Holiday_Name, Holiday_Date);
         
 
-	   RequestDispatcher rd = request.getRequestDispatcher("add_holiday.jsp?message=" + status);
+	   RequestDispatcher rd = request.getRequestDispatcher("addholiday.jsp?message=" + status);
 rd.forward(request, response);
 } 
 protected void doPost(HttpServletRequest request, HttpServletResponse response)

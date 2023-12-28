@@ -160,6 +160,7 @@ public String editempsalary(String employee_id, String Basic, String DA, String 
         ps.setString(12, CalculateDEDUCTIONTOTAL);
         ps.setString(13, calculatedNet);
         ps.setString(14, ESI);
+        ps.setString(15, employee_id);
 
         int k = ps.executeUpdate();
 

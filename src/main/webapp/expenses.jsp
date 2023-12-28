@@ -46,8 +46,8 @@
      <link rel="stylesheet" href="css/M.css">
 		
 
-    <script src="js/html5shiv.min.js"></script>
-    <script src="js/respond.min.js"></script>
+  <!--   <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script> -->
     
     </head>
     <body>

@@ -46,7 +46,7 @@
 		
 		<!-- Select2 CSS -->
 		<link rel="stylesheet" href="css/select2.min.css">
-		
+		<link rel="stylesheet" href="css/M.css">
 		<!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/styles.css">
@@ -119,9 +119,9 @@ if (newRecordsPerPageParam != null) {
 					<div class="page-header">
 						<div class="row align-items-center">
 							<div class="col">
-							<div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
+							<%-- <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
                                 Welcome <%= username %>!
-                              </div>
+                              </div> --%>
 								<h3 class="page-title">Tasks</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
@@ -129,7 +129,7 @@ if (newRecordsPerPageParam != null) {
 								</ul>
 							</div>
 							<div class="col-auto float-right ml-auto">
-							<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_tasks"><i class="fa fa-plus"></i> Add Task</a>
+							<a href="#" class="Addbutton" data-toggle="modal" data-target="#add_tasks"><i class="fa fa-plus"></i> Add Task</a>
 							</div>
 						</div>
 					</div>
@@ -137,34 +137,30 @@ if (newRecordsPerPageParam != null) {
 					<!-- Search Filter -->
 					<form action="./TaskSearchSrv" method="post">
     <div class="row filter-row">
+    <div class="col-sm-6 col-md-3" id = "flag">
+        <label>Records per page:</label>
+        <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+            <option value="10">10</option>
+        </select>
+    </div>
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus select-focus">
                 <label for="id">task_id:</label>
-                <input type="text" name="task_id" id="task_id">
+                <input class="input" type="text" name="task_id" id="task_id">
             </div>
         </div>
-        <div class="col-sm-6 col-md-3">
-            <input style="margin-top: 29px;" type="submit" value="Search">
-        </div>
+       <div class="col-sm-6 col-md-3" >
+                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
+               </div>
     </div>
     <input type="hidden" name="start" value="<%= currentPage %>">
     <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
 
-    <div class="col-sm-6 col-md-3" id = "flag">
-        <label>Records per page:</label>
-        <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-            
-            <option value="10">10</option>
-           
-          
-        </select>
-        
-    </div>
-</form>
+    </form>
 					
 
-								<table>
-									<thead>
+								 <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
+									
 										<tr>
 							
 											<th>task_id</th>
@@ -174,10 +170,9 @@ if (newRecordsPerPageParam != null) {
 									        <th>end_date</th>
 									        <th>assigned_resource</th>
 									        <th>is_completed</th>
-									        <th>Edit</th>
-									         <th>Delete</th>    
+									       <th style="text-align: center;" colspan="2">Actions</th>    
 										</tr>
-									</thead>
+									
 <%
 int start = currentPage;
 int limit = newRecordsPerPage;
@@ -234,11 +229,11 @@ for (TasksBean tasks : tax) {
     <td><%=tasks.getAssigned_resource() %></td>
     <td><%=tasks.getIs_completed() %></td>
     <td>
-        <a href="edit_tasks.jsp?task_id=<%= tasks.getTask_id() %>">Edit</a>
+        <a class="edit" href="edit_tasks.jsp?task_id=<%= tasks.getTask_id() %>">Edit</a>
     </td>
     <td>
 <%--          <a href="delete_task.jsp?id=<%= tasks.getTask_id() %>">Delete</a>  --%>
-        <a href="DeleteTaskSrv?task_id=<%= tasks.getTask_id() %>">Delete</a> 
+        <a class="delete" href="DeleteTaskSrv?task_id=<%= tasks.getTask_id() %>">Delete</a> 
     </td>
 </tr>
 <%
@@ -246,24 +241,24 @@ for (TasksBean tasks : tax) {
 %>
 
 								</table>
-<div class="row justify-content-center align-items-center" id = "flag1">
+<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
    
    <!-- Pagination links -->
 
     <% if (pageno > 1) { %>
-        <a href="tasks.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="tasks.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%=i%>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="tasks.jsp?page=<%=i%>"><%=i%></a>
+            <a href="tasks.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="tasks.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="tasks.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } }%>
 
 </div>

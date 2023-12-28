@@ -17,13 +17,14 @@
 		
 		<!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
-		
+        
+		<link rel="stylesheet" href="css/Modifying.css">
 		<!-- Fontawesome CSS -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
 		
 		<!-- Lineawesome CSS -->
         <link rel="stylesheet" href="css/line-awesome.min.css">
-		
+		<link rel="stylesheet" href="css/M.css">
 		<!-- Select2 CSS -->
 		<link rel="stylesheet" href="css/select2.min.css">
 		
@@ -35,19 +36,13 @@
 		
 		<!-- Main CSS -->
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/tstyles.css">
+      
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 		
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-<style>
-#table{
-    width:1210px;
-    margin-left: 30px;
-    border:2px;
-    }
-</style>
+			<!-- <script src="assets/js/html5shiv.min.js"></script>
+			<script src="assets/js/respond.min.js"></script> -->
 	
     </head>
     <body>
@@ -71,7 +66,7 @@ if (currentPageStr == null || "0".equals(currentPageStr)) {
 int currentPage = Integer.parseInt(currentPageStr);
 
 // Handle the change in recordsPerPage here
-int newRecordsPerPage = 5; // Default value
+int newRecordsPerPage = 10; // Default value
 String newRecordsPerPageParam = request.getParameter("newRecordsPerPage");
 if (newRecordsPerPageParam != null) {
     newRecordsPerPage = Integer.parseInt(newRecordsPerPageParam);
@@ -126,7 +121,7 @@ if (newRecordsPerPageParam != null) {
 								</ul>
 							</div>
 							<div class="col-auto float-right ml-auto">
-								<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_promotion"><i class="fa fa-plus"></i> Add Promotion</a>
+								<a href="#" class="Addbutton" data-toggle="modal" data-target="#add_promotion"><i class="fa fa-plus"></i> Add Promotion</a>
 							</div>
 						</div>
 					</div>
@@ -134,38 +129,45 @@ if (newRecordsPerPageParam != null) {
 					  <!-- Search form -->
             <form action="./PromotionSearchSrv" method="post">
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-				      <div class="form-group form-focus">
-					   <input name="promotionfor" id="promotionfor" name="employee" type="text" class="form-control floating">
-					   <label class="focus-label">promotion for</label>
-				     </div>
+                
+                <div class="col-sm-6 col-md-3" id = "flag">
+                 <label>Records per page:</label>
+			       <select class="record" id="recordsPerPage" onchange="changeRecordsPerPage()">
+					    <option value="10">10</option>
+					</select>
+			    </div>
+			    
+                     <div class="col-sm-6 col-md-3">  
+					 <div class="custom-input-field form-group form-focus d-flex align-items-center">
+					     <label style="margin-right:5px;" for="ItemName">promotion For</label>
+					        <input  class="input" id="promotionfor" name="promotionfor" type="text" class="form-control floating">
+					  
+					    </div>
+					</div>
+				
+				<div class="col-sm-6 col-md-3"> 
+				    <div class="custom-input-field form-group form-focus d-flex align-items-center">
+				    <label>Promotion Date</label>
+				        <input class="input" class="form-control floating" type="date" value="" name="promotiondate" id="promotiondate" placeholder=" ">			        
+				    </div>
 				</div>
-                   <div class="col-sm-6 col-md-3"> 
-				     <div class="form-group form-focus select-focus">
-			            <input class="form-control floating" type="date" value="" name="promotiondate" id="promotiondate" placeholder=" ">
-			          <label class="focus-label">Promotion Date</label>
-			        </div>
-			       </div>
+
 			       
-               <div class="col-sm-6 col-md-3" >
-                 <input class="form-control floating"  style=" color:white; border-radius:5px; height:55px; width:260px; background-color:#55ce63;" type="submit" value="SEARCH">
-               </div>
+               <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
+
               
                 
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                <div class="col-sm-6 col-md-3" id = "flag">
-                    <label>Records per page:</label>
-                    <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        <option value="10">10</option>
-                    </select>
+             
                 </div>
-                </div>
-            </form>
+             </form>
             
         </div>
-					
-					  <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
+			
+					  <table class="table" id="tab"  class="table-striped custom-table mb-0 datatable">
 						<tr>
 							<th>Id</th>
 				            <th>PromotionFor </th>
@@ -234,34 +236,37 @@ if (newRecordsPerPageParam != null) {
             <td><%= train.getPromotionTo()%></td>
             <td><%= train.getPromotionDate()%></td>
           
-             <td>
-        <a href="edit_promotion.jsp?id=<%= train.getId() %>">Edit</a>
+     <td>
+        <a class="edit" href="edit_promotion.jsp?id=<%= train.getId() %>">Edit</a>
     </td>
+
     <td>
-       <a href="DeletePromotionSrv?id=<%= train.getId() %>">Delete</a>
+        <a class="delete" href="DeletePromotionSrv?id=<%= train.getId() %>">Delete</a>
+    
     </td>
+
 </tr>
        
         <%
             }
         %>
-				</table>
-			<div class="row justify-content-center align-items-center" id = "flag1">
+		   </table>					
+			<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
 			<!-- Pagination links -->
             <% if (pageno > 1) { %>
-            <a href="promotion.jsp?page=<%=pageno - 1%>">Previous</a>
+           <a href="promotion.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
             <% } %>
 
             <% for (int i = 1; i <= noOfPages; i++) { %>
             <% if (i == pageno) { %>
-            <%=i%>
+             <span class="pagination-number active"><%=i%></span>
             <% } else { %>
-            <a href="promotion.jsp?page=<%=i%>"><%=i%></a>
+            <a href="promotion.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
             <% } %>
             <% } %>
 
             <% if (pageno < noOfPages) { %>
-            <a href="promotion.jsp?page=<%=pageno + 1%>">Next</a>
+            <a href="promotion.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
             <% } %>
 
         </div>
@@ -293,9 +298,9 @@ if (newRecordsPerPageParam != null) {
 		<!-- Select2 JS -->
 		<script src="js/select2.min.js"></script>
 		
-		<!-- Datetimepicker JS -->
+		<!-- Datetimepicker JS 
 		<script src="js/moment.min.js"></script>
-		<script src="js/bootstrap-datetimepicker.min.js"></script>
+		<script src="js/bootstrap-datetimepicker.min.js"></script>-->
 		
 		<!-- Datatable JS -->
 		<script src="js/jquery.dataTables.min.js"></script>
@@ -303,6 +308,10 @@ if (newRecordsPerPageParam != null) {
 		
 		<!-- Custom JS -->
 		<script src="js/app.js"></script>
+		<!-- DataTables CSS -->
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+		
 
 <script>
     $(document).ready(function () {

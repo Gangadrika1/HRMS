@@ -78,11 +78,12 @@ public String editresignation(String Id, String ResigningEmployee, String Notice
     PreparedStatement ps = null;
 
     try {
-        ps = con.prepareStatement("UPDATE resignation SET ResigningEmployee =?, NoticeDate =?, ResignationDate =? WHERE Id=?");  
+        ps = con.prepareStatement("UPDATE resignation SET ResigningEmployee =?, NoticeDate =?, ResignationDate =?,Reason=? WHERE Id=?");  
         ps.setString(1, ResigningEmployee);
         ps.setString(2, NoticeDate);
         ps.setString(3, ResignationDate);
-        ps.setString(4, Id);
+        ps.setString(4,Reason);
+        ps.setString(5, Id);
        
         int k = ps.executeUpdate();
 

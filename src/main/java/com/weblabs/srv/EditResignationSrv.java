@@ -41,9 +41,9 @@ public class EditResignationSrv extends HttpServlet {
 
         AddResignationServiceImpl dao = new AddResignationServiceImpl();
    
-        String status1 = dao.editresignation(id,resigningemp,noticedate,resignationdate,reason);
+        status = dao.editresignation(id,resigningemp,noticedate,resignationdate,reason);
 
-        RequestDispatcher rd = request.getRequestDispatcher("resignation.jsp?message=" + status1);
+        RequestDispatcher rd = request.getRequestDispatcher("resignation.jsp?message=" + status);
         rd.forward(request, response);
     }
 

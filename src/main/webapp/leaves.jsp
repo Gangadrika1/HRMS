@@ -20,36 +20,33 @@
     <meta name="robots" content="noindex, nofollow">
     <title>newLeaves - HRMS admin template</title>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-
-    <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-
-    <!-- Lineawesome CSS -->
-    <link rel="stylesheet" href="css/line-awesome.min.css">
-
-    <!-- Select2 CSS -->
-    <link rel="stylesheet" href="css/select2.min.css">
-
-    <!-- Datetimepicker CSS -->
-    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
-
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="css/style.css">
+ <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+		
+		<!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+		
+		<!-- Lineawesome CSS -->
+        <link rel="stylesheet" href="css/line-awesome.min.css">
+		
+		<!-- Datatable CSS -->
+		<link rel="stylesheet" href="css/dataTables.bootstrap4.min.css">
+		
+		<!-- Select2 CSS -->
+		<link rel="stylesheet" href="css/select2.min.css">
+		
+		<!-- Main CSS -->
+        <link rel="stylesheet" href="css/style.css">
+		   <link rel="stylesheet" href="css/tstyles.css">
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="assets/js/html5shiv.min.js"></script>
+			<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
     
-    <!-- Table styles CSS -->
-    <!-- <link rel="stylesheet" href="css/tstyles.css"> -->
-    
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-   
-    <script src="js/html5shiv.min.js"></script>
-    <script src="js/respond.min.js"></script>
-   
-    <title>Leave List</title>
 </head>
 <body>
 <%
@@ -175,7 +172,7 @@ if (newRecordsPerPageParam != null) {
 			
               <div class="col-sm-6 col-md-3">
 				    <input class="search" type="submit" value="SEARCH">
-				</div> 
+				</div>
                
            </div>
              <input type="hidden" name="start" value="<%= currentPage %>">
@@ -308,7 +305,7 @@ if (newRecordsPerPageParam != null) {
             <!-- Include your Add Leave Modal HTML here -->
 
         </div>
-   
+   </div>
 
 <!-- JavaScript Libraries and Custom JS -->
 <script src="js/jquery-3.2.1.min.js"></script>
