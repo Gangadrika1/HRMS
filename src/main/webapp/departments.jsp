@@ -132,9 +132,17 @@ if (newRecordsPerPageParam != null) {
                            </div>
 			              </div>
 			            </div>
-
+			           
            
             <form action="./DepartmentSearchSrv" method="post">
+             
+			            <label>Records per page:</label>
+                    <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+                        
+                        <option value="10">10</option>
+                       
+                    </select>
+            
                 <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">  
 				<div style= margin-left:30px; class="form-group form-focus">
@@ -156,12 +164,7 @@ if (newRecordsPerPageParam != null) {
                 <input type="hidden" name="start" value="<%= currentPage %>">
                 <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
                 <div class="col-sm-6 col-md-3" id = "flag">
-                    <label>Records per page:</label>
-                    <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                        
-                        <option value="10">10</option>
-                       
-                    </select>
+                    
                 </div>
             </form>
         </div> <!-- Closes the filter-row div -->
