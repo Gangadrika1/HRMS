@@ -82,51 +82,38 @@
             
             <div class="page-header">
 <form action="./EditOvertimeSrv" method="post">
-<div id="edit_overtime" class="modal custom-modal fade" role="dialog">
-					<div class="modal-dialog modal-dialog-centered" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title">Edit Overtime</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">								
-								<div class="form-group">
+<div role="dialog">
+					<div class="col-sm-6">
+                        <div class="form-group">					
+								<%-- <div class="form-group">
 										<label> ID <span class="text-danger">*</span></label>
-										<input name="id" required class="form-control" type="text">
-									</div>
-									<div class="form-group">
-										<label>Employee ID <span class="text-danger">*</span></label>employeename
-										<select id="selectedEmployee" name="employeename" class="form-control">
-                                <%
-											List<EmployeeBean> dept = EmployeeDAO.getAllEmployees();
-											for(EmployeeBean dep: dept)
-											{
-											%>
-                                           <option><%= dep.getEmployee_ID() %></option>
-                                        <%
-                          					}
-									     %>                       
-                            </select>
-									</div>
+										<input value="<%=over.getId() %>" readonly name="id" required class="form-control" type="text">
+									</div> --%>
+									
+               
+										<div class="form-group">
+										<label>Employee ID <span class="text-danger">*</span></label>										
+                                           <input value="<%= over.getEmployee_Id()%>" readonly id="selectedEmployee" name="employeename" class="form-control">                                      
+									     </div>
+									 
 									<div class="form-group">
 										<label>Overtime Date <span class="text-danger">*</span></label>
 										<div class="cal-icon">
-											<input name="overtimedate" required class="form-control datetimepicker" type="text">
+											<input class="form-control" value="<%= over.getOverTime_Date()%>" name="overtimedate" required type="date">
 										</div>
 									</div>
 									<div class="form-group">
 										<label>Overtime Hours <span class="text-danger">*</span></label>
-										<input name="hours" required class="form-control" type="text">
+										<input value="<%= over.getHours()%>" name="hours" required class="form-control" type="text">
 									</div>
+								
 									<div class="form-group">
 										<label>Type <span class="text-danger">*</span></label>
-										<input name="type" required class="form-control" type="text">
+										<input value="<%= over.getType()%>" name="type" required class="form-control" type="text">
 									</div>
 									<div class="form-group">
 										<label>Description <span class="text-danger">*</span></label>
-										<textarea name="description" required rows="4" class="form-control"></textarea>
+										<input value="<%= over.getDescription()%>" name="description" required rows="4" class="form-control"></input>
 									</div>
 									<div class="submit-section">
 										<button class="btn btn-primary submit-btn">Submit</button>
@@ -134,13 +121,12 @@
 								
 							 </div>
         </div>
-    </div>
 </div>
 </form>
 </div>
 </div>
 </div>
-</div>
+
 
 <%
     HttpSession sessionstatus = request.getSession(true);

@@ -11,7 +11,7 @@ import com.weblabs.beans.AddDeductions;
 import com.weblabs.beans.AddPayrollDeductionAssigne;
 import com.weblabs.utility.DBUtil;
 	
-public class AddDeductionServiceImpl{
+public class AddDeductionServiceImpl {
 	public static List<AddDeductions> getFilteredAddDeductions(String whereClause, int start, int limit) {
         List<AddDeductions> filteredAddDeductions = new ArrayList<>();
         Connection connection = null;
@@ -67,36 +67,38 @@ public class AddDeductionServiceImpl{
         return filteredAddDeductions;
     }
 	
-	public static boolean editDeduction(AddDeductions deduction) {
+	public static String editDeduction(String Payroll_id,String DeductionName,String  Unitcalculation,String UnitAmount ) {
 	    Connection connection = null;
 	    PreparedStatement preparedStatement = null;
+	    String status = "Deduction Update Failed!";
 
 	    try {
 	        connection = DBUtil.provideConnection();
-	        String query = "UPDATE payroll_deduction SET UnitCalculation = ?, UnitAmount = ? ,DeductionName = ? WHERE payrolldeductionid = ? ";
+	        String query = "UPDATE payroll_deduction SET UnitCalculation = ?, UnitAmount = ? ,DeductionName = ? WHERE payroll_id = ? ";
 
 	        preparedStatement = connection.prepareStatement(query);
-	        preparedStatement.setString(1, deduction.getUnitcalculation());
-	        preparedStatement.setString(2, deduction.getUnitAmount());
-	        preparedStatement.setString(3, deduction.getDeductionName());
-	        preparedStatement.setString(4, deduction.getPayrolldeductionid());
+	        preparedStatement.setString(1, Unitcalculation);
+	        preparedStatement.setString(2, UnitAmount);
+	        preparedStatement.setString(3, DeductionName);
+	        preparedStatement.setString(4, Payroll_id);
   
 	        
-	        int rowsUpdated = preparedStatement.executeUpdate();
+	        int k = preparedStatement.executeUpdate();
 
-	        return rowsUpdated > 0;
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        return false;
-	    } finally {
-	        try {
-	            if (preparedStatement != null) preparedStatement.close();
-	            if (connection != null) connection.close();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
-	}
+            if (k > 0) {
+                status = "Designation Added Successfully!";
+            }
+        } catch (SQLException e) {
+            status = "Error: " + e.getMessage();
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeConnection(connection);
+            DBUtil.closeConnection(preparedStatement);
+        }
+
+        return status;
+}
+
 
 	  public String deletededuction(String id) {
 		    String status = "deduction Removal Failed!";

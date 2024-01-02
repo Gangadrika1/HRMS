@@ -173,7 +173,7 @@ if (newRecordsPerPageParam != null) {
 								</ul>
 							</div>
 							<div class="col-auto float-right ml-auto">
-							<a href="#" class="btn add-btn" data-toggle="modal" data-target="#create_project"><i class="fa fa-plus"></i> Create Project</a>
+							<a href="#" class="Addbutton" data-toggle="modal" data-target="#create_project"><i class="fa fa-plus"></i> Create Project</a>
 							</div>
 						</div>
 					</div>

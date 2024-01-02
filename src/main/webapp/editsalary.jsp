@@ -92,7 +92,7 @@ if (leaves != null && !leaves.isEmpty()) {
 										
 										<div class="col-sm-6"> 
 											<label>Net Salary</label>
-											<input value="<%= leave.getNetSal()%>"  name="netsalary" class="form-control" type="text" >
+											<input readonly value="<%= leave.getNetSal()%>"  name="netsalary" class="form-control" type="text" >
 										</div>
 									</div>
 									<div class="row"> 
@@ -116,7 +116,7 @@ if (leaves != null && !leaves.isEmpty()) {
 											</div>
 											<div class="form-group">
 												<label>Allowance</label>
-												<input  name="allowance" class="form-control" type="text">
+												<input  name="allowance" value="<%= leave.getALLOWANCE()%>" class="form-control" type="text">
 											</div>
 											<div class="form-group">
 												<label>Medical  Allowance</label>

@@ -157,7 +157,7 @@
                         
  
                         <div class="submit-section">
-                            <button type="submit" name="submit" class="btn btn-primary submit-btn">Update</button>
+                            <button type="submit" name="submit" class="Addbutton">Update</button>
                         </div>
              </div>
              

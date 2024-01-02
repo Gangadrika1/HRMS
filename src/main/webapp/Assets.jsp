@@ -200,7 +200,7 @@ function changeRecordsPerPage() {
                     <th>Price</th>
                     <th>Asset User</th>
                     <th>Description</th>
-                    <th>DateTime</th>
+                   <!--  <th>DateTime</th> -->
                      <th style="text-align: center;" colspan="2">Actions</th>
                     
                   
@@ -271,7 +271,7 @@ function changeRecordsPerPage() {
                     <td><%= asset.getPrice() %></td>
                     <td><%= asset.getAssetUser() %></td>
                     <td><%= asset.getDescription() %></td>
-                    <td><%= asset.getDateTime() %></td>
+                  <%--   <td><%= asset.getDateTime() %></td> --%>
                     <td>
 
  

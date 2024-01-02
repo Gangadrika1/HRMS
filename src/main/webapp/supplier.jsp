@@ -39,7 +39,7 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
-    
+     <link rel="stylesheet" href="css/M.css">
     <!-- Table styles CSS -->
     <link rel="stylesheet" href="css/tstyles.css">
 
@@ -118,16 +118,16 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h3 class="page-title">Supplier</h3>
-                            <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
+                           <%--  <div id="welcomeMessage" style="text-align: center; margin-top: 20px; font-size: 24px;">
                                 Welcome <%= username %>
-                            </div>
+                            </div> --%>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.jsp">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Supplier</li>
                             </ul>
                         </div>
                         <div class="col-auto float-right ml-auto">
-                            <a href="#" class="btn add-btn" data-toggle="modal" data-target="#AddSupplier"><i class="fa fa-plus"></i> Add Supplier</a>
+                            <a href="#" class="Addbutton" data-toggle="modal" data-target="#AddSupplier"><i class="fa fa-plus"></i> Add Supplier</a>
                             <!-- <div class="view-icons">
                                 <a href="asset.jsp" title="Grid View" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                                 <a href="assets-list.jsp" title="Tabular View" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
@@ -141,36 +141,34 @@
                 <!-- Search form -->
                 <form action="./SupplierSearchSrv" method="post">
                     <div class="row filter-row">
-                        <div class="col-sm-6 col-md-3">
-                            <div class="form-group form-focus">
-                                <label for="supplierName">Supplier Name:</label>
-                                <input type="text" name="supplierName" id="supplierName">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3">
-                            <div class="form-group form-focus select-focus">
-                                <label for="supplierID">ID:</label>
-                                <input style="margin-top: 29px;" type="text" name="supplierID" id="supplierID">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-3">
-                            <input style="margin-top: 29px;" type="submit" value="Search">
-                        </div>
-                    </div>
-                    <input type="hidden" name="start" value="<%= currentPage %>">
-                    <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
-                    <div class="col-sm-6 col-md-3">
+                     <div class="col-sm-6 col-md-3">
                         <label>Records per page:</label>
                         <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-                            <option value="5">5</option>
                             <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
                         </select>
                   
             </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="custom-input-field form-group form-focus d-flex align-items-center">
+                                <label for="supplierName">Supplier Name:</label>
+                                <input class="input"  type="text" name="supplierName" id="supplierName">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3">
+                         <div class="custom-input-field form-group form-focus d-flex align-items-center">
+                                <label for="supplierID">ID:</label>
+                                <input class="input"  type="text" name="supplierID" id="supplierID">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div>
+                    </div>
+                    <input type="hidden" name="start" value="<%= currentPage %>">
+                    <input type="hidden" name="limit" value="<%= newRecordsPerPage %>">
+                   
           </form>
                         <table>
                         <thead>
@@ -237,8 +235,8 @@
                                 <td><%= supplier.getSupplierName() %></td>
                                 <td><%= supplier.getProductDetails() %></td>
                                 <td>
-                                    <a href="EditSupplier.jsp?supplierID=<%= supplier.getSupplierID()%>">Edit</a>
-                                    <a href="DeleteSupplierSrv?supplierID=<%=supplier.getSupplierID() %>">Delete</a>
+                                    <a class="edit" href="EditSupplier.jsp?supplierID=<%= supplier.getSupplierID()%>">Edit</a>
+                                    <a class="delete" href="DeleteSupplierSrv?supplierID=<%=supplier.getSupplierID() %>">Delete</a>
                                 </td>
                             </tr>
                             <%
@@ -247,20 +245,20 @@
                         </table>
 
 
-            <div class="row justify-content-center align-items-center">
+           <div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
                 <!-- Pagination links -->
                 <% if (pageno > 1) { %>
-                    <a href="supplier.jsp?page=<%=pageno - 1%>">Previous</a>
+                    <a href="supplier.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
                 <% } %>
                 <% for (int i = 1; i <= noOfPages; i++) { %>
                     <% if (i == pageno) { %>
-                        <%=i%>
+                      <span class="pagination-number active"><%=i%></span>
                     <% } else { %>
-                        <a href="supplier.jsp?page=<%=i%>"><%=i%></a>
+                        <a href="supplier.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
                     <% } %>
                 <% } %>
                 <% if (pageno < noOfPages) { %>
-                    <a href="supplier.jsp?page=<%=pageno + 1%>">Next</a>
+                    <a href="supplier.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
                 <% } %>
             </div>
         </div>

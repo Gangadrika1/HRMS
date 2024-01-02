@@ -192,7 +192,7 @@ if (newRecordsPerPageParam != null) {
 											<th>End Date</th>
 											<th>Description </th>
 											<th>Status </th>
-											<th>Progress </th>
+											<!-- <th>Progress </th> -->
 											<th style="text-align: center;" colspan="2">Actions</th>
 										</tr>
 			<%
@@ -250,7 +250,7 @@ if (newRecordsPerPageParam != null) {
             <td><%=goals.getEndDate() %></td>
             <td><%=goals.getDescription()%></td>
             <td><%=goals.getStatus()%></td>
-            <td><%=goals.getProgress()%></td>
+        <%--  <td><%=goals.getProgress()%></td> --%>
              <td>
         <a class="edit" href="edit_goals.jsp?GoalID=<%= goals.getId() %>">Edit</a>
     </td>

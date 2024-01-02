@@ -54,9 +54,9 @@ public class EditCSSrv extends HttpServlet {
 
         CompanySettingServiceImpl dao = new CompanySettingServiceImpl();
    
-        String status1 = dao.editCS( CompanyID,  CompanyName, ContactPerson, Address, Country, City, State, PostalCode, Email, PhoneNumber, MobileNumber, Fax, WebsiteUrl,logo,InstagramUrl,TelegramUrl);
+        status = dao.editCS( CompanyID,  CompanyName, ContactPerson, Address, Country, City, State, PostalCode, Email, PhoneNumber, MobileNumber, Fax, WebsiteUrl,logo,InstagramUrl,TelegramUrl);
 
-        RequestDispatcher rd = request.getRequestDispatcher("CS.jsp?message=" + status1);
+        RequestDispatcher rd = request.getRequestDispatcher("CS.jsp?message=" + status);
         rd.forward(request, response);
     }
 

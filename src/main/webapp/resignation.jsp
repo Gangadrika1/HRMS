@@ -137,7 +137,7 @@ if (newRecordsPerPageParam != null) {
                 
                     <div class="col-sm-6 col-md-3">  
 				     <div class="custom-input-field form-group form-focus d-flex align-items-center">
-				      <label for="ItemName">Employee Name</label>
+				      <label for="ItemName">Employee ID</label>
 					     <input class="input" name="resigningemployee" id="resigningemployee" type="text" class="form-control floating">	     
 				       </div>
 				    </div>
@@ -168,7 +168,7 @@ if (newRecordsPerPageParam != null) {
         <table id="table" class="table-striped custom-table mb-0 datatable" style="border: 5px solid black;">
             <tr>
                 <th>id</th>
-                <th>Resigning Employee</th>
+                <th>Resigning Employee ID</th>
                 <th>Notice Date</th>
                 <th>Resignation Date</th>
                 <th>Reason</th>

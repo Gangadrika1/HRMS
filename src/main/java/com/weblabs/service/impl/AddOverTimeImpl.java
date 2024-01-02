@@ -47,7 +47,7 @@ public String deleteovertime(String id) {
     PreparedStatement ps = null;
 
     try {
-        ps = con.prepareStatement("DELETE FROM overtime WHERE id = ?");
+        ps = con.prepareStatement("DELETE FROM overtime WHERE Employee_Id = ?");
         ps.setString(1, id);
 
         int k = ps.executeUpdate();
@@ -67,7 +67,7 @@ public String deleteovertime(String id) {
 }
 
 @Override
-public String editovertime(String id, String Employee_Id, String OverTime_Date, String Hours, String Type,
+public String editovertime( String Employee_Id, String OverTime_Date, String Hours, String Type,
 		String Description) {
 	String status = "overtime Updation Failed!";
 
@@ -75,13 +75,13 @@ public String editovertime(String id, String Employee_Id, String OverTime_Date, 
     PreparedStatement ps = null;
 
     try {
-        ps = con.prepareStatement("UPDATE overtime SET Employee_Id =?, OverTime_Date =?, Hours =?, Type =?, Description =? WHERE id=?");  
-        ps.setString(1, Employee_Id);
-        ps.setString(2, OverTime_Date);
-        ps.setString(3,  Hours);
-        ps.setString(4, Type);
-        ps.setString(5, Description);
-        ps.setString(6, id);
+        ps = con.prepareStatement("UPDATE overtime SET OverTime_Date =?, Hours =?, Type =?, Description =? WHERE Employee_Id =?");  
+     
+        ps.setString(1, OverTime_Date);
+        ps.setString(2,  Hours);
+        ps.setString(3, Type);
+        ps.setString(4, Description);
+        ps.setString(5, Employee_Id);
        
         int k = ps.executeUpdate();
 

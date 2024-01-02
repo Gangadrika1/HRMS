@@ -197,7 +197,7 @@ if (newRecordsPerPageParam != null) {
                     <th>FormName</th>
                     <th>PermissionType</th>
                     <th>Edit</th>
-                    <th>Delete</th>
+                    <!-- <th>Delete</th> -->
                 </tr>
                 <%
                 
@@ -259,9 +259,9 @@ if (newRecordsPerPageParam != null) {
                     <td>
                         <a class="edit" href="edit_rp.jsp?RolePermissionID=<%= leave.getRolePermissionID() %>">Edit</a>
                     </td>
-                    <td>
+                    <%-- <td>
                         <a class="delete" href="DeleteRPSrv?RolePermissionID=<%= leave.getRolePermissionID() %>">Delete</a>
-                    </td>
+                    </td> --%>
                 </tr>
                 <%
                     }

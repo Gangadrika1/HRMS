@@ -30,7 +30,7 @@
     
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="css/select2.min.css">
-    
+    <link rel="stylesheet" href="css/M.css">
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/tstyles.css">
@@ -128,41 +128,42 @@
 		<form action="./PayslipSearchSRV" method="post"> 
   		
                 <div class="row filter-row">
+               
                  <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus">
+                        <div class="custom-input-field form-group form-focus d-flex align-items-center">
                             <label for="Employee_Id">Employee ID :</label>
-                            <input type="text" name="Employee_Id" id="year">
+                            <input class="input" type="text" name="Employee_Id" id="year">
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <label for="year">Year :</label>
-                            <input type="text" name="year" id="year">
+                            <input class="input" type="text" name="year" id="year">
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3">
-                        <div class="form-group form-focus select-focus">
+                       <div class="custom-input-field form-group form-focus d-flex align-items-center">
                             <label for="month">Month :</label>
-                            <input type="text" name="month" id="month">
+                            <input class="input" type="text" name="month" id="month">
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
-                        <input type="submit" value="Search">
-                    </div>
+                     
+               <div class="col-sm-6 col-md-3">
+				    <input class="search" type="submit" value="SEARCH">
+				</div> 
+				 <div class="custom-input-field form-group form-focus d-flex align-items-center">
+			       <label>Records per page:</label>
+			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
+					    <option value="10">10</option>
+					    
+					</select>
+				
+			       </div>
                 </div>
                 	 <input type="hidden"  name="start" value="<%= currentPage %>">
        	 			<input type="hidden"  name="limit" value="<%= newRecordsPerPage %>">
 	
-       	       <div class="col-sm-6 col-md-3">
-			       <label>Records per page:</label>
-			       <select id="recordsPerPage" onchange="changeRecordsPerPage()">
-					    <option value="5">5</option>
-					    <option value="10">10</option>
-					    <option value="20">20</option>
-					   <option value="50">50</option>
-					</select>
-				
-			       </div>
+       	      
 	</form>  
 	
 <table>
@@ -253,7 +254,7 @@
 		    <td><%= employeeData[10] %></td>
 		    <td><%= employeeData[9] %></td>
 		   
-		    <td><a href="salary-view.jsp?id=<%= employeeData[0] %>&year=<%= employeeData[10] %>&month=<%= employeeData[9] %>">Payslip View</a></td>
+		    <td><a class="delete" href="salary-view.jsp?id=<%= employeeData[0] %>&year=<%= employeeData[10] %>&month=<%= employeeData[9] %>">Payslip View</a></td>
               </tr>
                 <% }catch (Exception e) {
                     // Handle exceptions
@@ -267,22 +268,22 @@
 
 
 </table>
+		<div class="row justify-content-center align-items-center custom-pagination d-flex justify-content-center" id="flag1">
 
-<div class="row justify-content-center align-items-center">
     <% if (pageno > 1) { %>
-        <a href="PayslipList.jsp?page=<%=pageno - 1%>">Previous</a>
+        <a href="PayslipList.jsp?page=<%=pageno - 1%>"><span class="pagination-label">Previous</span></a>
     <% } %>
 
     <% for (int i = 1; i <= noOfPages; i++) { %>
         <% if (i == pageno) { %>
-            <%= i %>
+            <span class="pagination-number active"><%=i%></span>
         <% } else { %>
-            <a href="PayslipList.jsp?page=<%=i%>"><%="&nbsp;&nbsp;&nbsp;" + i + "&nbsp;&nbsp;"%></a>
+            <a href="PayslipList.jsp?page=<%=i%>"><span class="pagination-number"><%=i%></span></a>
         <% } %>
     <% } %>
 
     <% if (pageno < noOfPages) { %>
-        <a href="PayslipList.jsp?page=<%=pageno + 1%>">Next</a>
+        <a href="PayslipList.jsp?page=<%=pageno + 1%>"><span class="pagination-label">Next</span></a>
     <% } %>
 </div>
 

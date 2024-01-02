@@ -49,7 +49,7 @@ public class EditDepartmentSrv extends HttpServlet {
 
         AddDepartmentImpl dao = new AddDepartmentImpl();
    
-        String status1 = dao.editdepartment(id,department);
+        status = dao.editdepartment(id,department);
 
         RequestDispatcher rd = request.getRequestDispatcher("departments.jsp?message=" + status);
         rd.forward(request, response);

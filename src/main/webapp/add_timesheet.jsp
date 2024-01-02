@@ -60,7 +60,7 @@
 											<input name="project_id" required  class="form-control" type="text" > -->
 											
 											
-<label>project_id <span class="text-danger">*</span></label>
+<label>project  Name <span class="text-danger">*</span></label>
 <select name="project_id" id="project_id" class="form-control" required onchange="getAllProjects">
   
             <option value="">Select projectId</option>
@@ -90,7 +90,7 @@
 											
 											
 											
-<label>task_id <span class="text-danger">*</span></label>
+<label>task Name <span class="text-danger">*</span></label>
 <select name="task_id" id="task_id" class="form-control" required onchange="getAllProjects">
   
             <option value="">Select taskId</option>

@@ -43,7 +43,7 @@
     int start = 0;
     int limit = 25;
 
-    String idFilter = request.getParameter("id"); // Make sure the parameter name matches your form
+    String idFilter = request.getParameter("payroll_id"); // Make sure the parameter name matches your form
     List<Payroll> Holiday = null; // Initialize the list as empty
 
     String whereClause = ""; // Initialize an empty whereClause
@@ -61,49 +61,58 @@
     	Payroll holiday = Holiday.get(0); // Access the first element
         if (holiday != null) {
 %>
+<div class="main-wrapper">
 
+    <!-- Header -->
+    <!-- Include your header HTML here -->
+    <jsp:include page="header.jsp" />
+
+    <!-- Sidebar -->
+    <!-- Include your sidebar HTML here -->
+    <jsp:include page="sidebar.jsp" />
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+
+        <!-- Page Content -->
+        <div class="content container-fluid">
+
+            <!-- Page Header -->
+            
+            <div class="page-header">
 <form action="./EditPayrollSrv" method="post">
-<div id="edit_payroll" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit payroll</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-                   <div class="modal-body">
-                    <div class="form-group">
+<div class="col-sm-6">
+                <div class="form-group">
                         <label for="payroll">ID<span class="text-danger">*</span></label>
-                         <input name="id" required  class="form-control" type="text"> 
+                         <input value="<%=holiday.getPayroll_id() %>" name="payroll_id" required  class="form-control" type="text"> 
                     </div>
-                    <div class="form-group">
+                   <!--  <div class="form-group">
                         <label for="payroll">EmployeeId<span class="text-danger">*</span></label>
                          <input name="empid" required  class="form-control" type="text"> 
-                    </div>
-                    <div class="form-group">
+                    </div> -->
+                    <!-- <div class="form-group">
                         <label for="payroll">Name<span class="text-danger">*</span></label>
                          <input name="name" required  class="form-control" type="text"> 
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label for="payroll">Year<span class="text-danger">*</span></label>
-                         <input name="year" required  class="form-control" type="text"> 
+                         <input value="<%=holiday.getYear() %>" name="year" required  class="form-control" type="text"> 
                     </div>
                     <div class="form-group">
                         <label for="payroll">Month<span class="text-danger">*</span></label>
-                         <input name="month" required  class="form-control" type="text"> 
+                         <input value="<%=holiday.getMonth() %>" name="month" required  class="form-control" type="text"> 
                     </div>
                     <div class="form-group">
                         <label for="payroll">Is_opened<span class="text-danger">*</span></label>
-                         <input name="isopen" required  class="form-control" type="text"> 
+                         <input value="<%=holiday.getIs_opened() %>" name="isopen" required  class="form-control" type="text"> 
                     </div>
                     <div class="form-group">
                         <label for="payroll">Ranby<span class="text-danger">*</span></label>
-                         <input name="ranby" required  class="form-control" type="text"> 
+                         <input value="<%=holiday.getRanby()%>" name="ranby" required  class="form-control" type="text"> 
                     </div>
                     <div class="form-group">
                         <label for="payroll">last_modified_time<span class="text-danger">*</span></label>
-                         <input name="lasttime" required  class="form-control" type="text"> 
+                         <input value="<%=holiday.getLast_modified_time()%>" name="lasttime" required  class="form-control" type="text"> 
                     </div>
                     
                     
@@ -111,8 +120,11 @@
                         <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                     </div>
                     <%}} %>
-            </div>
-        </div>
-    </div>
-</div>
+ </div>
+    
 </form>
+</div>
+</div>
+</div>
+
+</div>

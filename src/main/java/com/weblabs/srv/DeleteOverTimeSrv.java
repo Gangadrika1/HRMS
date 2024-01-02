@@ -20,7 +20,7 @@ public class DeleteOverTimeSrv extends HttpServlet {
             throws ServletException, IOException {
 
   
-    	String id = request.getParameter("id");
+    	String id = request.getParameter("Employee_Id");
 
     	AddOverTimeImpl overtime = new AddOverTimeImpl();
 		String status = overtime.deleteovertime(id);

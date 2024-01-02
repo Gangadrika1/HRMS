@@ -134,10 +134,10 @@
                         </div>
  
  
-                         <div class="form-group">
+                        <%--  <div class="form-group">
                             <label class="col-form-label">Progress <span class="text-danger">*</span></label>
                             <input name="Progress" value="<%= goal.getProgress() %>" required class="form-control-range custom-range" id="customRange" type="text">
-                        </div>
+                        </div> --%>
  
  
                         <div class="submit-section">

@@ -91,12 +91,12 @@ int start = 0;
                             <input name="id" value="<%= holiday.getId() %>" required class="form-control" type="text" readonly>
                         </div>
                         <div class="form-group">
-                            <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                            <label class="col-form-label">Name <span class="text-danger">*</span></label>
                             <input name="holidayname" value="<%= holiday.getHoliday_Name() %>" required class="form-control" type="text">
                         </div>
               
                         <div class="form-group">
-                            <label class="col-form-label">Last Name <span class="text-danger">*</span></label>
+                            <label class="col-form-label"> Date<span class="text-danger">*</span></label>
                             <input name="holidaydate" value="<%= holiday.getHoliday_Date() %>" required class="form-control" type="text">
                         </div>
  

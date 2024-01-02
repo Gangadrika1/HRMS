@@ -32,6 +32,7 @@ package com.weblabs.srv;
 	       // if (userType == null || !userType.equals("admin")) {
 	          //  response.sendRedirect("login.jsp?message=Access Denied, Login As Admin!!");
 	           // return;
+	    	
 	       // } else if (userName == null || password == null) {
 	           // response.sendRedirect("login.jsp?message=Session Expired, Login Again!!");
 	          //  return;
@@ -39,8 +40,8 @@ package com.weblabs.srv;
 
 	        // Login success
 	        String status = "Edit Employee salary Failed!";
-	        String id= request.getParameter("id");
-	        String employee = request.getParameter("employee");
+	        
+	        String employee = request.getParameter("employeename");
 	        String overtimedate = request.getParameter("overtimedate");
 	        String hours = request.getParameter("hours");
 	        String type= request.getParameter("type");
@@ -48,7 +49,7 @@ package com.weblabs.srv;
 	      
 
 	        AddOverTime time = new AddOverTime();
-	        time.setId(id);
+	        
 	        time.setEmployee_Id(employee);
 	        time.setOverTime_Date(overtimedate);
 	        time.setHours (hours);
@@ -60,9 +61,9 @@ package com.weblabs.srv;
 	        AddOverTimeImpl dao = new AddOverTimeImpl();
 	        
 
-	        String status1 = dao.editovertime(id,employee,overtimedate,hours,type,description );
+	       status = dao.editovertime(employee,overtimedate,hours,type,description );
 
-	        RequestDispatcher rd = request.getRequestDispatcher("overtime.jsp?message=" + status);
+	        RequestDispatcher rd = request.getRequestDispatcher("payroll-items.jsp?message=" + status);
 	        rd.forward(request, response);
 	    }
 

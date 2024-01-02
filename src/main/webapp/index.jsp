@@ -187,19 +187,31 @@
 </div>
       </div>
 
-
-
-      
-                            
 <%
 BigDecimal totalPreviousMonthApprovedPricing = biddingDAO.getTotalPricingForPreviousMonthApprovedProjects();
 BigDecimal TotalPricingForProject = biddingDAO.getTotalPricingForProject();
 int previousMonthApprovedPricingCount = totalPreviousMonthApprovedPricing != null ? totalPreviousMonthApprovedPricing.intValue() : 0;
- int biddingCount1 = TotalPricingForProject.intValue();
+int biddingCount1 = 0;
  
- double percentageChange33 = (((double) biddingCount1 - previousMonthApprovedPricingCount) / biddingCount1) * 100;
+ if (TotalPricingForProject != null) {
+	   // int value = TotalPricingForProject.intValue();
+	    // Continue with the rest of your code
+	  biddingCount1 = TotalPricingForProject.intValue();
+	}
+ double percentageChange33;
+ try {
+	    percentageChange33 = (((double) biddingCount1 - previousMonthApprovedPricingCount) / biddingCount1) * 100;
+	    
+	    // Check if the result is NaN
+	    if (Double.isNaN(percentageChange33)) {
+	        percentageChange33 = 0; // Set it to 0 in case of NaN
+	    }
+	} catch (ArithmeticException e) {
+	    // Handle division by zero or other arithmetic exceptions
+	    percentageChange33 = 0;
+	}
 DecimalFormat df1 = new DecimalFormat("#.##");
- percentageChange33 = Double.parseDouble(df1.format(percentageChange33));
+percentageChange33 = Double.parseDouble(df1.format(percentageChange33));
  %>
  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
 <div class="card dash-widget">
@@ -270,9 +282,21 @@ BigDecimal TotalPricingForProject = biddingDAO.getTotalPricingForProject();
 int previousMonthApprovedPricingCount = totalPreviousMonthApprovedPricing != null ? totalPreviousMonthApprovedPricing.intValue() : 0;
  int biddingCount1 = TotalPricingForProject.intValue(); */
  
- double percentageChange22 = (((biddingCount1 - totalAmount) -  (previousMonthApprovedPricingCount- totalExpensePreviousMonth)) / (biddingCount1 - totalAmount)) * 100;
- DecimalFormat df2 = new DecimalFormat("#.##");
- percentageChange22 = Double.parseDouble(df2.format(percentageChange22));
+ double percentageChange22;
+ try {
+     double rawPercentageChange22 = (((biddingCount1 - totalAmount) - (previousMonthApprovedPricingCount - totalExpensePreviousMonth)) / (biddingCount1 - totalAmount)) * 100;
+
+     // Format the result to two decimal places
+     DecimalFormat df2 = new DecimalFormat("#.##");
+     String formattedPercentageChange22 = df2.format(rawPercentageChange22);
+
+     // Parse the formatted string back to a double
+     percentageChange22 = Double.parseDouble(formattedPercentageChange22);
+ } catch (ArithmeticException | NumberFormatException e) {
+     // Handle division by zero or other arithmetic exceptions
+     percentageChange22 = 0;
+ }
+
 %>
 <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
 <div class="card dash-widget">

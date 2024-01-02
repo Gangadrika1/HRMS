@@ -5,6 +5,6 @@ public interface AddOverTimeService {
 
 	public String deleteovertime(String id);
 	
-	public String editovertime( String id, String Employee_Id, String OverTime_Date, String Hours, String Type,  String Description);
+	public String editovertime(String Employee_Id, String OverTime_Date, String Hours, String Type,  String Description);
 
 }

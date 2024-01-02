@@ -119,7 +119,7 @@
 											for(EmployeeBean dep: deptt)
 											{
 											%>
-                                           <option><%= dep.getEmployee_ID() %></option>
+                                           <option><%= dep.getEmployee_ID()%></option>
                                         <%
                           					}
 									     %>                       
@@ -143,7 +143,7 @@
 											for(EmployeeBean dep: depttt)
 											{
 											%>
-                                           <option><%= dep.getUsername() %></option>
+                                           <option><%= dep.getUsername()%></option>
                                         <%
                           					}
 									     %>                       

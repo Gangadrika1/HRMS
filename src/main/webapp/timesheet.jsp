@@ -281,14 +281,15 @@ if (newRecordsPerPageParam != null) {
 
 </div>
              </div> <!-- Closes the content container-fluid div -->
-
+        </div>
+ </div>
             <!-- Add Timesheet Modal -->
-            <jsp:include page="add_timesheet.jsp" />
-            <jsp:include page="edit_timesheet.jsp" />
-            <jsp:include page="delete_timesheet.jsp" />
+            <jsp:include page="add_timesheet.jsp" /> 
+          <%--   <jsp:include page="edit_timesheet.jsp" />
+            <jsp:include page="delete_timesheet.jsp" /> --%>
             <!-- Include your Add Timesheet Modal HTML here -->
 
-        </div>
+       
   
 
 <!-- /Main Wrapper -->
