@@ -311,9 +311,10 @@ if (newRecordsPerPageParam != null) {
 		<script src="js/select2.min.js"></script>
 		
 		<!-- Datatable JS -->
+		<!-- 
 		<script src="js/jquery.dataTables.min.js"></script>
 		<script src="js/dataTables.bootstrap4.min.js"></script>
-		
+		-->
 		<!-- Datetimepicker JS -->
 		<script src="js/moment.min.js"></script>
 		<script src="js/bootstrap-datetimepicker.min.js"></script>

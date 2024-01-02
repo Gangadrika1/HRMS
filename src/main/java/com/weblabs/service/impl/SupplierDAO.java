@@ -76,7 +76,7 @@ public class SupplierDAO {
     }
 
     public static List<SupplierBean> getFilteredSuppliers(String whereClause, int start, int limit) {
-        List<SupplierBean> filteredSuppliers = new ArrayList<>();
+        List<SupplierBean>   = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
